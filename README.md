@@ -1,0 +1,1 @@
+Welcome to XXXXX a simple projet which show you how to build an extension for DAT Foundation !

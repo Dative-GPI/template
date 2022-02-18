@@ -1,0 +1,94 @@
+version: "3"
+
+services:
+
+  db:
+    image: timescale/timescaledb:latest-pg12
+    networks:
+      - web
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: example
+    volumes:
+      - data-extension-db:/var/lib/postgresql/data
+      
+  shell:
+    build: 
+      context: ..
+      dockerfile: dev/dockerfiles/dotnet.dockerfile
+      args:
+        PROJECT: src/app/shell/XXXXX.Shell.API
+    networks:
+      - web
+    environment:
+      MEDIATOR__ENDPOINTURI: amqp://rabbitmq
+      DOTNET_ENVIRONMENT: Development
+      DOTNET_URLS: http://+:80
+      CUSTOMCONNSTR_PGSQL: Host=db;Database=data-extension;Username=postgres;Password=example
+
+  gateway:
+    build: 
+      context: ..
+      dockerfile: dev/dockerfiles/dotnet.dockerfile
+      args:
+        PROJECT: src/app/gateway/XXXXX.Gateway.API
+    networks:
+      - web
+    extra_hosts:
+      - "foundation-admin.localhost:172.17.0.1"
+    environment:
+      MEDIATOR__ENDPOINTURI: amqp://rabbitmq
+      DOTNET_ENVIRONMENT: Development
+      DOTNET_URLS: http://+:80
+      CUSTOMCONNSTR_PGSQL: Host=db;Database=data-extension;Username=postgres;Password=example
+    labels:
+      - 'custom.label=extension'
+      - "traefik.enable=true"
+      - "traefik.http.services.extension-backend.loadbalancer.server.port=80"
+      - "traefik.http.routers.extension-backend.rule=Host(`extension.localhost`) && (PathPrefix(`/api`) || Path(`/signin-oidc`) || Path(`/signin-google`) || Path(`/signin-facebook`) || Path(`/signout-callback-oidc`) || Path(`/signout-callback-google`) || Path(`/signout-callback-facebook`))"
+      - "traefik.http.routers.extension-backend.entrypoints=websecure"
+      - "traefik.http.routers.extension-backend.tls=true"
+
+  ui:
+    build:
+      context: ..
+      dockerfile: dev/dockerfiles/vue.dockerfile
+      args:
+        PROJECT: "src/app/shell/XXXXX.Shell.UI"
+    networks:
+      - web
+    volumes: # hot reload
+    - ../src/app/shell/XXXXX.Shell.UI/public:/app/src/app/shell/XXXXX.Shell.UI/public:delegated
+    - ../src/app/shell/XXXXX.Shell.UI/src:/app/src/app/shell/XXXXX.Shell.UI/src:delegated
+    - ../src/app/shell/XXXXX.Shell.UI/.env:/app/src/app/shell/XXXXX.Shell.UI/.env:delegated
+    - ../src/app/shell/XXXXX.Shell.UI/.eslintrc.js:/app/src/app/shell/XXXXX.Shell.UI/.eslintrc.js:delegated
+    - ../src/app/shell/XXXXX.Shell.UI/babel.config.js:/app/src/app/shell/XXXXX.Shell.UI/babel.config.js:delegated
+    - ../src/app/shell/XXXXX.Shell.UI/tsconfig.json:/app/src/app/shell/XXXXX.Shell.UI/tsconfig.json:delegated
+    - ../src/app/shell/XXXXX.Shell.UI/vue.config.js:/app/src/app/shell/XXXXX.Shell.UI/vue.config.js:delegated
+    labels:
+      - "custom.label=extension"
+      - "traefik.enable=true"
+      - "traefik.http.services.extension-frontend.loadbalancer.server.port=8080"
+      - "traefik.http.routers.extension-frontend.rule=Host(`extension.localhost`) && PathPrefix(`/`)"
+      - "traefik.http.routers.extension-frontend.entrypoints=websecure"
+      - "traefik.http.routers.extension-frontend.tls=true"
+
+  migrations:
+    build:
+      context: ..
+      dockerfile: dev/dockerfiles/dotnet.dockerfile
+      args:
+        PROJECT: src/context/XXXXX.Context.Migrations
+    networks:
+      - web
+    environment:
+      CUSTOMCONNSTR_PGSQL: Host=db;Database=data-extension;Username=postgres;Password=example
+
+
+networks:
+  web:
+    external: true
+  extension:
+
+volumes:
+  data-extension-db:
