@@ -1,72 +1,105 @@
 <template>
-  <v-app ref=appz>
-    <v-fade-transition mode="out-in">
-      <layout />
-    </v-fade-transition>
-  </v-app>
+  <d-app class="d-extension">
+    <extension-host-manager>
+      <div style="height: 500px; background-color: red;" />
+      <!-- <network-manager
+        v-show="show"
+        :disabled="!userId"
+        :language-id="languageId"
+        @logout="userId = null"
+        @hook:mounted="loading = 1"
+      >
+            <translations-provider @hook:mounted="loading = 4">
+              <user-provider
+                @input="
+                  userId = $event;
+                  show = false;
+                "
+                @hook:mounted="loading = 5"
+                @show="askShow = true"
+              >
+                <user-organisation-provider @hook:mounted="loading = 6">
+                  <permissions-provider @hook:mounted="loading = 7">
+                    <layout @hook:mounted="loading = 9" />
+                  </permissions-provider>
+                </user-organisation-provider>
+              </user-provider>
+            </translations-provider>
+          </language-provider>
+        </application-provider>
+      </network-manager>
+
+      <div v-if="!show" class="progress">
+        <v-progress-linear
+          color="light-green darken-4"
+          height="10"
+          :value="(state / 9) * 100"
+          striped
+        ></v-progress-linear>
+      </div> -->
+    </extension-host-manager>
+  </d-app>
 </template>
 
 <script lang="ts">
-import { DependencyContainer } from "tsyringe";
-import { Component, Vue, Inject, Watch, Ref } from "vue-property-decorator";
-import { PROVIDER } from "@/config";
+import { Component, Vue } from "vue-property-decorator";
 
-import axios from "@/plugins/axios";
-
-import Layout from "@/Layout.vue";
-import AxiosSnackbar from "@/components/shared/AxiosSnackbar.vue";
+import ExtensionHostManager from "./views/roots/ExtensionHostManager.vue";
+// import NetworkManager from "./views/roots/NetworkManager.vue";
+// import ApplicationProvider from "./views/roots/ApplicationProvider.vue";
+// import LanguageProvider from "./views/roots/LanguageProvider.vue";
+// import TranslationsProvider from "./views/roots/TranslationsProvider.vue";
+// import UserProvider from "./views/roots/UserProvider.vue";
+// import UserApplicationProvider from "./views/roots/UserApplicationProvider.vue";
+// import PermissionsProvider from "./views/roots/PermissionsProvider.vue";
+// import RoutesProvider from "./views/roots/RoutesProvider.vue";
+// import Layout from "./Layout.vue";
 
 @Component({
   components: {
-    Layout,
-    AxiosSnackbar,
+    ExtensionHostManager,
+    // NetworkManager,
+    // ApplicationProvider,
+    // LanguageProvider,
+    // TranslationsProvider,
+    // UserProvider,
+    // UserApplicationProvider,
+    // PermissionsProvider,
+    // RoutesProvider,
+    // Layout,
   },
 })
 export default class App extends Vue {
-  @Inject(PROVIDER)
-  container!: DependencyContainer;
+  userId = null;
+  languageId = null;
 
+  loading = 0;
+  state = 0;
+  show = false;
+  askShow = false;
 
-  fetching = true;
-  
-  interval = 0;
-  scrollHeight = 0; 
+  timer = 0;
 
-  mounted(): void {
-    this.interval = setInterval(() => {
-      this.scrollHeight = document.body.scrollHeight;
+  mounted() {
+    this.timer = setInterval(() => {
+      if (this.state <= this.loading) this.state++;
+      else if (this.askShow) this.show = true;
+
+      if (this.state == 9) {
+        clearInterval(this.timer);
+        setTimeout(() => (this.show = true), 300);
+      }
     }, 100);
-    window.addEventListener(
-      "message",
-      (event) => {
-        if (event.origin !== "https://foundation.localhost") {
-          return;
-        }
-
-        if (event.source instanceof Window) {
-          console.log(event);
-          event.source.postMessage(
-            document.documentElement.scrollHeight,
-            event.origin
-          );
-        }
-      },
-      false
-    );
-    this.sendHeight();
   }
-
-  sendHeight(){
-    window.top!.postMessage(this.scrollHeight, "*");
-  }
-
-  @Watch("scrollHeight")
-  onRouterChange = this.sendHeight;
 }
 </script>
 
-<style>
-a {
-  text-decoration: none;
+<style scoped>
+.progress {
+  position: absolute;
+  width: 50vw;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 50%);
 }
 </style>

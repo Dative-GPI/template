@@ -5,7 +5,7 @@ services:
   db:
     image: timescale/timescaledb:latest-pg12
     networks:
-      - web
+      - XXXXX
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: example
@@ -19,7 +19,7 @@ services:
       args:
         PROJECT: src/app/shell/XXXXX.Shell.API
     networks:
-      - web
+      - XXXXX
     environment:
       MEDIATOR__ENDPOINTURI: amqp://rabbitmq
       DOTNET_ENVIRONMENT: Development
@@ -33,7 +33,7 @@ services:
       args:
         PROJECT: src/app/gateway/XXXXX.Gateway.API
     networks:
-      - web
+      - XXXXX
     extra_hosts:
       - "foundation-admin.localhost:172.17.0.1"
     environment:
@@ -56,7 +56,7 @@ services:
       args:
         PROJECT: "src/app/shell/XXXXX.Shell.UI"
     networks:
-      - web
+      - XXXXX
     volumes: # hot reload
     - ../src/app/shell/XXXXX.Shell.UI/public:/app/src/app/shell/XXXXX.Shell.UI/public:delegated
     - ../src/app/shell/XXXXX.Shell.UI/src:/app/src/app/shell/XXXXX.Shell.UI/src:delegated
@@ -80,15 +80,13 @@ services:
       args:
         PROJECT: src/context/XXXXX.Context.Migrations
     networks:
-      - web
+      - XXXXX
     environment:
       CUSTOMCONNSTR_PGSQL: Host=db;Database=data-extension;Username=postgres;Password=example
 
 
 networks:
-  web:
-    external: true
-  extension:
+  XXXXX:
 
 volumes:
   data-extension-db:
