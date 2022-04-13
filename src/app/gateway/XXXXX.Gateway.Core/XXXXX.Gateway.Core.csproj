@@ -6,9 +6,10 @@
 
   
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="10.1.1"/>
-    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.0"/>
-    <PackageReference Include="FluentValidation" Version="10.1.0"/>
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.0" />
+    <PackageReference Include="Bones.Flow" Version="0.0.7" />
+    <PackageReference Include="FluentValidation" Version="10.1.0" />
   </ItemGroup>
 
   

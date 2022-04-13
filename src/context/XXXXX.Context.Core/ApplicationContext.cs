@@ -6,6 +6,7 @@ namespace XXXXX.Context.Core
 {
     public class ApplicationContext : DbContext
     {
+        public DbSet<ApplicationDTO> Applications { get; set; } 
         public DbSet<DrawerRouteDTO> Routes { get; set; } 
 
         public DbSet<TranslationDTO> Translations { get; set; }
@@ -17,6 +18,11 @@ namespace XXXXX.Context.Core
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<ApplicationDTO>(m =>
+            {
+                m.HasKey(a => a.Id);
+            });
 
             modelBuilder.Entity<DrawerRouteDTO>(m =>
             {

@@ -30,10 +30,16 @@ export default class NetworkManager extends Vue {
   // Properties
 
   @Prop({ required: false, default: () => null })
-  organisationId!: string | null;
+  token!: string | null;
 
   @Prop({ required: false, default: () => null })
   languageId!: string | null;
+
+  @Prop({ required: false, default: () => null })
+  languageCode!: string | null;
+
+  @Prop({ required: false, default: () => null })
+  userApplicationId!: string | null;
 
   @Prop({ required: false, default: false })
   disabled!: boolean;
@@ -56,9 +62,21 @@ export default class NetworkManager extends Vue {
   }
 
   requestInterceptor(config: AxiosRequestConfig) {
-    // If there is a language, add the language header
+    if(this.token != null){
+      // config.headers.Authorization = "Bearer " + this.token;
+      config.headers.common['Authorization'] = "Bearer " + this.token;
+    }
+
     if (this.languageId != null) {
       config.headers.common["X-Language-Id"] = this.languageId;
+    }
+
+    if (this.languageCode != null) {
+      config.headers.common["X-Language-Code"] = this.languageCode;
+    }
+
+    if (this.userApplicationId != null) {
+      config.headers.common["X-User-Application-Id"] = this.userApplicationId;
     }
 
     return config;

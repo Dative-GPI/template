@@ -11,28 +11,27 @@ import {
   Inject,
   InjectReactive,
   Watch,
+  Prop,
 } from "vue-property-decorator";
 
-import { ApplicationDetails, Language } from "@/domain/models";
-import { APPLICATION, PROVIDER, SERVICES as S, LANGUAGE } from "@/config";
-import { IApplicationTranslationService } from "@/interfaces";
+import { PROVIDER, SERVICES as S } from "@/config";
 
 @Component
 export default class TranslationsProvider extends Vue {
-  @InjectReactive(APPLICATION)
-  application!: ApplicationDetails | null;
-
-  @InjectReactive(LANGUAGE)
-  language!: Language | null;
+  @Prop({ required: false, default: () => null })
+  languageId!: string | null;
+  
+  @Prop({ required: false, default: () => null })
+  languageCode!: string | null;
 
   @Inject(PROVIDER)
   container!: DependencyContainer;
 
-  get translationService(): IApplicationTranslationService {
-    return this.container.resolve<IApplicationTranslationService>(
-      S.APPLICATIONTRANSLATIONSERVICE
-    );
-  }
+  // get translationService(): IApplicationTranslationService {
+  //   return this.container.resolve<IApplicationTranslationService>(
+  //     S.APPLICATIONTRANSLATIONSERVICE
+  //   );
+  // }
 
   fetching = true;
 
@@ -41,13 +40,12 @@ export default class TranslationsProvider extends Vue {
   }
 
   async fetch(): Promise<void> {
-    if (!this.language) return;
+    if (!this.languageId || !this.languageCode) return;
 
     this.fetching = true;
 
     try {
       // const translations = await this.translationService.getMany({
-      //   languageId: this.language.id,
       // });
       // this.$tm.set(translations);
     } finally {
@@ -55,7 +53,7 @@ export default class TranslationsProvider extends Vue {
     }
   }
 
-  @Watch("language")
+  @Watch("languageId")
   onLanguageChanged = this.fetch;
 }
 </script>

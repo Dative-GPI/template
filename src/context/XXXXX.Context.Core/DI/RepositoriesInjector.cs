@@ -10,6 +10,7 @@ namespace XXXXX.Context.Core.DI
     {
         public static IServiceCollection AddRepositories(this IServiceCollection services)
         {
+            services.AddScoped<IApplicationRepository, ApplicationRepository>();
             services.AddScoped<IDrawerRouteRepository, DrawerRouteRepository>();
 
             return services;

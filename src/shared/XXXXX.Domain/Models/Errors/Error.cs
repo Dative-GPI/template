@@ -11,6 +11,7 @@ namespace XXXXX.Domain.Models
     {
         public const string MissingOrganisation       = "errors.missingorganisation";       // 400
         public const string MissingLanguage           = "errors.missinglanguage";           // 400
+        public const string MissingUserApplication    = "errors.missinguserapplication";           // 400
         public const string InvalidChart              = "errors.invalidchart";              // 400
         public const string AuthenticationFailed      = "errors.authenticationfailed";      // 401
         public const string NoRegisteredUser          = "errors.noregistereduser";          // 401

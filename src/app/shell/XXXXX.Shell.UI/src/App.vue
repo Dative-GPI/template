@@ -1,42 +1,39 @@
 <template>
   <d-app class="d-extension">
-    <extension-host-manager>
-      <div style="height: 500px; background-color: red;" />
-      <!-- <network-manager
+    <extension-host-manager
+      v-slot="{ languageId, languageCode, token, userApplicationId }"
+    >
+      <div style="height: 500px; background-color: red" />
+      <network-manager
         v-show="show"
         :disabled="!userId"
         :language-id="languageId"
+        :language-code="languageCode"
+        :token="token"
+        :user-application-id="userApplicationId"
         @logout="userId = null"
         @hook:mounted="loading = 1"
       >
-            <translations-provider @hook:mounted="loading = 4">
-              <user-provider
-                @input="
-                  userId = $event;
-                  show = false;
-                "
-                @hook:mounted="loading = 5"
-                @show="askShow = true"
-              >
-                <user-organisation-provider @hook:mounted="loading = 6">
-                  <permissions-provider @hook:mounted="loading = 7">
-                    <layout @hook:mounted="loading = 9" />
-                  </permissions-provider>
-                </user-organisation-provider>
-              </user-provider>
-            </translations-provider>
-          </language-provider>
-        </application-provider>
+        <translations-provider
+          :language-id="languageId"
+          :language-code="languageCode"
+          @hook:mounted="loading = 2"
+        >
+          <permissions-provider :user-application-id="userApplicationId" @hook:mounted="loading = 3">
+            <layout @hook:mounted="loading = 4" />
+          </permissions-provider>
+        </translations-provider>
       </network-manager>
 
       <div v-if="!show" class="progress">
         <v-progress-linear
           color="light-green darken-4"
           height="10"
-          :value="(state / 9) * 100"
+          :value="(state / 4) * 100"
           striped
         ></v-progress-linear>
-      </div> -->
+      </div>
+      -->
     </extension-host-manager>
   </d-app>
 </template>
@@ -45,29 +42,29 @@
 import { Component, Vue } from "vue-property-decorator";
 
 import ExtensionHostManager from "./views/roots/ExtensionHostManager.vue";
-// import NetworkManager from "./views/roots/NetworkManager.vue";
+import NetworkManager from "./views/roots/NetworkManager.vue";
 // import ApplicationProvider from "./views/roots/ApplicationProvider.vue";
 // import LanguageProvider from "./views/roots/LanguageProvider.vue";
-// import TranslationsProvider from "./views/roots/TranslationsProvider.vue";
+import TranslationsProvider from "./views/roots/TranslationsProvider.vue";
 // import UserProvider from "./views/roots/UserProvider.vue";
 // import UserApplicationProvider from "./views/roots/UserApplicationProvider.vue";
-// import PermissionsProvider from "./views/roots/PermissionsProvider.vue";
+import PermissionsProvider from "./views/roots/PermissionsProvider.vue";
 // import RoutesProvider from "./views/roots/RoutesProvider.vue";
-// import Layout from "./Layout.vue";
+import Layout from "./Layout.vue";
 
 @Component({
   components: {
     ExtensionHostManager,
-    // NetworkManager,
+    NetworkManager,
     // ApplicationProvider,
     // LanguageProvider,
-    // TranslationsProvider,
+    TranslationsProvider,
     // UserProvider,
     // UserApplicationProvider,
-    // PermissionsProvider,
+    PermissionsProvider,
     // RoutesProvider,
-    // Layout,
-  },
+    Layout,
+  }
 })
 export default class App extends Vue {
   userId = null;
@@ -85,7 +82,7 @@ export default class App extends Vue {
       if (this.state <= this.loading) this.state++;
       else if (this.askShow) this.show = true;
 
-      if (this.state == 9) {
+      if (this.state == 4) {
         clearInterval(this.timer);
         setTimeout(() => (this.show = true), 300);
       }

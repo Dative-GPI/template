@@ -1,6 +1,6 @@
 <template>
   <div>
-    <slot />
+    <slot :token="token" :languageId="languageId" :languageCode="languageCode" :userApplicationId="userApplicationId" />
   </div>
 </template>
 
@@ -26,6 +26,22 @@ export default class ExtensionHostManager extends Vue {
 
     setInterval(this.notify, 100);
     this.notify();
+  }
+
+  get token(){
+    return new URL(window.location.toString()).searchParams.get("token");
+  }
+
+  get languageId(){
+    return new URL(window.location.toString()).searchParams.get("languageCode");
+  }
+
+  get languageCode(){
+    return new URL(window.location.toString()).searchParams.get("languageId");
+  }
+
+  get userApplicationId(){
+    return new URL(window.location.toString()).searchParams.get("userApplicationId");
   }
 
   unmounted = this.unsubscribe;

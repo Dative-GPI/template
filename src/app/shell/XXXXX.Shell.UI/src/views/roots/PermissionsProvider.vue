@@ -1,5 +1,4 @@
 <template>
-  <!-- <div></div> -->
   <div><slot></slot></div>
 </template>
 
@@ -11,6 +10,7 @@ import {
   Inject,
   InjectReactive,
   Watch,
+  Prop,
 } from "vue-property-decorator";
 
 import { UserApplicationDetails } from "@/domain/models";
@@ -21,18 +21,17 @@ export default class App extends Vue {
   @Inject(PROVIDER)
   container!: DependencyContainer;
 
-  @InjectReactive(USER_APPLICATION)
-  userApplication!: UserApplicationDetails | null;
-
+  @Prop({required: true, default: null})
+  userApplicationId: string | null;
 
   mounted(): void {
     this.reset();
   }
 
   reset() {
-    // if (this.userApplication)
+    // if (this.userApplicationId)
     // Get the permissions for the v-right directive
-    // this.$pm.set(this.userOrganisation.permissions);
+    // this.$pm.set(permission);
   }
 
   @Watch("userOrganisation")
