@@ -30,12 +30,12 @@ namespace XXXXX.Gateway.API
 
             services.AddControllers();
 
-            services.AddHttpClient(string.Empty, c => {}).ConfigurePrimaryHttpMessageHandler(() =>
-                new HttpClientHandler
-                {
-                    ClientCertificateOptions = ClientCertificateOption.Manual,
-                    ServerCertificateCustomValidationCallback = (httpRequestMessage, cert, certChain, policyErrors) => true
-                }
+            services.AddHttpClient(string.Empty, c => { }).ConfigurePrimaryHttpMessageHandler(() =>
+                 new HttpClientHandler
+                 {
+                     ClientCertificateOptions = ClientCertificateOption.Manual,
+                     ServerCertificateCustomValidationCallback = (httpRequestMessage, cert, certChain, policyErrors) => true
+                 }
             );
 
             services.AddSwaggerGen(c =>
@@ -53,10 +53,18 @@ namespace XXXXX.Gateway.API
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "XXXXX.Gateway.API v1"));
+                app.UseSwagger(c =>
+                {
+                    c.RouteTemplate = "api/swagger/{documentname}/swagger.json";
+                });
+
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/api/swagger/v1/swagger.json", "Gateway v1");
+                    c.RoutePrefix = "api/swagger";
+                });
             }
-            
+
             app.UseForwardedHeaders(new ForwardedHeadersOptions
             {
                 ForwardedHeaders = ForwardedHeaders.XForwardedProto
@@ -71,7 +79,7 @@ namespace XXXXX.Gateway.API
             {
                 endpoints.MapControllers();
 
-                endpoints.MapReverseProxy(proxyPipeline => 
+                endpoints.MapReverseProxy(proxyPipeline =>
                 {
                     proxyPipeline.UseSessionAffinity();
                     proxyPipeline.UseLoadBalancing();
