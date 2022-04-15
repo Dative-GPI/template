@@ -9,6 +9,7 @@ using XXXXX.Domain.Settings;
 using Microsoft.AspNetCore.HttpOverrides;
 using System.Net.Http;
 using XXXXX.CrossCutting.DI;
+using XXXXX.Gateway.Core.DI;
 
 namespace XXXXX.Gateway.API
 {
@@ -26,6 +27,7 @@ namespace XXXXX.Gateway.API
         {
             var jwtSettings = Configuration.GetSection("Jwt").Get<JwtSettings>();
 
+            services.AddCore();
             services.AddCrossCutting(Configuration);
 
             services.AddControllers();

@@ -11,6 +11,8 @@ services:
       POSTGRES_PASSWORD: example
     volumes:
       - data-extension-db:/var/lib/postgresql/data
+    ports:
+      - 5433:5433
       
   shell:
     build: 

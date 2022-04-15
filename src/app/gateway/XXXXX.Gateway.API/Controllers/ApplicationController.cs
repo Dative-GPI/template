@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using XXXXX.Gateway.Core.Interfaces;
 using XXXXX.Gateway.Core.ViewModels;
@@ -17,6 +18,7 @@ namespace XXXXX.Gateway.API.Controllers
         }
 
         [Route("applications")]
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Install([FromBody]CreateApplicationViewModel payload)
         {
@@ -25,7 +27,8 @@ namespace XXXXX.Gateway.API.Controllers
             return Ok(result);
         }
 
-        [Route("application/{applicationId:Guid}")]
+        [Route("applications/{applicationId:Guid}")]
+        [AllowAnonymous]
         [HttpDelete]
         public async Task<IActionResult> Uninstall([FromRoute]Guid applicationId)
         {

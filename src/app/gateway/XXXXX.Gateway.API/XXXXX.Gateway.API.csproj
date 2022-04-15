@@ -15,5 +15,9 @@
     <ProjectReference Include="..\..\..\shared\XXXXX.CrossCutting\XXXXX.CrossCutting.csproj"/>
     <ProjectReference Include="..\..\..\shared\XXXXX.Domain\XXXXX.Domain.csproj"/>
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.1.1"/>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.0"/>
+  </ItemGroup>
 
 </Project>
