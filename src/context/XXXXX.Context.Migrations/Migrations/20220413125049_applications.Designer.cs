@@ -67,7 +67,7 @@ namespace XXXXX.Context.Migrations.Migrations
                     b.Property<string>("Path")
                         .HasColumnType("text");
 
-                    b.Property<List<TranslationDrawerRouteDTO>>("Translations")
+                    b.Property<List<TranslationRouteDTO>>("Translations")
                         .HasColumnType("jsonb");
 
                     b.Property<string>("Uri")

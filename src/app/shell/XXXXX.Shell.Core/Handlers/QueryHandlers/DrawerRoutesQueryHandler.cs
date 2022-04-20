@@ -12,23 +12,23 @@ using XXXXX.Shell.Core;
 
 namespace XXXXX.Shell.Core.Handlers
 {
-    public class DrawerRoutesQueryHandler : IMiddleware<DrawerRoutesQuery, IEnumerable<DrawerRouteInfos>>
+    public class RoutesQueryHandler : IMiddleware<RoutesQuery, IEnumerable<RouteInfos>>
     {
-        private IDrawerRouteRepository _routeRepository;
+        private IRouteRepository _routeRepository;
 
-        public DrawerRoutesQueryHandler(IDrawerRouteRepository routeRepository)
+        public RoutesQueryHandler(IRouteRepository routeRepository)
         {
             _routeRepository = routeRepository;
         }
 
-        public async Task<IEnumerable<DrawerRouteInfos>> HandleAsync(DrawerRoutesQuery request, Func<Task<IEnumerable<DrawerRouteInfos>>> next, CancellationToken cancellationToken)
+        public async Task<IEnumerable<RouteInfos>> HandleAsync(RoutesQuery request, Func<Task<IEnumerable<RouteInfos>>> next, CancellationToken cancellationToken)
         {
-            var DrawerRouteFilter = new DrawerRoutesFilter()
+            var routeFilter = new DrawerRoutesFilter()
             {
                 Search = request.Search
             };
 
-            return await _routeRepository.GetMany(DrawerRouteFilter);
+            return await _routeRepository.GetMany(routeFilter);
         }
     }
 }

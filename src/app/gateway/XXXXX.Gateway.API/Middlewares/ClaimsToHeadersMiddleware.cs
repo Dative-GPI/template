@@ -33,6 +33,8 @@ namespace XXXXX.Gateway.API.Middlewares
 
         public async Task InvokeAsync(HttpContext context)
         {
+            _logger.LogTrace("Claims to header middleware start");
+
             using var scope = _sp.CreateScope();
             var claimFactory = scope.ServiceProvider.GetRequiredService<IClaimsFactory>();
             // Clean headers potentially used
@@ -41,8 +43,8 @@ namespace XXXXX.Gateway.API.Middlewares
             
             if (context.Features.Get<IEndpointFeature>().Endpoint.Metadata.Any(m => m is AllowAnonymousAttribute))
             {
+                _logger.LogTrace("Claims to header middleware: anonymous request");
                 await _next(context);
-                return;
             }
             else
             {
@@ -50,6 +52,10 @@ namespace XXXXX.Gateway.API.Middlewares
 
                 context.Request.Headers.Add("X-Application-Id", claims.ApplicationId.ToString());
                 context.Request.Headers.Add("X-User-Id", claims.UserId.ToString());
+
+
+                _logger.LogTrace("Claims to header middleware: claims added");
+                await _next(context);
             }
         }
     }

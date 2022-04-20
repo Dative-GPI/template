@@ -11,19 +11,19 @@ using XXXXX.Shell.Core.ViewModels;
 
 namespace XXXXX.Shell.API.Controllers
 {
-    [Route("api/drawer-routes")]
-    public class DrawerRouteController : AppController
+    [Route("api/admin")]
+    public class RouteController : AppController
     {
-        private IDrawerRouteService _drawerRouteService;
+        private IRouteService _routeService;
 
-        public DrawerRouteController(IDrawerRouteService drawerRouteService)
+        public RouteController(IRouteService routeService)
         {
-            _drawerRouteService = drawerRouteService;
+            _routeService = routeService;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetMany([FromQuery] DrawerRoutesFilterViewModel filter){
-            var routes = await _drawerRouteService.GetMany(GetAppId(), GetActorId(), filter);
+        [HttpGet("routes")]
+        public async Task<IActionResult> GetMany([FromQuery] RoutesFilterViewModel filter){
+            var routes = await _routeService.GetMany(GetAppId(), GetActorId(), filter);
 
             return Ok(routes);
         }

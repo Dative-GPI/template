@@ -41,23 +41,26 @@ namespace XXXXX.Context.Migrations.Migrations
                     b.ToTable("Applications");
                 });
 
-            modelBuilder.Entity("XXXXX.Context.Core.DTOs.DrawerRouteDTO", b =>
+            modelBuilder.Entity("XXXXX.Context.Core.DTOs.RouteDTO", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<string>("Code")
-                        .HasColumnType("text");
-
                     b.Property<bool>("Disabled")
                         .HasColumnType("boolean");
 
-                    b.Property<string>("Icon")
+                    b.Property<string>("DrawerCategory")
                         .HasColumnType("text");
 
-                    b.Property<string>("LabelDefault")
+                    b.Property<string>("DrawerIcon")
                         .HasColumnType("text");
+
+                    b.Property<string>("DrawerLabelDefault")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("Exact")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Name")
                         .HasColumnType("text");
@@ -65,7 +68,10 @@ namespace XXXXX.Context.Migrations.Migrations
                     b.Property<string>("Path")
                         .HasColumnType("text");
 
-                    b.Property<List<TranslationDrawerRouteDTO>>("Translations")
+                    b.Property<bool>("ShowOnDrawer")
+                        .HasColumnType("boolean");
+
+                    b.Property<List<TranslationRouteDTO>>("Translations")
                         .HasColumnType("jsonb");
 
                     b.Property<string>("Uri")

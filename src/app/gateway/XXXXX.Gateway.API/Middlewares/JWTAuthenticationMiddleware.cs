@@ -5,7 +5,8 @@ using System.Net;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
-
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
@@ -33,6 +34,8 @@ namespace xxxxx.Gateway.API.Middlewares
 
         public async Task InvokeAsync(HttpContext context)
         {
+            _logger.LogTrace("JWT authentication middleware start");
+
             if (context.Features.Get<IEndpointFeature>().Endpoint.Metadata.Any(m => m is AllowAnonymousAttribute))
             {
                 await _next(context);
@@ -52,24 +55,27 @@ namespace xxxxx.Gateway.API.Middlewares
 
                 var bearer = context.Request.Headers[HeaderNames.Authorization];
                 client.DefaultRequestHeaders.Add("Authorization", bearer.ToString());
-                
+
                 var response = await client.GetAsync(url);
 
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
+                    _logger.LogTrace("JWT authentication middleware Authentication succeed");
+
                     var toRead = bearer.ToString().Substring("Bearer ".Length);
                     var token = new JwtSecurityTokenHandler().ReadJwtToken(toRead);
-                    var identity = (ClaimsIdentity)context.User.Identity;
-                    identity.AddClaims(token.Claims);
 
+                    ClaimsIdentity identity = new ClaimsIdentity(token.Claims, "Custom");
+
+                    context.User = new ClaimsPrincipal(identity);
+
+                    _logger.LogTrace("JWT authentication middleware Authentication terminated");
                     await _next(context);
-                    return;
                 }
                 else
                 {
                     _logger.LogError("Unable to verify JWT token : {response}", response.ReasonPhrase);
                     context.Response.StatusCode = 401;
-                    return;
                 }
             }
         }

@@ -7,7 +7,7 @@ namespace XXXXX.Context.Core
     public class ApplicationContext : DbContext
     {
         public DbSet<ApplicationDTO> Applications { get; set; } 
-        public DbSet<DrawerRouteDTO> Routes { get; set; } 
+        public DbSet<RouteDTO> Routes { get; set; } 
 
         public DbSet<TranslationDTO> Translations { get; set; }
 
@@ -24,7 +24,7 @@ namespace XXXXX.Context.Core
                 m.HasKey(a => a.Id);
             });
 
-            modelBuilder.Entity<DrawerRouteDTO>(m =>
+            modelBuilder.Entity<RouteDTO>(m =>
             {
                 m.HasKey(r => r.Id);
                 m.Property(s => s.Translations)

@@ -2,9 +2,9 @@ using System;
 
 namespace XXXXX.Domain.Models
 {
-    public class TranslationDrawerRoute : ITranslation
+    public class TranslationRoute : ITranslation
     {
         public Guid LanguageId { get; set; }
-        public string Label { get; set; }
+        public string DrawerLabel { get; set; }
     }
 }

@@ -15,24 +15,24 @@ using XXXXX.Shell.Core.ViewModels;
 
 namespace XXXXX.Shell.Core.Services
 {
-    public class DrawerRouteService : IDrawerRouteService
+    public class RouteService : IRouteService
     {
-        private IQueryHandler<DrawerRoutesQuery, IEnumerable<DrawerRouteInfos>> _extensionsQueryHandler;
-        private IDrawerRouteRepository _extensionRepository;
+        private IQueryHandler<RoutesQuery, IEnumerable<RouteInfos>> _extensionsQueryHandler;
+        private IRouteRepository _extensionRepository;
         private IMapper _mapper;
 
-        public DrawerRouteService(
-            IQueryHandler<DrawerRoutesQuery, IEnumerable<DrawerRouteInfos>> extensionsQueryHandler,
-            IDrawerRouteRepository extensionRepository,
+        public RouteService(
+            IQueryHandler<RoutesQuery, IEnumerable<RouteInfos>> extensionsQueryHandler,
+            IRouteRepository extensionRepository,
             IMapper mapper
         ) {
             _extensionsQueryHandler = extensionsQueryHandler;
             _extensionRepository = extensionRepository;
             _mapper = mapper;
         }
-        public async Task<IEnumerable<DrawerRouteInfosViewModel>> GetMany(Guid appId, Guid actorId, DrawerRoutesFilterViewModel filter)
+        public async Task<IEnumerable<RouteInfosViewModel>> GetMany(Guid appId, Guid actorId, RoutesFilterViewModel filter)
         {
-            var query = new DrawerRoutesQuery()
+            var query = new RoutesQuery()
             {
                 ApplicationId = appId,
                 ActorId = actorId,
@@ -41,7 +41,7 @@ namespace XXXXX.Shell.Core.Services
 
             var result = await _extensionsQueryHandler.HandleAsync(query);
 
-            return _mapper.Map<IEnumerable<DrawerRouteInfos>, IEnumerable<DrawerRouteInfosViewModel>>(result);
+            return _mapper.Map<IEnumerable<RouteInfos>, IEnumerable<RouteInfosViewModel>>(result);
         }
     }
 }

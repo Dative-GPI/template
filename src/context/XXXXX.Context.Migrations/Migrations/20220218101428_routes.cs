@@ -20,7 +20,7 @@ namespace XXXXX.Context.Migrations.Migrations
                     Icon = table.Column<string>(type: "text", nullable: true),
                     Code = table.Column<string>(type: "text", nullable: true),
                     LabelDefault = table.Column<string>(type: "text", nullable: true),
-                    Translations = table.Column<List<TranslationDrawerRouteDTO>>(type: "jsonb", nullable: true),
+                    Translations = table.Column<List<TranslationRouteDTO>>(type: "jsonb", nullable: true),
                     Disabled = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>

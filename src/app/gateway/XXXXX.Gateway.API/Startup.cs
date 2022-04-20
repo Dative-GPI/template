@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.HttpOverrides;
 using System.Net.Http;
 using XXXXX.CrossCutting.DI;
 using XXXXX.Gateway.Core.DI;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authentication;
 
 namespace XXXXX.Gateway.API
 {
@@ -39,6 +41,8 @@ namespace XXXXX.Gateway.API
                      ServerCertificateCustomValidationCallback = (httpRequestMessage, cert, certChain, policyErrors) => true
                  }
             );
+
+            services.AddAuthentication("Custom");
 
             services.AddSwaggerGen(c =>
             {
@@ -75,6 +79,8 @@ namespace XXXXX.Gateway.API
             app.UseRouting();
 
             app.UseJWTAuthenticationMiddleware();
+            app.UseAuthorization();
+
             app.UseClaimsToHeadersMiddleware();
 
             app.UseEndpoints(endpoints =>

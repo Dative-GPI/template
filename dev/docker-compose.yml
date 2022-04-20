@@ -11,8 +11,6 @@ services:
       POSTGRES_PASSWORD: example
     volumes:
       - data-extension-db:/var/lib/postgresql/data
-    ports:
-      - 5433:5433
       
   shell:
     build: 
@@ -20,6 +18,20 @@ services:
       dockerfile: dev/dockerfiles/dotnet.dockerfile
       args:
         PROJECT: src/app/shell/XXXXX.Shell.API
+    networks:
+      - XXXXX
+    environment:
+      MEDIATOR__ENDPOINTURI: amqp://rabbitmq
+      DOTNET_ENVIRONMENT: Development
+      DOTNET_URLS: http://+:80
+      CUSTOMCONNSTR_PGSQL: Host=db;Database=data-extension;Username=postgres;Password=example
+  
+  admin:
+    build: 
+      context: ..
+      dockerfile: dev/dockerfiles/dotnet.dockerfile
+      args:
+        PROJECT: src/app/admin/XXXXX.Admin.API
     networks:
       - XXXXX
     environment:
@@ -47,7 +59,7 @@ services:
       - 'custom.label=extension'
       - "traefik.enable=true"
       - "traefik.http.services.extension-backend.loadbalancer.server.port=80"
-      - "traefik.http.routers.extension-backend.rule=Host(`extension.localhost`) && (PathPrefix(`/api`) || Path(`/signin-oidc`) || Path(`/signin-google`) || Path(`/signin-facebook`) || Path(`/signout-callback-oidc`) || Path(`/signout-callback-google`) || Path(`/signout-callback-facebook`))"
+      - "traefik.http.routers.extension-backend.rule=Host(`extension-admin.localhost`)|| Host(`extension.localhost`) && (PathPrefix(`/api`) || Path(`/signin-oidc`) || Path(`/signin-google`) || Path(`/signin-facebook`) || Path(`/signout-callback-oidc`) || Path(`/signout-callback-google`) || Path(`/signout-callback-facebook`))"
       - "traefik.http.routers.extension-backend.entrypoints=websecure"
       - "traefik.http.routers.extension-backend.tls=true"
 
@@ -72,6 +84,30 @@ services:
       - "traefik.enable=true"
       - "traefik.http.services.extension-frontend.loadbalancer.server.port=8080"
       - "traefik.http.routers.extension-frontend.rule=Host(`extension.localhost`) && PathPrefix(`/`)"
+      - "traefik.http.routers.extension-frontend.entrypoints=websecure"
+      - "traefik.http.routers.extension-frontend.tls=true"
+  
+  admin-ui:
+    build:
+      context: ..
+      dockerfile: dev/dockerfiles/vue.dockerfile
+      args:
+        PROJECT: "src/app/admin/XXXXX.Admin.UI"
+    networks:
+      - XXXXX
+    volumes: # hot reload
+    - ../src/app/admin/XXXXX.Admin.UI/public:/app/src/app/admin/XXXXX.Admin.UI/public:delegated
+    - ../src/app/admin/XXXXX.Admin.UI/src:/app/src/app/admin/XXXXX.Admin.UI/src:delegated
+    - ../src/app/admin/XXXXX.Admin.UI/.env:/app/src/app/admin/XXXXX.Admin.UI/.env:delegated
+    - ../src/app/admin/XXXXX.Admin.UI/.eslintrc.js:/app/src/app/admin/XXXXX.Admin.UI/.eslintrc.js:delegated
+    - ../src/app/admin/XXXXX.Admin.UI/babel.config.js:/app/src/app/admin/XXXXX.Admin.UI/babel.config.js:delegated
+    - ../src/app/admin/XXXXX.Admin.UI/tsconfig.json:/app/src/app/admin/XXXXX.Admin.UI/tsconfig.json:delegated
+    - ../src/app/admin/XXXXX.Admin.UI/vue.config.js:/app/src/app/admin/XXXXX.Admin.UI/vue.config.js:delegated
+    labels:
+      - "custom.label=extension"
+      - "traefik.enable=true"
+      - "traefik.http.services.extension-frontend.loadbalancer.server.port=8080"
+      - "traefik.http.routers.extension-frontend.rule=Host(`extension-admin.localhost`) && PathPrefix(`/`)"
       - "traefik.http.routers.extension-frontend.entrypoints=websecure"
       - "traefik.http.routers.extension-frontend.tls=true"
 

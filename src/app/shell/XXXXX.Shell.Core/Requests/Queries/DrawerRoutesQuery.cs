@@ -9,7 +9,7 @@ using static XXXXX.Shell.Core.Authorizations;
 
 namespace XXXXX.Shell.Core
 {
-    public class DrawerRoutesQuery : ICoreRequest, IRequest<IEnumerable<DrawerRouteInfos>>
+    public class RoutesQuery : ICoreRequest, IRequest<IEnumerable<RouteInfos>>
     {
         public IEnumerable<string> Authorizations => new[] { DRAWER_ROUTE_INFOS };
         public Guid ApplicationId { get; set; }

@@ -15,13 +15,13 @@ namespace XXXXX.Shell.Core.DI
     {
         public static IServiceCollection AddRoutes(this IServiceCollection services)
         {
-            services.AddScoped<DrawerRoutesQueryHandler>();
+            services.AddScoped<RoutesQueryHandler>();
 
-            services.AddScoped<IQueryHandler<DrawerRoutesQuery, IEnumerable<DrawerRouteInfos>>>(sp =>
+            services.AddScoped<IQueryHandler<RoutesQuery, IEnumerable<RouteInfos>>>(sp =>
             {
-                var pipeline = sp.GetPipelineFactory<DrawerRoutesQuery, IEnumerable<DrawerRouteInfos>>()
+                var pipeline = sp.GetPipelineFactory<RoutesQuery, IEnumerable<RouteInfos>>()
                     // .With<PermissionsMiddleware>()
-					.Add<DrawerRoutesQueryHandler>()
+					.Add<RoutesQueryHandler>()
                     .Build();
 
                 return pipeline;

@@ -6,8 +6,8 @@ using XXXXX.Shell.Core.ViewModels;
 
 namespace XXXXX.shell.Core.Interfaces
 {
-    public interface IDrawerRouteService
+    public interface IRouteService
     {
-        Task<IEnumerable<DrawerRouteInfosViewModel>> GetMany(Guid appId, Guid actorId, DrawerRoutesFilterViewModel filter);
+        Task<IEnumerable<RouteInfosViewModel>> GetMany(Guid appId, Guid actorId, RoutesFilterViewModel filter);
     }
 }

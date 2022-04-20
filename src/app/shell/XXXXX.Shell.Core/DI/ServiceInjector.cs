@@ -8,7 +8,7 @@ namespace XXXXX.Shell.Core.DI
     {
         public static IServiceCollection AddServices(this IServiceCollection services)
         {
-            services.AddScoped<IDrawerRouteService, DrawerRouteService>();
+            services.AddScoped<IRouteService, RouteService>();
 
             return services;
         }
