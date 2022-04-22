@@ -9,7 +9,14 @@ namespace XXXXX.Context.Core
         public DbSet<ApplicationDTO> Applications { get; set; } 
         public DbSet<RouteDTO> Routes { get; set; } 
 
+        #region Permissions
+        public DbSet<PermissionDTO> Permissions { get; set; }
+        public DbSet<PermissionCategoryDTO> PermissionCategories { get; set; }
+        public DbSet<PermissionOrganisationTypeDTO> PermissionOrganisationTypes { get; set; }
+        #endregion
+
         public DbSet<TranslationDTO> Translations { get; set; }
+
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
         {
@@ -31,6 +38,29 @@ namespace XXXXX.Context.Core
                     .HasColumnType("jsonb");
             });
 
+            #region Permissions
+            modelBuilder.Entity<PermissionDTO>(m =>
+            {
+                m.HasKey(p => p.Id);
+                m.Property(p => p.Translations)
+                    .HasColumnType("jsonb");
+            });
+
+            modelBuilder.Entity<PermissionCategoryDTO>(m =>
+            {
+                m.HasKey(p => p.Id);
+                m.Property(p => p.Translations)
+                    .HasColumnType("jsonb");
+            });
+            modelBuilder.Entity<PermissionOrganisationTypeDTO>(m =>
+            {
+                m.HasKey(p => p.Id);
+                m.HasOne(p => p.Permission)
+                    .WithMany(p => p.PermissionOrganisationTypes)
+                    .HasForeignKey(p => p.PermissionId);
+            });
+            #endregion
+
             #region Translations
             modelBuilder.Entity<TranslationDTO>(m =>
             {
@@ -38,6 +68,8 @@ namespace XXXXX.Context.Core
                 m.HasIndex(t => t.Code);
             });
             #endregion
+
+
 
         }
     }

@@ -41,6 +41,77 @@ namespace XXXXX.Context.Migrations.Migrations
                     b.ToTable("Applications");
                 });
 
+            modelBuilder.Entity("XXXXX.Context.Core.DTOs.PermissionCategoryDTO", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("LabelDefault")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Prefix")
+                        .HasColumnType("text");
+
+                    b.Property<List<TranslationPermissionCategoryDTO>>("Translations")
+                        .HasColumnType("jsonb");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PermissionCategories");
+                });
+
+            modelBuilder.Entity("XXXXX.Context.Core.DTOs.PermissionDTO", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("LabelDefault")
+                        .HasColumnType("text");
+
+                    b.Property<List<TranslationPermissionDTO>>("Translations")
+                        .HasColumnType("jsonb");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Permissions");
+                });
+
+            modelBuilder.Entity("XXXXX.Context.Core.DTOs.PermissionOrganisationTypeDTO", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid>("OrganisationTypeId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("PermissionId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PermissionId");
+
+                    b.ToTable("PermissionOrganisationTypes");
+                });
+
             modelBuilder.Entity("XXXXX.Context.Core.DTOs.RouteDTO", b =>
                 {
                     b.Property<Guid>("Id")
@@ -102,6 +173,22 @@ namespace XXXXX.Context.Migrations.Migrations
                     b.HasIndex("Code");
 
                     b.ToTable("Translations");
+                });
+
+            modelBuilder.Entity("XXXXX.Context.Core.DTOs.PermissionOrganisationTypeDTO", b =>
+                {
+                    b.HasOne("XXXXX.Context.Core.DTOs.PermissionDTO", "Permission")
+                        .WithMany("PermissionOrganisationTypes")
+                        .HasForeignKey("PermissionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Permission");
+                });
+
+            modelBuilder.Entity("XXXXX.Context.Core.DTOs.PermissionDTO", b =>
+                {
+                    b.Navigation("PermissionOrganisationTypes");
                 });
 #pragma warning restore 612, 618
         }

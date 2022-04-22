@@ -1,0 +1,14 @@
+using System;
+using System.Collections.Generic;
+
+namespace XXXXX.Domain.Repositories.Filters
+{
+    public class PermissionsFilter
+    {
+        public Guid? ExtensionId { get; set;  }
+        public Guid? OrganisationTypeId { get; set; }
+        public Guid? RoleId { get; set; }
+        public string Search { get; set; }
+        public IEnumerable<Guid> Ids { get; set; }
+    }
+}

@@ -13,9 +13,9 @@ namespace XXXXX.Admin.Core.DI
             services.AddFlow();
             services.AddServices();
             services.AddMiddlewares();
-            
             services.AddAutoMapper();
 
+            services.AddPermissions();
             services.AddRoutes();
 
             return services;

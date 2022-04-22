@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
-using XXXXX.admin.Core.Interfaces;
+using XXXXX.Admin.Core.Interfaces;
 using XXXXX.Admin.Core;
 using XXXXX.Admin.Core.ViewModels;
 

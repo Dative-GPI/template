@@ -10,7 +10,7 @@ using Bones.Repository.Interfaces;
 
 using XXXXX.Domain.Models;
 using XXXXX.Domain.Repositories.Interfaces;
-using XXXXX.admin.Core.Interfaces;
+using XXXXX.Admin.Core.Interfaces;
 using XXXXX.Admin.Core.ViewModels;
 
 namespace XXXXX.Admin.Core.Services

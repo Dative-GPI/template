@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 using XXXXX.Admin.Core.ViewModels;
 
-namespace XXXXX.admin.Core.Interfaces
+namespace XXXXX.Admin.Core.Interfaces
 {
     public interface IRouteService
     {

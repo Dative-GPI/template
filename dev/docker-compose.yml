@@ -59,7 +59,7 @@ services:
       - 'custom.label=extension'
       - "traefik.enable=true"
       - "traefik.http.services.extension-backend.loadbalancer.server.port=80"
-      - "traefik.http.routers.extension-backend.rule=Host(`extension-admin.localhost`)|| Host(`extension.localhost`) && (PathPrefix(`/api`) || Path(`/signin-oidc`) || Path(`/signin-google`) || Path(`/signin-facebook`) || Path(`/signout-callback-oidc`) || Path(`/signout-callback-google`) || Path(`/signout-callback-facebook`))"
+      - "traefik.http.routers.extension-backend.rule=(Host(`extension-admin.localhost`)|| Host(`extension.localhost`)) && (PathPrefix(`/api`) || Path(`/signin-oidc`) || Path(`/signin-google`) || Path(`/signin-facebook`) || Path(`/signout-callback-oidc`) || Path(`/signout-callback-google`) || Path(`/signout-callback-facebook`))"
       - "traefik.http.routers.extension-backend.entrypoints=websecure"
       - "traefik.http.routers.extension-backend.tls=true"
 

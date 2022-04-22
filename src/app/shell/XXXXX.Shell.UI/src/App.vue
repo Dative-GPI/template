@@ -33,7 +33,6 @@
           striped
         ></v-progress-linear>
       </div>
-      -->
     </extension-host-manager>
   </d-app>
 </template>

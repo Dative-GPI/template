@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="network-manager">
     <v-snackbar v-if="snacks.length > 0" :value="true" top right :timeout="-1">
       {{ snacks[snacks.length - 1] }}
       <template

@@ -1,18 +1,5 @@
 <template>
   <v-app id="inspire">
-    Coucou
-    <d-bottom-bar>
-      <v-list>
-        <template v-for="(item, index) in routes">
-          <d-btn v-if="!item.heading" v-bind:key="index" :to="item.to">
-            <d-icon>
-              {{ item.icon }}
-            </d-icon>
-          </d-btn>
-        </template>
-      </v-list>
-    </d-bottom-bar>
-
     <v-main>
       <v-container fluid class="py-0 px-1 pl-sm-5 pl-md-5 pl-lg-10 pr-sm-5">
         <router-view name="default" :key="$route.fullPath"> </router-view>

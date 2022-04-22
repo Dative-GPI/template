@@ -11,6 +11,8 @@ namespace XXXXX.Context.Core.DI
         public static IServiceCollection AddRepositories(this IServiceCollection services)
         {
             services.AddScoped<IApplicationRepository, ApplicationRepository>();
+            services.AddScoped<IPermissionRepository, PermissionRepository>();
+            services.AddScoped<IPermissionOrganisationTypeRepository, PermissionOrganisationTypeRepository>();
             services.AddScoped<IRouteRepository, RouteRepository>();
 
             return services;
