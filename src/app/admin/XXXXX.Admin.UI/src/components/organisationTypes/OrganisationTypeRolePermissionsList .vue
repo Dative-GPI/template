@@ -1,12 +1,12 @@
 <template>
-    <d-switch-grid
-      class="mt-4"
-      :categories="formattedPermissions"
-      v-model="items"
-      :editable="editMode"
-      select-all-btns
-      select-by-category-btns
-    />
+  <d-switch-grid
+    class="mt-4"
+    :categories="formattedPermissions"
+    v-model="items"
+    :editable="editMode"
+    select-all-btns
+    select-by-category-btns
+  />
 </template>
 
 <script lang="ts">
@@ -18,14 +18,18 @@ import { PROVIDER, SERVICES as S } from "@/config";
 import { PermissionCategory, PermissionInfos } from "@/domain/models";
 import {
   IOrganisationTypePermissionService,
-  IPermissionService
+  IPermissionService,
+  IRolePermissionService
 } from "@/interfaces";
 
 @Component({})
-export default class OrganisationTypePermissionList extends Vue {
+export default class OrganisationTypeRolePermissionList extends Vue {
   // Properties
   @Prop({ required: true })
   organisationTypeId!: string;
+
+  @Prop({ required: true })
+  roleId!: string;
 
   @Prop({ required: false, default: false })
   editMode!: boolean;
@@ -37,7 +41,7 @@ export default class OrganisationTypePermissionList extends Vue {
   fetching = true;
 
   permissionCategories: PermissionCategory[] = [];
-  permissions: PermissionInfos[] = [];
+  rolePermissions: PermissionInfos[] = [];
   organisationTypePermissions: PermissionInfos[] = [];
 
   items: string[] = [];
@@ -46,6 +50,12 @@ export default class OrganisationTypePermissionList extends Vue {
 
   get permissionService(): IPermissionService {
     return this.container.resolve<IPermissionService>(S.PERMISSIONSERVICE);
+  }
+
+  get rolePermissionService(): IRolePermissionService {
+    return this.container.resolve<IRolePermissionService>(
+      S.ROLEPERMISSIONSERICE
+    );
   }
 
   get organisationTypePermissionService(): IOrganisationTypePermissionService {
@@ -62,7 +72,7 @@ export default class OrganisationTypePermissionList extends Vue {
     return this.permissionCategories.map((cat, index) => ({
       id: index.toString(),
       label: cat.label,
-      options: this.permissions
+      options: this.organisationTypePermissions
         .filter(p => p.code.startsWith(cat.prefix))
         .map(p => ({
           id: p.id,
@@ -75,62 +85,54 @@ export default class OrganisationTypePermissionList extends Vue {
 
   mounted(): void {
     this.fetchPermissionsCategories();
-    this.fetchPermissions();
     this.fetchOrganisationTypePermissions();
+    this.fetchRolePermissions();
   }
 
   async fetchPermissionsCategories(): Promise<void> {
     this.permissionCategories = await this.permissionService.getCategories();
   }
 
-  async fetchPermissions() {
-    this.fetching = true;
-    try {
-      this.permissions = await this.permissionService.getMany();
-    } finally {
-      this.fetching = false;
-    }
+  async fetchOrganisationTypePermissions() {
+    this.organisationTypePermissions = await this.organisationTypePermissionService.getMany(
+      this.organisationTypeId
+    );
   }
 
-  async fetchOrganisationTypePermissions() {
+  async fetchRolePermissions() {
     this.fetching = true;
     try {
-      this.organisationTypePermissions = await this.organisationTypePermissionService.getMany(
-        this.organisationTypeId
+      this.rolePermissions = await this.rolePermissionService.getMany(
+        this.roleId
       );
     } finally {
-      this.reset();
       this.fetching = false;
     }
   }
 
   async save() {
-    await this.organisationTypePermissionService.update(
-      this.organisationTypeId,
+    await this.rolePermissionService.update(
+      this.roleId,
       this.items
     );
   }
 
   reset() {
-    this.items = this.organisationTypePermissions.map(p => p.id).slice();
+    this.items = this.rolePermissions.map(p => p.id).slice();
   }
 
   @Watch("items")
   onPropertyChanged = _.debounce(() => {
-    if (this.editMode) {
-      console.log("items changed")
-      this.save();
-    }
+    console.log("editMode " + this.editMode)
+    if (this.editMode) this.save();
   }, 5000);
 
-  @Watch("organisationTypePermissions")
-  onOrgTypePermissionsChanged() {
-    this.reset;
-  }
+  @Watch("rolePermissions")
+  onOrgTypePermissionsChanged = this.reset;
 
   @Watch("editMode")
   onEditModeChanged() {
-    if (!this.editMode) this.save();
+    if (!this.editMode && !this.fetching) this.save();
   }
 }
 </script>

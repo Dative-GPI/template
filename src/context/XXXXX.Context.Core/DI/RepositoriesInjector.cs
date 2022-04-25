@@ -12,7 +12,8 @@ namespace XXXXX.Context.Core.DI
         {
             services.AddScoped<IApplicationRepository, ApplicationRepository>();
             services.AddScoped<IPermissionRepository, PermissionRepository>();
-            services.AddScoped<IPermissionOrganisationTypeRepository, PermissionOrganisationTypeRepository>();
+            services.AddScoped<IOrganisationTypePermissionRepository, OrganisationTypePermissionRepository>();
+            services.AddScoped<IRolePermissionRepository, RolePermissionRepository>();
             services.AddScoped<IRouteRepository, RouteRepository>();
 
             return services;

@@ -15,41 +15,41 @@ using XXXXX.Domain.Repositories.Filters;
 
 namespace XXXXX.Admin.Core.Services
 {
-    public class PermissionOrganisationTypeService : IPermissionOrganisationTypeService
+    public class OrganisationTypePermissionService : IOrganisationTypePermissionService
     {
-        private IQueryHandler<PermissionOrganisationTypesQuery, IEnumerable<PermissionInfos>> _permissionOrganisationTypesQueryHandler;
-        private ICommandHandler<UpdatePermissionOrganisationTypesCommand> _updatePermissionOrganisationTypesCommand;
+        private IQueryHandler<OrganisationTypePermissionsQuery, IEnumerable<PermissionInfos>> _organisationTypePermissionsQueryHandler;
+        private ICommandHandler<UpdateOrganisationTypePermissionsCommand> _updateOrganisationTypePermissionsCommand;
         private IPermissionRepository _permissionRepository;
         private IMapper _mapper;
 
-        public PermissionOrganisationTypeService(
-            IQueryHandler<PermissionOrganisationTypesQuery, IEnumerable<PermissionInfos>> permissionOrganisationTypesQuery,
-            ICommandHandler<UpdatePermissionOrganisationTypesCommand> updatePermissionOrganisationTypesCommand,
+        public OrganisationTypePermissionService(
+            IQueryHandler<OrganisationTypePermissionsQuery, IEnumerable<PermissionInfos>> organisationTypePermissionsQuery,
+            ICommandHandler<UpdateOrganisationTypePermissionsCommand> updateOrganisationTypePermissionsCommand,
             IPermissionRepository permissionRepository,
             IMapper mapper
         ) {
-            _permissionOrganisationTypesQueryHandler = permissionOrganisationTypesQuery;
-            _updatePermissionOrganisationTypesCommand = updatePermissionOrganisationTypesCommand;
+            _organisationTypePermissionsQueryHandler = organisationTypePermissionsQuery;
+            _updateOrganisationTypePermissionsCommand = updateOrganisationTypePermissionsCommand;
             _permissionRepository = permissionRepository;
             _mapper = mapper;
         }
 
         public async Task<IEnumerable<PermissionInfosViewModel>> GetMany(Guid appId, Guid actorId, Guid organisationTypeId)
         {
-            var query = new PermissionOrganisationTypesQuery(){
+            var query = new OrganisationTypePermissionsQuery(){
                 ApplicationId = appId,
                 ActorId = actorId,
                 OrganisationTypeId = organisationTypeId
             };
 
-            var result = await _permissionOrganisationTypesQueryHandler.HandleAsync(query);
+            var result = await _organisationTypePermissionsQueryHandler.HandleAsync(query);
 
             return _mapper.Map<IEnumerable<PermissionInfos>, IEnumerable<PermissionInfosViewModel>>(result);
         }
 
         public async Task Update(Guid appId, Guid actorId, Guid organisationTypeId, List<Guid> payload)
         {
-            var command = new UpdatePermissionOrganisationTypesCommand()
+            var command = new UpdateOrganisationTypePermissionsCommand()
             {
                 ApplicationId = appId,
                 ActorId = actorId,
@@ -58,7 +58,7 @@ namespace XXXXX.Admin.Core.Services
                 PermissionsIds = payload
             };
 
-            await _updatePermissionOrganisationTypesCommand.HandleAsync(command);
+            await _updateOrganisationTypePermissionsCommand.HandleAsync(command);
         }
     }
 }

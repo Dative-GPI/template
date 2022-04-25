@@ -13,12 +13,17 @@ namespace XXXXX.Admin.Core
         public const string ADMIN_PERMISSION_CATEGORY = "admin.permission.category";
         #endregion
 
-        #region Permissionorganisationtype
-        public const string ADMIN_PERMISSIONORGANISATIONTYPE_INFOS = "admin.permissionorganisationtype.infos";
-        public const string ADMIN_PERMISSIONORGANISATIONTYPE_DETAILS = "admin.permissionorganisationtype.details";
-        public const string ADMIN_PERMISSIONORGANISATIONTYPE_CREATE = "admin.permissionorganisationtype.create";
-        public const string ADMIN_PERMISSIONORGANISATIONTYPE_UPDATE = "admin.permissionorganisationtype.update";
-        public const string ADMIN_PERMISSIONORGANISATIONTYPE_REMOVE = "admin.permissionorganisationtype.remove";
+        #region organisationTypePermission
+        public const string ADMIN_ORGANISATION_TYPE_PERMISSION_INFOS = "admin.organisation.type.permission.infos";
+        public const string ADMIN_ORGANISATION_TYPE_PERMISSION_DETAILS = "admin.organisation.type.permission.details";
+        public const string ADMIN_ORGANISATION_TYPE_PERMISSION_CREATE = "admin.organisation.type.permission.create";
+        public const string ADMIN_ORGANISATION_TYPE_PERMISSION_UPDATE = "admin.organisation.type.permission.update";
+        public const string ADMIN_ORGANISATION_TYPE_PERMISSION_REMOVE = "admin.organisation.type.permission.remove";
+        #endregion
+        
+        #region RolePermissions
+        public const string ADMIN_ROLE_PERMISSIONS_INFOS = "admin.role.permissions.infos";
+        public const string ADMIN_ROLE_PERMISSIONS_UPDATE = "admin.role.permissions.update";
         #endregion
   }
 }

@@ -135,7 +135,7 @@ export default class AxiosSnackbar extends Vue {
        message += ` ${this.$tr('ui.common.pageInformations', 'page informations')}`;
        break;
       }
-      case "PermissionOrganisationTypes":
+      case "organisationTypePermissions":
       case "PermissionRoles": {
        message += ` ${this.$tr('ui.common.permissions', 'permissions')}`;
        break;

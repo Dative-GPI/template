@@ -9,8 +9,9 @@ namespace XXXXX.Admin.Core.DI
         public static IServiceCollection AddServices(this IServiceCollection services)
         {
             services.AddScoped<IRouteService, RouteService>();
-            services.AddScoped<IPermissionOrganisationTypeService, PermissionOrganisationTypeService>();
+            services.AddScoped<IOrganisationTypePermissionService, OrganisationTypePermissionService>();
             services.AddScoped<IPermissionService, PermissionService>();
+            services.AddScoped<IRolePermissionService, RolePermissionService>();
 
             return services;
         }

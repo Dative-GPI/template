@@ -24,30 +24,6 @@ namespace XXXXX.Admin.Core.DI
                 return pipeline;
             });
 
-
-            services.AddScoped<PermissionOrganisationTypesQueryHandler>();
-            services.AddScoped<IQueryHandler<PermissionOrganisationTypesQuery, IEnumerable<PermissionInfos>>>(sp =>
-            {
-                var pipeline = sp.GetPipelineFactory<PermissionOrganisationTypesQuery, IEnumerable<PermissionInfos>>()
-                    // .With<PermissionsMiddleware>()
-                    .Add<PermissionOrganisationTypesQueryHandler>()
-                    .Build();
-
-                return pipeline;
-            });
-
-
-            services.AddScoped<UpdatePermissionOrganisationTypesCommandHandler>();
-            services.AddScoped<ICommandHandler<UpdatePermissionOrganisationTypesCommand>>(sp =>
-            {
-                var pipeline = sp.GetPipelineFactory<UpdatePermissionOrganisationTypesCommand>()
-                    // .Add<PermissionsMiddleware>()
-                    .Add<UpdatePermissionOrganisationTypesCommandHandler>()
-                    .Build();
-
-                return pipeline;
-            });
-
             return services;
         }
     }

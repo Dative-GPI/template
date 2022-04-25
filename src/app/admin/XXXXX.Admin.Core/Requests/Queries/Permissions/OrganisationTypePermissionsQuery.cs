@@ -9,9 +9,9 @@ using static XXXXX.Admin.Core.Authorizations;
 
 namespace XXXXX.Admin.Core
 {
-    public class PermissionOrganisationTypesQuery : ICoreRequest, IRequest<IEnumerable<PermissionInfos>>
+    public class OrganisationTypePermissionsQuery : ICoreRequest, IRequest<IEnumerable<PermissionInfos>>
     {
-        public IEnumerable<string> Authorizations => new[] { ADMIN_PERMISSIONORGANISATIONTYPE_INFOS };
+        public IEnumerable<string> Authorizations => new[] { ADMIN_ORGANISATION_TYPE_PERMISSION_INFOS };
 		public Guid ApplicationId { get; set; }
         public Guid ActorId { get; set; }
         

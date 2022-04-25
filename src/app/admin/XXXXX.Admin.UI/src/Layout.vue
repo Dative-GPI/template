@@ -1,5 +1,5 @@
 <template>
-  <router-view name="default" :key="$route.fullPath"> </router-view>
+  <router-view name="default"> </router-view>
 </template>
 
 <script lang="ts">
@@ -24,7 +24,6 @@ export default class Layout extends Vue {
   fetching = false;
 
   mounted(): void {
-    window.top!.postMessage("hello", "*");
     this.fetch();
   }
 

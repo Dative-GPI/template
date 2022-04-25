@@ -12,7 +12,8 @@ namespace XXXXX.Context.Core
         #region Permissions
         public DbSet<PermissionDTO> Permissions { get; set; }
         public DbSet<PermissionCategoryDTO> PermissionCategories { get; set; }
-        public DbSet<PermissionOrganisationTypeDTO> PermissionOrganisationTypes { get; set; }
+        public DbSet<OrganisationTypePermissionDTO> OrganisationTypePermissions { get; set; }
+        public DbSet<RolePermissionDTO> RolePermissions { get; set; }
         #endregion
 
         public DbSet<TranslationDTO> Translations { get; set; }
@@ -52,11 +53,12 @@ namespace XXXXX.Context.Core
                 m.Property(p => p.Translations)
                     .HasColumnType("jsonb");
             });
-            modelBuilder.Entity<PermissionOrganisationTypeDTO>(m =>
+            
+            modelBuilder.Entity<OrganisationTypePermissionDTO>(m =>
             {
                 m.HasKey(p => p.Id);
                 m.HasOne(p => p.Permission)
-                    .WithMany(p => p.PermissionOrganisationTypes)
+                    .WithMany(p => p.OrganisationTypePermissions)
                     .HasForeignKey(p => p.PermissionId);
             });
             #endregion

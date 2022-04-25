@@ -12,11 +12,11 @@ using XXXXX.Admin.Core.ViewModels;
 namespace XXXXX.Admin.API.Controllers
 {
     [Route("api/admin/routes")]
-    public class RouteController : AppController
+    public class RoutesController : AppController
     {
         private IRouteService _routeService;
 
-        public RouteController(IRouteService routeService)
+        public RoutesController(IRouteService routeService)
         {
             _routeService = routeService;
         }

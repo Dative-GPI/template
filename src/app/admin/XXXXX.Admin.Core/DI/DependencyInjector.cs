@@ -16,6 +16,8 @@ namespace XXXXX.Admin.Core.DI
             services.AddAutoMapper();
 
             services.AddPermissions();
+            services.AddOrganisationTypePermissions();
+            services.AddRolePermissions();
             services.AddRoutes();
 
             return services;

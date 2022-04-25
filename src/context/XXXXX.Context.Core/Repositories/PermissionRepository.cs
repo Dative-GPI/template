@@ -42,7 +42,7 @@ namespace XXXXX.Context.Core.Repositories
         public async Task<IEnumerable<PermissionInfos>> GetMany(PermissionsFilter filter)
         {
             var set = _dbSet
-                .Include(p => p.PermissionOrganisationTypes)
+                .Include(p => p.OrganisationTypePermissions)
                 .AsQueryable();
 
             if (filter.Ids != null)
@@ -57,7 +57,7 @@ namespace XXXXX.Context.Core.Repositories
 
             if (filter.OrganisationTypeId.HasValue)
             {
-                set = set.Where(p => p.PermissionOrganisationTypes.Any(pr => pr.OrganisationTypeId == filter.OrganisationTypeId.Value));
+                set = set.Where(p => p.OrganisationTypePermissions.Any(pr => pr.OrganisationTypeId == filter.OrganisationTypeId.Value));
             }
 
             IEnumerable<PermissionDTO> dtos = await set.AsNoTracking().ToListAsync();

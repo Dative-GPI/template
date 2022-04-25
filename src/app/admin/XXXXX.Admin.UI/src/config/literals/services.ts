@@ -10,3 +10,4 @@ export const PERMISSIONSERVICE = "PermissionService";
 export const PROGRAMSERVICE = "ProgramService";
 export const RECIPEDEVICESERVICE = "RecipeDeviceService";
 export const RECIPESERVICE = "RecipeService";
+export const ROLEPERMISSIONSERICE = "RolePermissionService";

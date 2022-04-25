@@ -10,7 +10,7 @@ namespace XXXXX.Context.Core.DTOs
         public Guid Id { get; set; }
         public string Code { get; set; }
         public string LabelDefault { get; set; }
-        public List<PermissionOrganisationTypeDTO> PermissionOrganisationTypes { get; set; }
+        public List<OrganisationTypePermissionDTO> OrganisationTypePermissions { get; set; }
         public List<TranslationPermissionDTO> Translations { get; set; }
         public bool Disabled { get; set; }
     }

@@ -2,9 +2,9 @@ using System;
 
 namespace XXXXX.Domain.Repositories.Commands
 {
-    public class CreatePermissionOrganisationTypes
+    public class UpdateRolePermissions
     {
-        public Guid OrganisationTypeId { get; set; }
+        public Guid RoleId { get; set; }
         public Guid PermissionsId { get; set; }
     }
 }

@@ -10,20 +10,20 @@ using XXXXX.Admin.Core.ViewModels;
 namespace XXXXX.Admin.API.Controllers
 {
     [Route("api/admin/v1")]
-    public class PermissionOrganisationTypesController : AppController
+    public class OrganisationTypePermissionController : AppController
     {
-        private readonly IPermissionOrganisationTypeService _permissionOrganisationTypeService;
+        private readonly IOrganisationTypePermissionService _organisationTypePermissionService;
 
-        public PermissionOrganisationTypesController(IPermissionOrganisationTypeService permissionOrganisationTypeService)
+        public OrganisationTypePermissionController(IOrganisationTypePermissionService organisationTypePermissionService)
         {
-            _permissionOrganisationTypeService = permissionOrganisationTypeService;
+            _organisationTypePermissionService = organisationTypePermissionService;
         }
         
         [Route("organisation-types/{organisationTypeId:Guid}/permissions")]
         [HttpGet]
         public async Task<IActionResult> GetMany([FromRoute] Guid organisationTypeId)
         {
-            var result = await _permissionOrganisationTypeService.GetMany(GetAppId(), GetActorId(), organisationTypeId);
+            var result = await _organisationTypePermissionService.GetMany(GetAppId(), GetActorId(), organisationTypeId);
             return Ok(result);
         }
 
@@ -31,7 +31,7 @@ namespace XXXXX.Admin.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Update([FromRoute] Guid organisationTypeId, [FromBody] List<Guid> payload)
         {
-            await _permissionOrganisationTypeService.Update(GetAppId(), GetActorId(), organisationTypeId, payload);
+            await _organisationTypePermissionService.Update(GetAppId(), GetActorId(), organisationTypeId, payload);
             return Ok();
         }
     }
