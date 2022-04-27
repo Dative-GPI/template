@@ -5,23 +5,23 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
-using XXXXX.shell.Core.Interfaces;
 using XXXXX.Shell.Core;
 using XXXXX.Shell.Core.ViewModels;
+using XXXXX.shell.Core.Interfaces;
 
 namespace XXXXX.Shell.API.Controllers
 {
-    [Route("api/admin")]
-    public class RouteController : AppController
+    [Route("api/routes")]
+    public class RoutesController : AppController
     {
         private IRouteService _routeService;
 
-        public RouteController(IRouteService routeService)
+        public RoutesController(IRouteService routeService)
         {
             _routeService = routeService;
         }
 
-        [HttpGet("routes")]
+        [HttpGet]
         public async Task<IActionResult> GetMany([FromQuery] RoutesFilterViewModel filter){
             var routes = await _routeService.GetMany(GetAppId(), GetActorId(), filter);
 

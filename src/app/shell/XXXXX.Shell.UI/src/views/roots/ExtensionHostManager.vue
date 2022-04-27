@@ -1,10 +1,11 @@
 <template>
   <div>
-    <slot :token="token" :languageId="languageId" :languageCode="languageCode" :userApplicationId="userApplicationId" />
+    <slot :token="token" :languageId="languageId" :languageCode="languageCode" :userOrganisationId="userOrganisationId" />
   </div>
 </template>
 
 <script lang="ts">
+import _ from "lodash";
 import { DependencyContainer } from "tsyringe";
 import { Component, Inject, Vue } from "vue-property-decorator";
 
@@ -18,13 +19,12 @@ export default class ExtensionHostManager extends Vue {
 
   fetching = true;
 
-  title = "";
-  lastHeight = 0;
+  lastMessage: any = null;
 
   mounted(): void {
     this.subscribe();
 
-    setInterval(this.notify, 100);
+    setInterval(this.notify, 10);
     this.notify();
   }
 
@@ -40,8 +40,8 @@ export default class ExtensionHostManager extends Vue {
     return new URL(window.location.toString()).searchParams.get("languageId");
   }
 
-  get userApplicationId(){
-    return new URL(window.location.toString()).searchParams.get("userApplicationId");
+  get userOrganisationId(){
+    return new URL(window.location.toString()).searchParams.get("userOrganisationId");
   }
 
   unmounted = this.unsubscribe;
@@ -60,22 +60,21 @@ export default class ExtensionHostManager extends Vue {
   }
 
   notify() {
-    if (window.top)
-      window.top.postMessage(
-        JSON.stringify({
-          height: document.body.clientHeight,
-          title: "Test",
-        }),
-        "*"
-      );
+    const payload = {
+      height: document.body.scrollHeight,
+      title: "Test"
+    };
+
+    if (!_.isEqual(this.lastMessage, payload)) {
+      this.lastMessage = payload;
+      this.sendMessage(payload);
+    }
   }
+
+  sendMessage = _.debounce((payload: any) => {
+    if (window.top) {
+      window.top.postMessage(JSON.stringify(payload), "*");
+    }
+  }, 50);
 }
 </script>
-
-<style scoped>
-.d-extension-container {
-  width: 100%;
-  height: calc(100vh - 100px);
-  border: 0;
-}
-</style>

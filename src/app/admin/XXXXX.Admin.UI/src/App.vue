@@ -1,7 +1,7 @@
 <template>
   <d-app class="d-extension">
     <extension-host-manager
-      v-slot="{ languageId, languageCode, token, userApplicationId }"
+      v-slot="{ languageId, languageCode, token, userOrganisationId }"
     >
       <network-manager
         v-show="show"
@@ -9,7 +9,7 @@
         :language-id="languageId"
         :language-code="languageCode"
         :token="token"
-        :user-application-id="userApplicationId"
+        :user-organisation-id="userOrganisationId"
         @logout="userId = null"
         @hook:mounted="loading = 1"
       >

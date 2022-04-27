@@ -51,8 +51,6 @@ namespace XXXXX.Context.Core.Repositories
                     DrawerLabel = t.DrawerLabel
                 }).ToList()
             });
-
-
         }
     }
 }

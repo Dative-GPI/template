@@ -1,4 +1,6 @@
 using AutoMapper;
+using XXXXX.Domain.Models;
+using XXXXX.Shell.Core.ViewModels;
 
 namespace XXXXX.Shell.Core.AutoMapper
 {
@@ -6,6 +8,7 @@ namespace XXXXX.Shell.Core.AutoMapper
     {
         public DomainToViewModelMappingProfile()
         {
+            CreateMap<RouteInfos, RouteInfosViewModel>();
         }
     }
 }

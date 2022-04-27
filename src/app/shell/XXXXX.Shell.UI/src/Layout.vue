@@ -1,11 +1,5 @@
 <template>
-  <v-app id="inspire">
-    <v-main>
-      <v-container fluid class="py-0 px-1 pl-sm-5 pl-md-5 pl-lg-10 pr-sm-5">
-        <router-view name="default" :key="$route.fullPath"> </router-view>
-      </v-container>
-    </v-main>
-  </v-app>
+  <router-view name="default" :key="$route.fullPath"> </router-view>
 </template>
 
 <script lang="ts">
@@ -24,8 +18,8 @@ import { onCollectionChanged } from "./tools";
 @Component({
   components: {
     NotificationsDrawer,
-    AppActions,
-  },
+    AppActions
+  }
 })
 export default class Layout extends Vue {
   @Inject(PROVIDER)
@@ -49,20 +43,20 @@ export default class Layout extends Vue {
     const params = this.$route.params;
 
     _(drawerRoutes)
-      .groupBy((r) => r.meta.codeHeader)
+      .groupBy(r => r.meta.codeHeader)
       .forEach((value, key) => {
         if (key != "undefined") result.push({ heading: key });
-        value.forEach((r) => {
+        value.forEach(r => {
           result.push({
             icon: r.meta.icon,
             codeLabel: r.meta.drawerCodeLabel,
             defaultLabel: r.meta.drawerDefaultLabel,
             to: {
               name: r.name,
-              params: r.meta.defaultParams && r.meta.defaultParams(params),
+              params: r.meta.defaultParams && r.meta.defaultParams(params)
             },
             exact: !!r.meta.exact,
-            disabled: !!r.meta.disabled,
+            disabled: !!r.meta.disabled
           });
         });
       });
@@ -71,12 +65,11 @@ export default class Layout extends Vue {
   }
 
   mounted(): void {
-    window.top!.postMessage('hello', '*')
+    window.top!.postMessage("hello", "*");
     this.fetch();
   }
 
-  async fetch(): Promise<void> {
-  }
+  async fetch(): Promise<void> {}
 }
 </script>
 

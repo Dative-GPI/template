@@ -14,22 +14,22 @@
         @logout="userId = null"
         @hook:mounted="loading = 1"
       >
-        <translations-provider
+        <!-- <translations-provider
           :language-id="languageId"
           :language-code="languageCode"
           @hook:mounted="loading = 2"
-        >
-          <permissions-provider :user-application-id="userApplicationId" @hook:mounted="loading = 3">
-            <layout @hook:mounted="loading = 4" />
-          </permissions-provider>
-        </translations-provider>
+        > -->
+          <!-- <permissions-provider :user-application-id="userApplicationId" @hook:mounted="loading = 3"> -->
+            <layout @hook:mounted="loading = 2" />
+          <!-- </permissions-provider> -->
+        <!-- </translations-provider> -->
       </network-manager>
 
       <div v-if="!show" class="progress">
         <v-progress-linear
           color="light-green darken-4"
           height="10"
-          :value="(state / 4) * 100"
+          :value="(state / 2) * 100"
           striped
         ></v-progress-linear>
       </div>
@@ -81,7 +81,7 @@ export default class App extends Vue {
       if (this.state <= this.loading) this.state++;
       else if (this.askShow) this.show = true;
 
-      if (this.state == 4) {
+      if (this.state == 2) {
         clearInterval(this.timer);
         setTimeout(() => (this.show = true), 300);
       }

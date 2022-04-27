@@ -7,15 +7,19 @@ namespace XXXXX.Shell.Core.ViewModels
     {
         public Guid Id { get; set; }
         public Guid ExtensionId { get; set; }
+
+        public bool ShowOnDrawer { get; set; }
+        public string DrawerIcon { get; set; }
+        public string DrawerCategory { get; set; }
+
         public string Path { get; set; }
         public string Uri { get; set; }
         public string Name { get; set; }
-        public string Icon { get; set; }
-        public string Code { get; set; }
+
+        public bool Exact { get; set; }
 
         #region Translated properties
-        public string ExtensionLabel { get; set; }
-        public string Label { get; set; }
+        public string DrawerLabel { get; set; }
         #endregion
     }
 }

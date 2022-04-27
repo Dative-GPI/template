@@ -45,9 +45,9 @@ export default class ExtensionHostManager extends Vue {
     return new URL(window.location.toString()).searchParams.get("languageId");
   }
 
-  get userApplicationId() {
+  get userOrganisationId() {
     return new URL(window.location.toString()).searchParams.get(
-      "userApplicationId"
+      "userOrganisationId"
     );
   }
 

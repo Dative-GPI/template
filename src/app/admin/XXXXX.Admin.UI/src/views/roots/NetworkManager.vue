@@ -39,7 +39,7 @@ export default class NetworkManager extends Vue {
   languageCode!: string | null;
 
   @Prop({ required: false, default: () => null })
-  userApplicationId!: string | null;
+  userOrganisationId!: string | null;
 
   @Prop({ required: false, default: false })
   disabled!: boolean;
@@ -64,7 +64,7 @@ export default class NetworkManager extends Vue {
   requestInterceptor(config: AxiosRequestConfig) {
     if(this.token != null){
       // config.headers.Authorization = "Bearer " + this.token;
-      config.headers.common['Authorization'] = "Bearer " + this.token;
+      config.headers.common['Authorization'] = `Bearer ${this.token}`;
     }
 
     if (this.languageId != null) {
@@ -75,8 +75,8 @@ export default class NetworkManager extends Vue {
       config.headers.common["X-Language-Code"] = this.languageCode;
     }
 
-    if (this.userApplicationId != null) {
-      config.headers.common["X-User-Application-Id"] = this.userApplicationId;
+    if (this.userOrganisationId != null) {
+      config.headers.common["X-User-Organisation-Id"] = this.userOrganisationId;
     }
 
     return config;
