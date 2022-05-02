@@ -4,7 +4,7 @@
       :token="token"
       :languageId="languageId"
       :languageCode="languageCode"
-      :userApplicationId="userApplicationId"
+      :userOrganisationId="userOrganisationId"
     />
   </div>
 </template>

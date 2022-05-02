@@ -18,7 +18,7 @@
           :language-code="languageCode"
           @hook:mounted="loading = 2"
         >
-          <permissions-provider :user-application-id="userApplicationId" @hook:mounted="loading = 3"> -->
+          <permissions-provider :user-application-id="userOrganisationId" @hook:mounted="loading = 3"> -->
             <layout @hook:mounted="loading = 2" />
           <!-- </permissions-provider>
         </translations-provider> -->

@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 
-using xxxxx.Gateway.API.Middlewares;
+using XXXXX.Gateway.API.Middlewares;
 
 public static class AuthenticationMiddlewareExtension
 {

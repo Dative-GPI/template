@@ -1,7 +1,7 @@
 <template>
   <d-app class="d-extension">
     <extension-host-manager
-      v-slot="{ languageId, languageCode, token, userApplicationId }"
+      v-slot="{ languageId, languageCode, token, userOrganisationId }"
     >
       <div style="height: 500px; background-color: red" />
       <network-manager
@@ -10,7 +10,7 @@
         :language-id="languageId"
         :language-code="languageCode"
         :token="token"
-        :user-application-id="userApplicationId"
+        :user-application-id="userOrganisationId"
         @logout="userId = null"
         @hook:mounted="loading = 1"
       >
@@ -19,7 +19,7 @@
           :language-code="languageCode"
           @hook:mounted="loading = 2"
         > -->
-          <!-- <permissions-provider :user-application-id="userApplicationId" @hook:mounted="loading = 3"> -->
+          <!-- <permissions-provider :user-application-id="userOrganisationId" @hook:mounted="loading = 3"> -->
             <layout @hook:mounted="loading = 2" />
           <!-- </permissions-provider> -->
         <!-- </translations-provider> -->

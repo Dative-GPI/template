@@ -15,7 +15,7 @@ using Microsoft.Net.Http.Headers;
 
 using XXXXX.Domain.Models;
 
-namespace xxxxx.Gateway.API.Middlewares
+namespace XXXXX.Gateway.API.Middlewares
 {
     public class JWTAuthenticationMiddleware
     {

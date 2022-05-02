@@ -22,14 +22,14 @@ export default class App extends Vue {
   container!: DependencyContainer;
 
   @Prop({required: true, default: null})
-  userApplicationId: string | null;
+  userOrganisationId: string | null;
 
   mounted(): void {
     this.reset();
   }
 
   reset() {
-    // if (this.userApplicationId)
+    // if (this.userOrganisationId)
     // Get the permissions for the v-right directive
     // this.$pm.set(permission);
   }
