@@ -10,5 +10,6 @@ html::-webkit-scrollbar {
 }
 
 .d-extension .v-application--wrap {
-  min-height: none;
+  min-height: auto;
+  display: block;
 }

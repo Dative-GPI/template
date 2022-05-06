@@ -6,14 +6,13 @@
 import _ from "lodash";
 import { Location } from "vue-router";
 import { DependencyContainer } from "tsyringe";
-import { Component, Vue, Inject, InjectReactive } from "vue-property-decorator";
+import { Component, Vue, Inject } from "vue-property-decorator";
 
-import { USER, ORGANISATION, PROVIDER, SERVICES as S } from "@/config";
+import { PROVIDER } from "@/config";
 import { drawerRoutes } from "@/router";
 
 import NotificationsDrawer from "@/components/shared/NotificationsDrawer.vue";
 import AppActions from "@/components/shared/AppActions.vue";
-import { onCollectionChanged } from "./tools";
 
 @Component({
   components: {

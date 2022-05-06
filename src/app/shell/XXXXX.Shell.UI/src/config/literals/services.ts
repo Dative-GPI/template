@@ -1,10 +1,2 @@
-export const CATEGORYSERVICE = "CategoryService";
-export const COMMENTSERVICE = "CommentService";
-export const COLUMNUSERSERVICE = "ColumnUserService";
-export const DEVICESERVICE = "DeviceService";
-export const DIFFEREDSTARTPLANNERSERVICE = "DifferedStartPlannerService";
-export const DIFFEREDSTARTPLANNINGSERVICE = "DifferedStartPlanningService";
-export const MARKETPLACERECIPESERVICE = "MarketplaceRecipeService";
-export const PROGRAMSERVICE = "ProgramService";
-export const RECIPEDEVICESERVICE = "RecipeDeviceService";
-export const RECIPESERVICE = "RecipeService";
+export const EXEMPLESERVICE = "ExempleService";
+export const EXTENSIONCOMMUNICATIONSERVICE = "ExtensionCommunicationService";

@@ -3,7 +3,6 @@
     <extension-host-manager
       v-slot="{ languageId, languageCode, token, userOrganisationId }"
     >
-      <div style="height: 500px; background-color: red" />
       <network-manager
         v-show="show"
         :disabled="!userId"
