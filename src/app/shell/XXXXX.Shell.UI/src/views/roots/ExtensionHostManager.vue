@@ -67,6 +67,10 @@ export default class ExtensionHostManager extends Vue {
     return this.container.resolve<IExtensionCommunicationService>(S.EXTENSIONCOMMUNICATIONSERVICE);
   }
 
+  get currentRoute(){
+    return this.$route;
+  } 
+
   unmounted(){
     _.forEach(this.subscriberIds, s => {
       this.extensionCommunicationService.unsubscribe(s)
@@ -78,5 +82,17 @@ export default class ExtensionHostManager extends Vue {
       this.extensionCommunicationService.setHeight(document.body.scrollHeight, this.$route.path);
     }
   }
+
+  goTo(){
+    if(this.$route.meta && !this.$route.meta.drawer) {
+      console.log("Extension route changed")
+      this.extensionCommunicationService.goTo(this.$route.path);
+
+    } 
+  }
+
+  @Watch("currentRoute")
+  onCurrentRouteChanged = this.goTo;
+
 }
 </script>

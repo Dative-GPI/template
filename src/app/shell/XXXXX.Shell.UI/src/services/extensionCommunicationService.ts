@@ -21,11 +21,7 @@ export class ExtensionCommunicationService
   }
 
   async goTo(path: string): Promise<void> {
-    throw new Error("Method not implemented.");
-    // const payload = {
-    //   route: path
-    // }
-    // await this.notify(payload);
+    await this.notifyPath(path);
   }
 
   setTitle(title: string): void {
@@ -58,7 +54,7 @@ export class ExtensionCommunicationService
     await this.notify(payload);
   }
 
-  async closeDrawer(path: string, success: boolean = false): Promise<void> {
+  async closeDrawer(path: string, success: boolean): Promise<void> {
     const payload = {
       path,
       success,
@@ -81,6 +77,14 @@ export class ExtensionCommunicationService
     };
     this.notify(payload);
   }, 50);
+
+  notifyPath = _.debounce((path) => {
+    const payload = {
+      path: path
+    };
+    this.notify(payload);
+  }, 50);
+  
 
   notify(payload: any) {
     if (window.top) {

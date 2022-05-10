@@ -1,6 +1,7 @@
 import { CustomRouteConfig } from "./interfaces";
 
 import SimpleTitle from "@/components/shared/SimpleTitle.vue";
+import { trimEnd } from "lodash";
 
 export const routes: CustomRouteConfig[] = [
   {
@@ -19,6 +20,18 @@ export const routes: CustomRouteConfig[] = [
     name: "exemples-drawer",
     components: {
       default: () => import("@/components/drawer.vue"),
+      title: SimpleTitle,
+    },
+    meta: {
+      exact: true,
+      drawer: true
+    },
+  },
+  {
+    path: "/applications/goto",
+    name: "exemples-goto",
+    components: {
+      default: () => import("@/views/GoToExemple.vue"),
       title: SimpleTitle,
     },
     meta: {

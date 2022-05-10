@@ -64,7 +64,6 @@ export default class Layout extends Vue {
   }
 
   mounted(): void {
-    window.top!.postMessage("hello", "*");
     this.fetch();
   }
 

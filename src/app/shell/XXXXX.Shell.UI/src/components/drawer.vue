@@ -1,7 +1,7 @@
 <template>
   <div name="drawerExample">
       <d-text-field :editable="true" v-model="exemple" />
-    <d-btn @click="close">Close</d-btn>
+    <d-btn @click="close(false)">Close</d-btn>
     <d-btn @click="onSuccess">Create new exemple</d-btn>
   </div>
 </template>
@@ -43,8 +43,7 @@ export default class CreateRecipeDrawer extends Vue {
     this.close(true);
   }
 
-  close(success: boolean = false) {
-    console.log("closeDrawer")
+  close(success: boolean) {
     this.extensionCommunicationService.closeDrawer(
       EXEMPLES_DRAWER_PATH,
       success

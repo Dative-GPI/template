@@ -1,5 +1,5 @@
 <template>
-  <div class="extension-host-manager">
+  <div>
     <slot
       :token="token"
       :languageId="languageId"
@@ -12,23 +12,34 @@
 <script lang="ts">
 import _ from "lodash";
 import { DependencyContainer } from "tsyringe";
-import { Component, Inject, Vue } from "vue-property-decorator";
+import {
+  Component,
+  Inject,
+  ProvideReactive,
+  Vue,
+  Watch
+} from "vue-property-decorator";
 
-import {} from "@/domain/models";
-import { PROVIDER, SERVICES as S } from "@/config";
+import { ORGANISATION, PROVIDER, SERVICES as S} from "@/config";
+import { IExtensionCommunicationService } from "@/interfaces";
 
 @Component({})
 export default class ExtensionHostManager extends Vue {
+  @ProvideReactive(ORGANISATION)
+  get organisationId() {
+    return new URL(window.location.toString()).searchParams.get(
+      "organisationId"
+    );
+  }
+
   @Inject(PROVIDER)
   container!: DependencyContainer;
 
   fetching = true;
 
-  lastMessage: any = null;
+  subscriberIds: number[] = [];
 
   mounted(): void {
-    this.subscribe();
-
     setInterval(this.notify, 10);
     this.notify();
   }
@@ -51,37 +62,20 @@ export default class ExtensionHostManager extends Vue {
     );
   }
 
-  unmounted = this.unsubscribe;
-
-  subscribe() {
-    window.addEventListener("message", this.onMessageReceived, false);
+  get extensionCommunicationService(){
+    return this.container.resolve<IExtensionCommunicationService>(S.EXTENSIONCOMMUNICATIONSERVICE);
   }
 
-  unsubscribe() {
-    window.removeEventListener("message", this.onMessageReceived, false);
-  }
-
-  onMessageReceived(event: MessageEvent) {
-    if (event.source) {
-    }
-  }
+  unmounted(){
+    _.forEach(this.subscriberIds, s => {
+      this.extensionCommunicationService.unsubscribe(s)
+    });
+  } 
 
   notify() {
-    const payload = {
-      height: document.body.scrollHeight,
-      title: "Test"
-    };
-
-    if (!_.isEqual(this.lastMessage, payload)) {
-      this.lastMessage = payload;
-      this.sendMessage(payload);
+    if(this.$route.path != "/"){//todo there is maybe a better solution 
+      this.extensionCommunicationService.setHeight(document.body.scrollHeight, this.$route.path);
     }
   }
-
-  sendMessage = _.debounce((payload: any) => {
-    if (window.top) {
-      window.top.postMessage(JSON.stringify(payload), "*");
-    }
-  }, 50);
 }
 </script>
