@@ -106,10 +106,10 @@ services:
     labels:
       - "custom.label=extension"
       - "traefik.enable=true"
-      - "traefik.http.services.extension-frontend.loadbalancer.server.port=8080"
-      - "traefik.http.routers.extension-frontend.rule=Host(`extension-admin.localhost`) && PathPrefix(`/`)"
-      - "traefik.http.routers.extension-frontend.entrypoints=websecure"
-      - "traefik.http.routers.extension-frontend.tls=true"
+      - "traefik.http.services.extension-frontend-admin.loadbalancer.server.port=8080"
+      - "traefik.http.routers.extension-frontend-admin.rule=Host(`extension-admin.localhost`) && PathPrefix(`/`)"
+      - "traefik.http.routers.extension-frontend-admin.entrypoints=websecure"
+      - "traefik.http.routers.extension-frontend-admin.tls=true"
 
   migrations:
     build:
