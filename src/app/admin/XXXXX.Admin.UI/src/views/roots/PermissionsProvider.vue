@@ -8,13 +8,11 @@ import {
   Component,
   Vue,
   Inject,
-  InjectReactive,
   Watch,
   Prop,
 } from "vue-property-decorator";
 
-import { UserApplicationDetails } from "@/domain/models";
-import { PROVIDER, USER_APPLICATION } from "@/config";
+import { PROVIDER } from "@/config";
 
 @Component
 export default class App extends Vue {
@@ -22,7 +20,7 @@ export default class App extends Vue {
   container!: DependencyContainer;
 
   @Prop({required: true, default: null})
-  userApplicationId: string | null;
+  userApplicationId!: string | null;
 
   mounted(): void {
     this.reset();
@@ -34,7 +32,7 @@ export default class App extends Vue {
     // this.$pm.set(permission);
   }
 
-  @Watch("userOrganisation")
+  @Watch("userApplicationId")
   onUserOrganisationChanged = this.reset;
 }
 </script>

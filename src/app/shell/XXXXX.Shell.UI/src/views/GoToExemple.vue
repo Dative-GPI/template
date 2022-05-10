@@ -29,16 +29,6 @@ export default class GoToExemple extends Vue {
   @Inject(ORGANISATION)
   organisationId!: string;
 
-  // drawerSchema: JTDSchemaType<DrawerPayload> = {
-  //   properties: {
-  //     drawer: { type: "boolean" },
-  //     path: { type: "string" }
-  //   },
-  //   optionalProperties: {
-  //     success: { type: "boolean" }
-  //   }
-  // };
-
   loading = false;
   
   goto(){

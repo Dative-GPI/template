@@ -13,6 +13,8 @@
     "@fontsource/montserrat": "^4.5.1",
     "@fontsource/open-sans": "^4.5.0",
     "@mdi/font": "^3.6.95",
+    "ajv": "^8.11.0",
+    "ajv-dist": "^8.11.0",
     "axios": "^0.21.1",
     "blurhash": "^1.1.4",
     "core-js": "^3.16.2",

@@ -39,7 +39,7 @@ export default class NetworkManager extends Vue {
   languageCode!: string | null;
 
   @Prop({ required: false, default: () => null })
-  userOrganisationId!: string | null;
+  userApplicationId!: string | null;
 
   @Prop({ required: false, default: false })
   disabled!: boolean;
@@ -75,8 +75,8 @@ export default class NetworkManager extends Vue {
       config.headers.common["X-Language-Code"] = this.languageCode;
     }
 
-    if (this.userOrganisationId != null) {
-      config.headers.common["X-User-Organisation-Id"] = this.userOrganisationId;
+    if (this.userApplicationId != null) {
+      config.headers.common["X-User-Application-Id"] = this.userApplicationId;
     }
 
     return config;

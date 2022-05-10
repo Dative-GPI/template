@@ -85,9 +85,7 @@ export default class ExtensionHostManager extends Vue {
 
   goTo(){
     if(this.$route.meta && !this.$route.meta.drawer) {
-      console.log("Extension route changed")
       this.extensionCommunicationService.goTo(this.$route.path);
-
     } 
   }
 

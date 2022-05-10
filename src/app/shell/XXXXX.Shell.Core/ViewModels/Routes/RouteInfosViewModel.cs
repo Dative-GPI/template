@@ -6,7 +6,6 @@ namespace XXXXX.Shell.Core.ViewModels
     public class RouteInfosViewModel
     {
         public Guid Id { get; set; }
-        public Guid ExtensionId { get; set; }
 
         public bool ShowOnDrawer { get; set; }
         public string DrawerIcon { get; set; }

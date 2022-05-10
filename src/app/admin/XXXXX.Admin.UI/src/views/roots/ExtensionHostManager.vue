@@ -4,7 +4,7 @@
       :token="token"
       :languageId="languageId"
       :languageCode="languageCode"
-      :userOrganisationId="userOrganisationId"
+      :userApplicationId="userApplicationId"
     />
   </div>
 </template>
@@ -20,7 +20,7 @@ import {
   Watch
 } from "vue-property-decorator";
 
-import { ORGANISATION, PROVIDER, SERVICES as S} from "@/config";
+import { ORGANISATION, PROVIDER, SERVICES as S } from "@/config";
 import { IExtensionCommunicationService } from "@/interfaces";
 
 @Component({})
@@ -40,6 +40,7 @@ export default class ExtensionHostManager extends Vue {
   subscriberIds: number[] = [];
 
   mounted(): void {
+    // this.extensionService.subscribe();
     setInterval(this.notify, 10);
     this.notify();
   }
@@ -56,26 +57,45 @@ export default class ExtensionHostManager extends Vue {
     return new URL(window.location.toString()).searchParams.get("languageId");
   }
 
-  get userOrganisationId() {
+  get userApplicationId() {
     return new URL(window.location.toString()).searchParams.get(
-      "userOrganisationId"
+      "userApplicationId"
     );
   }
 
-  get extensionCommunicationService(){
-    return this.container.resolve<IExtensionCommunicationService>(S.EXTENSIONCOMMUNICATIONSERVICE);
+  get extensionCommunicationService() {
+    return this.container.resolve<IExtensionCommunicationService>(
+      S.EXTENSIONCOMMUNICATIONSERVICE
+    );
   }
 
-  unmounted(){
+  get currentRoute() {
+    return this.$route;
+  }
+
+  unmounted() {
     _.forEach(this.subscriberIds, s => {
-      this.extensionCommunicationService.unsubscribe(s)
+      this.extensionCommunicationService.unsubscribe(s);
     });
-  } 
+  }
 
   notify() {
-    if(this.$route.path != "/"){//todo there is maybe a better solution 
-      this.extensionCommunicationService.setHeight(document.body.scrollHeight, this.$route.path);
+    if (this.$route.path != "/") {
+      //todo there is maybe a better solution
+      this.extensionCommunicationService.setHeight(
+        document.body.scrollHeight,
+        this.$route.path
+      );
     }
   }
+
+  goTo() {
+    if (this.$route.meta && !this.$route.meta.drawer) {
+      this.extensionCommunicationService.goTo(this.$route.path);
+    }
+  }
+
+  @Watch("currentRoute")
+  onCurrentRouteChanged = this.goTo;
 }
 </script>

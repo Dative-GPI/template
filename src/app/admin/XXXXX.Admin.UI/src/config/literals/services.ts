@@ -1,13 +1,4 @@
-export const CATEGORYSERVICE = "CategoryService";
-export const COMMENTSERVICE = "CommentService";
-export const COLUMNUSERSERVICE = "ColumnUserService";
-export const DEVICESERVICE = "DeviceService";
-export const DIFFEREDSTARTPLANNERSERVICE = "DifferedStartPlannerService";
-export const DIFFEREDSTARTPLANNINGSERVICE = "DifferedStartPlanningService";
+export const EXTENSIONCOMMUNICATIONSERVICE = "ExtensionCommunicationService";
 export const ORGANISATIONTYPEPERMISSIONSERVICE = "OrganisationPermissionService";
-export const MARKETPLACERECIPESERVICE = "MarketplaceRecipeService";
 export const PERMISSIONSERVICE = "PermissionService";
-export const PROGRAMSERVICE = "ProgramService";
-export const RECIPEDEVICESERVICE = "RecipeDeviceService";
-export const RECIPESERVICE = "RecipeService";
 export const ROLEPERMISSIONSERICE = "RolePermissionService";
