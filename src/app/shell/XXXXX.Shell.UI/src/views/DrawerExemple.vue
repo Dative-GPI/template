@@ -18,14 +18,13 @@ import {
   SERVICES as S
 } from "@/config";
 import { IExempleService, IExtensionCommunicationService } from "@/interfaces";
-import Drawer from "@/components/drawer.vue";
 import { JTDSchemaType } from "ajv/dist/jtd";
 import { ExempleDetails, ExempleInfos } from "@/domain/models";
 import { onCollectionChanged } from "@/tools";
 
 @Component({
   components: {
-    Drawer
+    
   }
 })
 export default class DrawerExemple extends Vue {

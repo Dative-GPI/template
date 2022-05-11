@@ -4,6 +4,7 @@ export interface IExtensionCommunicationService {
     goTo(path: string): Promise<void>
     setTitle(title: string): void
     setHeight(height: number, path: string): void
+    setWidth(width: number, path: string): void
     openDialog(path: string): Promise<void>
     closeDialog(path: string): Promise<void>
     openDrawer(path: string): Promise<void>

@@ -38,6 +38,14 @@ export class ExtensionCommunicationService
     }
   }
 
+  setWidth(width: number, path: string): void {
+      const payload = {
+        width,
+        path
+      }
+      this.notify(payload);
+  }
+
   openDialog(path: string): Promise<void> {
     throw new Error("Method not implemented.");
   }
