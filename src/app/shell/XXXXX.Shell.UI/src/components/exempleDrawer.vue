@@ -6,6 +6,7 @@
       <d-text-field :editable="true" v-model="exemple" />
     </template>
     <template #actions>
+      <v-spacer />
       <d-btn @click="onSuccess" right>Create</d-btn>
     </template>
   </drawer>

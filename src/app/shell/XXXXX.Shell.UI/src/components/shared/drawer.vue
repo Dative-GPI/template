@@ -44,10 +44,7 @@ import { IExtensionCommunicationService } from "@/interfaces";
 export default class ExempleDrawer extends Vue {
   @Inject(PROVIDER)
   container!: DependencyContainer;
-
-  @Inject(ORGANISATION)
-  organisationId!: string;
-
+  
   @Prop({required: true})
   title!: string
 
