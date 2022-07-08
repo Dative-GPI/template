@@ -1,25 +1,53 @@
 import axios from "axios";
 import { buildURL } from "@/tools";
 import { NotifyService } from "@/tools/notifyService";
-import { ORGANISATION_TYPE_PERMISSIONS_URL } from "@/config";
-import { PermissionsFilter, PermissionInfos, PermissionInfosDTO } from "@/domain/models";
-import { IOrganisationTypePermissionService } from "@/interfaces";
+import { ORGANISATION_TYPE_PERMISSIONS_URL, SERVICES as S } from "@/config";
+import {
+  PermissionsFilter,
+  PermissionInfos,
+  PermissionInfosDTO,
+} from "@/domain/models";
+import {
+  IExtensionCommunicationService,
+  IOrganisationTypePermissionService,
+} from "@/interfaces";
+import { inject, injectable } from "tsyringe";
 
-export class OrganisationTypePermissionService extends NotifyService<PermissionInfos, PermissionInfos> implements IOrganisationTypePermissionService {
+@injectable()
+export class OrganisationTypePermissionService
+  extends NotifyService<PermissionInfos, PermissionInfos>
+  implements IOrganisationTypePermissionService {
+  type: string = "organisationTypePermission";
 
-    async getMany(organisationId: string, filter: PermissionsFilter): Promise<PermissionInfos[]> {
-        const response = await axios.get(buildURL(ORGANISATION_TYPE_PERMISSIONS_URL(organisationId), filter));
-        const dto: PermissionInfosDTO[] = response.data;
+  constructor(
+    @inject(S.EXTENSIONCOMMUNICATIONSERVICE)
+    service: IExtensionCommunicationService
+  ) {
+    super(service);
+  }
 
-        const permissions = dto.map(o => new PermissionInfos(o));
-        this.notify({
-            action: "reset",
-            items: permissions.slice()
-        });
-        return permissions;
-    }
+  async getMany(
+    organisationId: string,
+    filter: PermissionsFilter
+  ): Promise<PermissionInfos[]> {
+    const response = await axios.get(
+      buildURL(ORGANISATION_TYPE_PERMISSIONS_URL(organisationId), filter)
+    );
+    const dto: PermissionInfosDTO[] = response.data;
 
-    async update(organisationId: string, payload: string[]): Promise<void> {
-        await axios.post(ORGANISATION_TYPE_PERMISSIONS_URL(organisationId), payload);
-    }
+    const permissions = dto.map((o) => new PermissionInfos(o));
+    this.notify({
+      action: "reset",
+      items: permissions.slice(),
+      type: this.type,
+    });
+    return permissions;
+  }
+
+  async update(organisationId: string, payload: string[]): Promise<void> {
+    await axios.post(
+      ORGANISATION_TYPE_PERMISSIONS_URL(organisationId),
+      payload
+    );
+  }
 }

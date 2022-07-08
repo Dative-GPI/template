@@ -142,6 +142,11 @@ export class ExtensionCommunicationService
   }
 
   onMessageReceived(event: MessageEvent) {
+    try {
+      JSON.parse(event.data);
+    } catch (e) {
+      return;
+    }
     _(this.subscribers)
       .filter((s) => new URL(event.origin).hostname == new URL(s.uri).hostname)
       .map((s) => ({

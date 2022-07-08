@@ -19,7 +19,7 @@ export const routes: CustomRouteConfig[] = [
     path: "/applications/exemples/drawer",
     name: "exemples-drawer",
     components: {
-      default: () => import("@/components/exempleDrawer.vue"),
+      default: () => import("@/components/ExempleDrawer.vue"),
       title: SimpleTitle,
     },
     meta: {

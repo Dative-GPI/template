@@ -23,4 +23,12 @@ export const routes: CustomRouteConfig[] = [
             // title: () => import("@/components/organisationTypes/nav/OrganisationTypeTitle.vue")
         }
     },
+    {
+        path: "/applications/exemple",
+        name: "Exemple",
+        components: {
+            default: () => import("@/views/Exemple.vue"),
+            title: SimpleTitle
+        }
+    },
 ]

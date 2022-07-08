@@ -23,7 +23,7 @@ import {
   SERVICES as S
 } from "@/config";
 import { IExempleService, IExtensionCommunicationService } from "@/interfaces";
-import Drawer from "@/components/shared/drawer.vue";
+import Drawer from "@/components/shared/Drawer.vue";
 
 @Component({
   components: {

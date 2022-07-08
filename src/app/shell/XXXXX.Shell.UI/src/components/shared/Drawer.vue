@@ -32,7 +32,6 @@ import { DependencyContainer } from "tsyringe";
 import { Component, Inject, Vue, Prop, Watch } from "vue-property-decorator";
 
 import {
-  ORGANISATION,
   PROVIDER,
   SERVICES as S
 } from "@/config";
