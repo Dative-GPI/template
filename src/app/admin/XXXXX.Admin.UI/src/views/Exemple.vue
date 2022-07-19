@@ -13,6 +13,7 @@ import { DependencyContainer } from "tsyringe";
 import { Component, Inject, Vue } from "vue-property-decorator";
 
 import ExempleComponent from "@/components/Exemple/ExempleComponent.vue";
+import { EXEMPLES_PATH } from "@/config";
 
 @Component({
   components: {
@@ -41,9 +42,9 @@ export default class Exemple extends Vue {
     this.extensionCommunicationService.setCrumbs([
       {
         codeLabel: "Exemple",
-        to: "Exemple",
+        to: EXEMPLES_PATH,
         defaultLabel: "Exemple",
-        disabled: true
+        disabled: false
       },
     ]);
   }
