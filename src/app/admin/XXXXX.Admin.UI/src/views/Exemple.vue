@@ -38,6 +38,14 @@ export default class Exemple extends Vue {
 
   mounted() {
     this.extensionCommunicationService.setTitle("Exemple");
+    this.extensionCommunicationService.setCrumbs([
+      {
+        codeLabel: "Exemple",
+        to: "Exemple",
+        defaultLabel: "Exemple",
+        disabled: true
+      },
+    ]);
   }
 }
 </script>

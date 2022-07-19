@@ -7,6 +7,7 @@ import { injectable } from "tsyringe";
 export class ExtensionCommunicationService
   implements IExtensionCommunicationService {
   title: string;
+  crumbs: any[] = [];
   height: number;
   ajv: Ajv;
   counter = 0;
@@ -28,6 +29,14 @@ export class ExtensionCommunicationService
     if (this.title != title) {
       this.title = title;
       this.notifyTitle();
+    }
+  }
+  
+  setCrumbs(crumbs: any[]) {
+    console.log("setCrumbs", crumbs);
+    if (this.crumbs != crumbs) {
+      this.crumbs = crumbs;
+      this.notifyCrumbs();
     }
   }
 
@@ -74,6 +83,13 @@ export class ExtensionCommunicationService
   notifyTitle = _.debounce(() => {
     const payload = {
       title: this.title,
+    };
+    this.notify(payload);
+  }, 50);
+
+  notifyCrumbs = _.debounce(() => {
+    const payload = {
+      crumbs: this.crumbs,
     };
     this.notify(payload);
   }, 50);
