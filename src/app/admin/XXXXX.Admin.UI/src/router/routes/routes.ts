@@ -31,4 +31,24 @@ export const routes: CustomRouteConfig[] = [
             title: SimpleTitle
         }
     },
+    {
+        path: "/applications/exemple",
+        name: "Exemple",
+        components: {
+            default: () => import("@/views/Exemple.vue"),
+            title: SimpleTitle
+        }
+    },
+    {
+      path: "/applications/secret/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba",
+      name: "secret-view",
+      components: {
+        default: () => import("@/views/Secret.vue"),
+        title: SimpleTitle,
+      },
+      meta: {
+        exact: true,
+      },
+    },
+
 ]

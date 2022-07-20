@@ -3,6 +3,13 @@
   <div v-else>
     <d-btn @click="openDrawer"> Open drawer </d-btn>
     <div v-for="exe in exemples" :key="exe.id"> {{ exe.label }}</div>
+
+    <!-- See the comportement of high height drawer -->
+      <d-btn @click="items = []"> Reset </d-btn>
+      <div v-for="item in items" :key="item" class="text-h1">
+        {{ item }}
+      </div>
+      <d-btn @click="growth"> Growth </d-btn>
   </div>
 </template>
 
@@ -33,6 +40,8 @@ export default class DrawerExemple extends Vue {
 
   @Inject(ORGANISATION)
   organisationId!: string;
+
+  items: any[] = [];
 
   drawerSchema: JTDSchemaType<DrawerPayload> = {
     properties: {
@@ -80,6 +89,13 @@ export default class DrawerExemple extends Vue {
 
   openDrawer() {
     this.extensionCommunicationService.openDrawer(EXEMPLES_DRAWER_PATH);
+  }
+
+  growth() {
+    length = this.items.length;
+    for(let i = length; i < length+10; i++) {
+      this.items.push(i);
+    }
   }
 }
 interface DrawerPayload {
