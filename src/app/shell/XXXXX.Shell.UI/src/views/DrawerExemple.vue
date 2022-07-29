@@ -13,6 +13,7 @@ import { Component, Inject, Vue } from "vue-property-decorator";
 
 import {
   EXEMPLES_DRAWER_PATH,
+  EXEMPLES_PATH,
   ORGANISATION,
   PROVIDER,
   SERVICES as S
@@ -56,6 +57,15 @@ export default class DrawerExemple extends Vue {
 
   mounted() {
     this.extensionCommunicationService.setTitle("Drawer exemple");
+    this.extensionCommunicationService.setCrumbs([
+      {
+        codeLabel: "Exemple",
+        to: EXEMPLES_PATH,
+        defaultLabel: "Exemple",
+        disabled: false
+      },
+    ]);
+    this.fetch();
     this.exempleService.subscribe(
       "all",
       onCollectionChanged<ExempleInfos, ExempleDetails>(() => this.exemples)

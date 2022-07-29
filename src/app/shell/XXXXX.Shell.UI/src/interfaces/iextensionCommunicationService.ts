@@ -3,6 +3,7 @@ import { JTDSchemaType } from "ajv/dist/core"
 export interface IExtensionCommunicationService {
     goTo(path: string): Promise<void>
     setTitle(title: string): void
+    setCrumbs(crumbs: any[]): void
     setHeight(height: number, path: string): void
     setWidth(width: number, path: string): void
     openDialog(path: string): Promise<void>

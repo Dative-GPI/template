@@ -12,6 +12,7 @@ import { Component, Inject, Vue } from "vue-property-decorator";
 
 import {
   EXEMPLES_PATH,
+  GOTO_PATH,
   ORGANISATION,
   PROVIDER,
   SERVICES as S,
@@ -37,6 +38,14 @@ export default class GoToExemple extends Vue {
 
   mounted() {
     this.extensionCommunicationService.setTitle("Go to exemple");
+    this.extensionCommunicationService.setCrumbs([
+      {
+        codeLabel: "goto",
+        to: GOTO_PATH,
+        defaultLabel: "Goto",
+        disabled: false
+      },
+    ]);
     this.fetch();
   }
 
