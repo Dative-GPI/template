@@ -1,5 +1,5 @@
 <template>
-  <div name="drawer" style="height: 100vh" class="pa-3">
+  <div name="drawer" style="height: 100vh" width="100%" class="pa-3">
     <slot name="header">
       <v-row
         no-gutters
@@ -21,7 +21,8 @@
 
     <slot></slot>
 
-    <v-footer absolute v-if="$scopedSlots['actions']" color="transparent">
+    <div style="height:40px" />
+    <v-footer fixed v-if="$scopedSlots['actions']" color="transparent" style="background-color:white!important">
       <slot name="actions"></slot>
     </v-footer>
   </div>
@@ -29,7 +30,7 @@
 
 <script lang="ts">
 import { DependencyContainer } from "tsyringe";
-import { Component, Inject, Vue, Prop, Watch } from "vue-property-decorator";
+import { Component, Inject, Vue, Prop, Watch, Ref } from "vue-property-decorator";
 
 import {
   PROVIDER,
