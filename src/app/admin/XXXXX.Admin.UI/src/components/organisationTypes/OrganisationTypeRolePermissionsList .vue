@@ -42,7 +42,6 @@ export default class OrganisationTypeRolePermissionList extends Vue {
 
   permissionCategories: PermissionCategory[] = [];
   rolePermissions: PermissionInfos[] = [];
-  organisationTypePermissions: PermissionInfos[] = [];
 
   items: string[] = [];
 
@@ -58,12 +57,6 @@ export default class OrganisationTypeRolePermissionList extends Vue {
     );
   }
 
-  get organisationTypePermissionService(): IOrganisationTypePermissionService {
-    return this.container.resolve<IOrganisationTypePermissionService>(
-      S.ORGANISATIONTYPEPERMISSIONSERVICE
-    );
-  }
-
   get formattedPermissions(): {
     id: string;
     label: string;
@@ -72,7 +65,7 @@ export default class OrganisationTypeRolePermissionList extends Vue {
     return this.permissionCategories.map((cat, index) => ({
       id: index.toString(),
       label: cat.label,
-      options: this.organisationTypePermissions
+      options: this.rolePermissions
         .filter(p => p.code.startsWith(cat.prefix))
         .map(p => ({
           id: p.id,
@@ -85,18 +78,11 @@ export default class OrganisationTypeRolePermissionList extends Vue {
 
   mounted(): void {
     this.fetchPermissionsCategories();
-    this.fetchOrganisationTypePermissions();
     this.fetchRolePermissions();
   }
 
   async fetchPermissionsCategories(): Promise<void> {
     this.permissionCategories = await this.permissionService.getCategories();
-  }
-
-  async fetchOrganisationTypePermissions() {
-    this.organisationTypePermissions = await this.organisationTypePermissionService.getMany(
-      this.organisationTypeId
-    );
   }
 
   async fetchRolePermissions() {
