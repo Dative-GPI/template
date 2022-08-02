@@ -125,6 +125,7 @@ services:
 
 networks:
   XXXXX:
+    name: "extension_XXXXX"
 
 volumes:
   data-extension-db:

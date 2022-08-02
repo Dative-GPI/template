@@ -37,13 +37,12 @@ export default class GoToExemple extends Vue {
   }
 
   mounted() {
-    this.extensionCommunicationService.setTitle("Go to exemple");
+    this.extensionCommunicationService.setTitle(this.$tr("ui.go-to-exemple","Go to exemple"));
     this.extensionCommunicationService.setCrumbs([
       {
-        codeLabel: "goto",
-        to: GOTO_PATH,
-        defaultLabel: "Goto",
-        disabled: false
+        text: this.$tr("ui.go-to-exemple","Go to exemple"),
+        to: `${GOTO_PATH}`,
+        disabled: true
       },
     ]);
     this.fetch();

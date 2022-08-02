@@ -65,13 +65,12 @@ export default class DrawerExemple extends Vue {
   }
 
   mounted() {
-    this.extensionCommunicationService.setTitle("Drawer exemple");
+    this.extensionCommunicationService.setTitle(this.$tr("ui.drawer-exemple","Drawer exemple"));
     this.extensionCommunicationService.setCrumbs([
       {
-        codeLabel: "Exemple",
-        to: EXEMPLES_PATH,
-        defaultLabel: "Exemple",
-        disabled: false
+        text: this.$tr("ui.drawer-exemple","Drawer exemple"),
+        to: `${EXEMPLES_PATH}`,
+        disabled: true
       },
     ]);
     this.fetch();

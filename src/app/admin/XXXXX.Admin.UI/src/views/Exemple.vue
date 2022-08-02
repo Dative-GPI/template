@@ -41,142 +41,122 @@ export default class Exemple extends Vue {
     this.extensionCommunicationService.setTitle("Exemple");
     this.extensionCommunicationService.setCrumbs([
       {
-        codeLabel: "Secret",
+        text: "Secret",
         to: "/applications/secret/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba",
-        defaultLabel: "Secret",
         disabled: false
       },
       {
-        codeLabel: "Secret",
+        text: "Secret",
         to: "/applications/secret/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba",
-        defaultLabel: "Secret",
         disabled: false
       },
       {
-        codeLabel: "Secret",
+        text: "Secret",
         to: "/applications/secret/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba",
-        defaultLabel: "Secret",
+
         disabled: false
       },
       {
-        codeLabel: "Secret",
+        text: "Secret",
         to: "/applications/secret/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba",
-        defaultLabel: "Secret",
         disabled: false
       },
       {
-        codeLabel: "Secret",
+        text: "Secret",
         to: "/applications/secret/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba",
-        defaultLabel: "Secret",
+
         disabled: false
       },
       {
-        codeLabel: "Secret",
+        text: "Secret",
         to: "/applications/secret/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba",
-        defaultLabel: "Secret",
+
         disabled: false
       },
       {
-        codeLabel: "Secret",
+        text: "Secret",
         to: "/applications/secret/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba",
-        defaultLabel: "Secret",
         disabled: false
       },
       {
-        codeLabel: "Secret",
+        text: "Secret",
         to: "/applications/secret/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba",
-        defaultLabel: "Secret",
         disabled: false
       },
       {
-        codeLabel: "Secret",
+        text: "Secret",
         to: "/applications/secret/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba",
-        defaultLabel: "Secret",
         disabled: false
       },
       {
-        codeLabel: "Secret",
+        text: "Secret",
         to: "/applications/secret/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba",
-        defaultLabel: "Secret",
         disabled: false
       },
       {
-        codeLabel: "Secret",
+        text: "Secret",
         to: "/applications/secret/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba",
-        defaultLabel: "Secret",
         disabled: false
       },
       {
-        codeLabel: "Secret",
+        text: "Secret",
         to: "/applications/secret/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba",
-        defaultLabel: "Secret",
         disabled: false
       },
       {
-        codeLabel: "Secret",
+        text: "Secret",
         to: "/applications/secret/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba",
-        defaultLabel: "Secret",
         disabled: false
       },
       {
-        codeLabel: "Secret",
+        text: "Secret",
         to: "/applications/secret/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba",
-        defaultLabel: "Secret",
         disabled: false
       },
       {
-        codeLabel: "Secret",
+        text: "Secret",
         to: "/applications/secret/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba",
-        defaultLabel: "Secret",
         disabled: false
       },
       {
-        codeLabel: "Secret",
+        text: "Secret",
         to: "/applications/secret/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba",
-        defaultLabel: "Secret",
         disabled: false
       },
       {
-        codeLabel: "Secret",
+        text: "Secret",
         to: "/applications/secret/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba",
-        defaultLabel: "Secret",
         disabled: false
       },
       {
-        codeLabel: "Secret",
+        text: "Secret",
         to: "/applications/secret/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba",
-        defaultLabel: "Secret",
         disabled: false
       },
       {
-        codeLabel: "Secret",
+        text: "Secret",
         to: "/applications/secret/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba",
-        defaultLabel: "Secret",
         disabled: false
       },
       {
-        codeLabel: "Secret",
+        text: "Secret",
         to: "/applications/secret/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba",
-        defaultLabel: "Secret",
         disabled: false
       },
       {
-        codeLabel: "Secret",
+        text: "Secret",
         to: "/applications/secret/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba",
-        defaultLabel: "Secret",
         disabled: false
       },
       {
-        codeLabel: "Secret",
+        text: "Secret",
         to: "/applications/secret/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba",
-        defaultLabel: "Secret",
         disabled: false
       },
       {
-        codeLabel: "Exemple",
-        to: EXEMPLES_PATH,
-        defaultLabel: "Exemple",
-        disabled: false
+        text: "Exemple",
+        to: `/${EXEMPLES_PATH}`,
+        disabled: true
       },
     ]);
   }

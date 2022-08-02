@@ -11,8 +11,7 @@ import { DependencyContainer } from "tsyringe";
 import { Component, Inject, Vue } from "vue-property-decorator";
 
 @Component({
-  components: {
-  }
+  components: {}
 })
 export default class Secret extends Vue {
   @Inject(PROVIDER)
@@ -35,17 +34,16 @@ export default class Secret extends Vue {
     this.extensionCommunicationService.setTitle("Secret");
     this.extensionCommunicationService.setCrumbs([
       {
-        codeLabel: "Exemple",
-        to: EXEMPLES_PATH,
-        defaultLabel: "Exemple",
+        text: "Exemple",
+        to: `${EXEMPLES_PATH}`,
         disabled: false
       },
-        {
-          codeLabel: "Secret",
-          to: "/applications/secret/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba",
-          defaultLabel: "Secret",
-          disabled: true
-        },
+      {
+        text: "Secret",
+        to:
+          "/applications/secret/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba",
+        disabled: true
+      }
     ]);
   }
 }

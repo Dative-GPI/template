@@ -33,7 +33,6 @@ export class ExtensionCommunicationService
   }
   
   setCrumbs(crumbs: any[]) {
-    console.log("setCrumbs", crumbs);
     if (this.crumbs != crumbs) {
       this.crumbs = crumbs;
       this.notifyCrumbs();
