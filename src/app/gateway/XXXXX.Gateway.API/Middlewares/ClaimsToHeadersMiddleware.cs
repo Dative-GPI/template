@@ -1,9 +1,5 @@
 using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Net.Http.Headers;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Authorization;
@@ -11,9 +7,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Net.Http.Headers;
+
 using XXXXX.Domain.Abstractions;
-using XXXXX.Domain.Models;
 
 namespace XXXXX.Gateway.API.Middlewares
 {
@@ -33,28 +28,34 @@ namespace XXXXX.Gateway.API.Middlewares
 
         public async Task InvokeAsync(HttpContext context)
         {
-            _logger.LogTrace("Claims to header middleware start");
+            _logger.LogTrace("Invoked");
 
             using var scope = _sp.CreateScope();
             var claimFactory = scope.ServiceProvider.GetRequiredService<IClaimsFactory>();
             // Clean headers potentially used
             context.Request.Headers.Remove("X-User-Id");
+            context.Request.Headers.Remove("X-Source-Id");
             context.Request.Headers.Remove("X-Application-Id");
-            
+
             if (context.Features.Get<IEndpointFeature>().Endpoint.Metadata.Any(m => m is AllowAnonymousAttribute))
             {
-                _logger.LogTrace("Claims to header middleware: anonymous request");
+                _logger.LogTrace("Anonymous request");
                 await _next(context);
             }
             else
             {
-                var claims = claimFactory.Get((ClaimsIdentity)context.User.Identity);
+                var claims = claimFactory.Get(context.User.Claims);
 
                 context.Request.Headers.Add("X-Application-Id", claims.ApplicationId.ToString());
-                context.Request.Headers.Add("X-User-Id", claims.UserId.ToString());
 
+                if (claims.UserId.HasValue)
+                    context.Request.Headers.Add("X-User-Id", claims.UserId.ToString());
 
-                _logger.LogTrace("Claims to header middleware: claims added");
+                if (claims.SourceId.HasValue)
+                    context.Request.Headers.Add("X-Source-Id", claims.SourceId.ToString());
+
+                // _logger.LogTrace("Headers {headers} added", context.Request.Headers.ToDictionary(h => h.Key, h => h.Value));
+
                 await _next(context);
             }
         }

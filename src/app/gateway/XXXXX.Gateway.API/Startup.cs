@@ -5,13 +5,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 
-using XXXXX.Domain.Settings;
 using Microsoft.AspNetCore.HttpOverrides;
 using System.Net.Http;
+
 using XXXXX.CrossCutting.DI;
 using XXXXX.Gateway.Core.DI;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authentication;
+using XXXXX.Gateway.API.DI;
 
 namespace XXXXX.Gateway.API
 {
@@ -27,10 +26,13 @@ namespace XXXXX.Gateway.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCore();
+            services.AddCore(Configuration);
             services.AddCrossCutting(Configuration);
+            
+            services.AddCustomContext();
 
             services.AddControllers();
+            services.AddHealthChecks();
 
             services.AddHttpClient(string.Empty, c => { }).ConfigurePrimaryHttpMessageHandler(() =>
                  new HttpClientHandler
@@ -48,6 +50,7 @@ namespace XXXXX.Gateway.API
             });
 
             var proxyBuilder = services.AddReverseProxy();
+            proxyBuilder.AddTransforms<FoundationRedirectTransform>();
             proxyBuilder.LoadFromConfig(Configuration.GetSection("ReverseProxy"));
         }
 
@@ -76,10 +79,13 @@ namespace XXXXX.Gateway.API
 
             app.UseRouting();
 
+            app.UseHealthChecks("/health");
+
             app.UseJWTAuthenticationMiddleware();
             app.UseAuthorization();
 
             app.UseClaimsToHeadersMiddleware();
+            app.UseCustomContext();
 
             app.UseEndpoints(endpoints =>
             {

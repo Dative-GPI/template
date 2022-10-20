@@ -4,6 +4,7 @@ using AutoMapper;
 using Bones.Flow;
 using Bones.Repository.Interfaces;
 using Microsoft.Extensions.Logging;
+
 using XXXXX.Domain.Models;
 using XXXXX.Domain.Repositories.Interfaces;
 using XXXXX.Gateway.Core.Interfaces;
@@ -41,7 +42,8 @@ namespace XXXXX.Gateway.Core.Services
             {
                 ApplicationId = payload.ApplicationId,
                 AdminHost = payload.AdminHost,
-                ShellHost = payload.ShellHost
+                ShellHost = payload.ShellHost,
+                AdminJWT = payload.AdminJWT
             };
 
             var result = await _createApplicationCommandHandler.HandleAsync(command);

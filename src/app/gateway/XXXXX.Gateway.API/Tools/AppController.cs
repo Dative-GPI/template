@@ -16,6 +16,11 @@ namespace XXXXX.Gateway.API.Controllers
         {
             return new Guid(Request.Headers["X-User-Id"].ToString());
         }
+
+        protected Guid GetSourceId()
+        {
+            return new Guid(Request.Headers["X-Source-Id"].ToString());
+        }
         
         protected Guid GetOrganisationId()
         {
@@ -27,7 +32,7 @@ namespace XXXXX.Gateway.API.Controllers
             return new Guid(Request.Headers["X-Organisation-Id"].ToString());
         }
 
-        protected Guid GetUserapplicationId()
+        protected Guid GetUserApplicationId()
         {
             if (string.IsNullOrWhiteSpace(Request.Headers["X-User-Application-Id"].ToString()))
             {
@@ -37,24 +42,14 @@ namespace XXXXX.Gateway.API.Controllers
             return new Guid(Request.Headers["X-User-Application-Id"].ToString());
         }
 
-        protected Guid GetLanguageId()
+        protected string GetLanguageCode()
         {
-            if (string.IsNullOrWhiteSpace(Request.Headers["X-Language-Id"].ToString()))
+            if (string.IsNullOrWhiteSpace(Request.Headers["Accept-Language"].ToString()))
             {
                 throw new Exception(ErrorCode.MissingLanguage);
             }
 
-            return new Guid(Request.Headers["X-Language-Id"].ToString());
-        }
-
-        protected Guid GetLanguageCode()
-        {
-            if (string.IsNullOrWhiteSpace(Request.Headers["X-Language-Code"].ToString()))
-            {
-                throw new Exception(ErrorCode.MissingLanguage);
-            }
-
-            return new Guid(Request.Headers["X-Language-Code"].ToString());
+            return Request.Headers["Accept-Language"].ToString();
         }
     }
 }

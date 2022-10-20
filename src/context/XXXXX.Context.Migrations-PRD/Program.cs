@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 using Microsoft.EntityFrameworkCore;
 
-namespace Bongard.Context.Migrations
+namespace XXXXX.Context.Migrations
 {
     class Program
     {

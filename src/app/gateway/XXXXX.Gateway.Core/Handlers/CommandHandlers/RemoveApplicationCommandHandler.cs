@@ -1,9 +1,9 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+
 using Bones.Flow;
-using Bones.Repository.Interfaces;
-using XXXXX.Domain.Repositories.Commands;
+
 using XXXXX.Domain.Repositories.Interfaces;
 using XXXXX.Gateway.Core.Requests.Commands;
 

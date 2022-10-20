@@ -5,15 +5,17 @@ using System.Net;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Net.Http.Headers;
 
-using XXXXX.Domain.Models;
+using XXXXX.Domain.Abstractions;
+
+using XXXXX.Gateway.Core.Abstractions;
 
 namespace XXXXX.Gateway.API.Middlewares
 {
@@ -34,50 +36,59 @@ namespace XXXXX.Gateway.API.Middlewares
 
         public async Task InvokeAsync(HttpContext context)
         {
-            _logger.LogTrace("JWT authentication middleware start");
+            _logger.LogTrace("Invoked");
 
             if (context.Features.Get<IEndpointFeature>().Endpoint.Metadata.Any(m => m is AllowAnonymousAttribute))
             {
+                _logger.LogTrace("Anonymous request");
                 await _next(context);
             }
             else
             {
-                var handler = new HttpClientHandler();
-                handler.ClientCertificateOptions = ClientCertificateOption.Manual;
-                handler.ServerCertificateCustomValidationCallback =
-                    (httpRequestMessage, cert, cetChain, policyErrors) =>
-                {
-                    return true;
-                };
-
-                var client = new HttpClient(handler);
-                var url = "https://foundation-admin.localhost/api/v1/users/current";
+                using var scope = _serviceProvider.CreateScope();
+                var sp = scope.ServiceProvider;
 
                 var bearer = context.Request.Headers[HeaderNames.Authorization];
-                client.DefaultRequestHeaders.Add("Authorization", bearer.ToString());
 
-                var response = await client.GetAsync(url);
-
-                if (response.StatusCode == HttpStatusCode.OK)
+                if (String.IsNullOrWhiteSpace(bearer))
                 {
-                    _logger.LogTrace("JWT authentication middleware Authentication succeed");
+                    Unauthorized(context);
+                    return;
+                }
 
-                    var toRead = bearer.ToString().Substring("Bearer ".Length);
-                    var token = new JwtSecurityTokenHandler().ReadJwtToken(toRead);
+                var toRead = bearer.ToString().Substring("Bearer ".Length);
+                var token = new JwtSecurityTokenHandler().ReadJwtToken(toRead);
+                var claimsFactory = sp.GetRequiredService<IClaimsFactory>();
+
+                var claims = claimsFactory.Get(token.Claims);
+
+                var clientFactory = sp.GetRequiredService<IFoundationClientFactory>();
+
+                var client = await clientFactory.Create(claims.ApplicationId, claims.LanguageCode, toRead);
+
+                var isAuthenticated = await client.Gateway.Accounts.IsAuthenticated();
+
+                if (isAuthenticated)
+                {
+                    _logger.LogTrace("Authentication succeed");
 
                     ClaimsIdentity identity = new ClaimsIdentity(token.Claims, "Custom");
 
                     context.User = new ClaimsPrincipal(identity);
-
-                    _logger.LogTrace("JWT authentication middleware Authentication terminated");
                     await _next(context);
                 }
                 else
                 {
-                    _logger.LogError("Unable to verify JWT token : {response}", response.ReasonPhrase);
-                    context.Response.StatusCode = 401;
+                    _logger.LogInformation("Unable to authenticate current request : User {user} - Source {source}", claims.UserId, claims.SourceId);
+                    Unauthorized(context);
+                    return;
                 }
             }
+        }
+
+        private void Unauthorized(HttpContext context)
+        {
+            context.Response.StatusCode = 401;
         }
     }
 }

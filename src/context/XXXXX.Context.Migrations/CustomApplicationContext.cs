@@ -16,7 +16,7 @@ namespace XXXXX.Context.Migrations
 
             // It could be possible to avoid the dependency to Context.Core in Migrations.Shared
             //  by creating the providers here ...
-            var fixturesProvider = new FixturesProvider("../Bongard.Context.Fixtures/Fixtures");
+            var fixturesProvider = new FixturesProvider("../XXXXX.Context.Fixtures/Fixtures");
 
             modelBuilder.Entity<PermissionDTO>()
                 .HasData(fixturesProvider.GetPermissions());
