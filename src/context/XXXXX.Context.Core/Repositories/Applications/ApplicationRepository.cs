@@ -19,6 +19,7 @@ namespace XXXXX.Context.Core.Repositories
         {
             _dbSet = context.Applications;
         }
+
         public Task<IEntity<Guid>> Create(CreateApplication payload)
         {
             var dto = new ApplicationDTO()
@@ -26,6 +27,7 @@ namespace XXXXX.Context.Core.Repositories
                 Id = payload.ApplicationId,
                 AdminHost = payload.AdminHost,
                 ShellHost = payload.ShellHost,
+                AdminJWT = payload.AdminJWT,
                 Disabled = false
             };
 
@@ -36,24 +38,47 @@ namespace XXXXX.Context.Core.Repositories
 
         public async Task<ApplicationDetails> Get(Guid applicationId)
         {
-            var applicationDTO = await _dbSet.AsNoTracking().SingleOrDefaultAsync(a => a.Id == applicationId);
+            var applicationDTO = await _dbSet.AsNoTracking()
+                .SingleOrDefaultAsync(a => a.Id == applicationId);
 
             if (applicationDTO == default)
             {
                 return null;
             }
+
             return new ApplicationDetails()
             {
                 Id = applicationDTO.Id,
                 AdminHost = applicationDTO.AdminHost,
-                ShellHost = applicationDTO.ShellHost
+                ShellHost = applicationDTO.ShellHost,
+                AdminJWT = applicationDTO.AdminJWT,
+                Disabled = applicationDTO.Disabled
             };
+        }
+
+        public async Task<IEntity<Guid>> Update(UpdateApplication payload)
+        {
+            var dto = await _dbSet.AsNoTracking()
+                .SingleOrDefaultAsync(a => a.Id == payload.ApplicationId);
+
+            if (dto == default)
+            {
+                return null;
+            }
+            
+            dto.AdminHost = payload.AdminHost;
+            dto.AdminJWT = payload.AdminJWT;
+            dto.ShellHost = payload.ShellHost;
+            dto.Disabled = false;
+
+            _dbSet.Update(dto);
+
+            return dto;
         }
 
         public async Task Remove(Guid applicationId)
         {
-            var applicationDTO = await _dbSet
-                .AsNoTracking()
+            var applicationDTO = await _dbSet.AsNoTracking()
                 .SingleOrDefaultAsync(a => a.Id == applicationId);
 
             applicationDTO.Disabled = true;

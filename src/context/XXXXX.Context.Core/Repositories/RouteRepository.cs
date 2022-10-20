@@ -47,7 +47,7 @@ namespace XXXXX.Context.Core.Repositories
                 ShowOnDrawer = routeDTO.ShowOnDrawer,
                 Translations = routeDTO.Translations.Select(t => new TranslationRoute()
                 {
-                    LanguageId = t.LanguageId,
+                    LanguageCode = t.LanguageCode,
                     DrawerLabel = t.DrawerLabel
                 }).ToList()
             });

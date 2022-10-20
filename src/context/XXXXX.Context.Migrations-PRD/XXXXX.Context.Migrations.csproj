@@ -24,5 +24,5 @@
     <Compile Remove="Migrations-PRD/**" Condition="'$(DOTNET_ENVIRONMENT)' != 'Production'" />
     <Compile Remove="Migrations/**" Condition="'$(DOTNET_ENVIRONMENT)' == 'Production'" />
   </ItemGroup>
-
+  
 </Project>

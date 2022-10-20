@@ -16,51 +16,51 @@ namespace XXXXX.Context.Core.Repositories
     public class PermissionRepository : IPermissionRepository
     {
         private DbSet<PermissionDTO> _dbSet;
-        private DbSet<PermissionCategoryDTO> _categorySet;
 
         public PermissionRepository(ApplicationContext context)
         {
             _dbSet = context.Permissions;
-            _categorySet = context.PermissionCategories;
-        }
-
-        public async Task<IEnumerable<PermissionCategory>> GetCategories()
-        {
-            var set = await _categorySet.ToListAsync();
-            return set.Select(c => new PermissionCategory()
-            {
-                Label = c.LabelDefault,
-                Prefix = c.Prefix,
-                Translations = c.Translations?.Select(t => new TranslationPermissionCategory()
-                {
-                    Label = t.Label,
-                    LanguageId = t.LanguageId
-                })?.ToList() ?? new List<TranslationPermissionCategory>()
-            }).ToList();
         }
 
         public async Task<IEnumerable<PermissionInfos>> GetMany(PermissionsFilter filter)
         {
-            var set = _dbSet
+            var query = _dbSet
                 .Include(p => p.OrganisationTypePermissions)
+                .Include(p => p.RolePermissions)
                 .AsQueryable();
 
-            if (filter.PermissionIds != null)
+            if (filter.PermissionIds != null && filter.PermissionIds.Any())
             {
-                set = set.Where(p => filter.PermissionIds.Contains(p.Id));
+                query = query.Where(p => filter.PermissionIds.Contains(p.Id));
             }
 
             if (!String.IsNullOrWhiteSpace(filter.Search))
             {
-
+                string caseInsensitiveSearch = filter.Search.ToLowerInvariant();
+                query = query.Where(p => 
+                    p.LabelDefault.ToLowerInvariant().Contains(caseInsensitiveSearch) ||
+                    p.Code.ToLowerInvariant().Contains(caseInsensitiveSearch)    
+                );
             }
 
             if (filter.OrganisationTypeId.HasValue)
             {
-                set = set.Where(p => p.OrganisationTypePermissions.Any(pr => pr.OrganisationTypeId == filter.OrganisationTypeId.Value));
+                query = query.Where(
+                    p => p.OrganisationTypePermissions.Any(
+                        otp => otp.OrganisationTypeId == filter.OrganisationTypeId.Value
+                    )
+                );
             }
 
-            IEnumerable<PermissionDTO> dtos = await set.AsNoTracking().ToListAsync();
+            if (filter.RoleId.HasValue)
+            {
+                query = query.Where(
+                    p => p.RolePermissions
+                        .Any(rp => rp.RoleId == filter.RoleId.Value)
+                );
+            }
+
+            IEnumerable<PermissionDTO> dtos = await query.AsNoTracking().ToListAsync();
 
             return dtos.Select(permissionDTO => new PermissionInfos()
             {
@@ -69,7 +69,7 @@ namespace XXXXX.Context.Core.Repositories
                 Label = permissionDTO.LabelDefault,
                 Translations = permissionDTO.Translations?.Select(t => new TranslationPermission()
                 {
-                    LanguageId = t.LanguageId,
+                    LanguageCode = t.LanguageCode,
                     Label = t.Label
                 })?.ToList() ?? new List<TranslationPermission>()
             }).ToList();

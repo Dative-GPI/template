@@ -16,7 +16,7 @@ namespace XXXXX.Context.Core.DTOs
 
     public class TranslationPermissionCategoryDTO
     {
-        public Guid LanguageId { get; set; }
+        public string LanguageCode { get; set; }
         public string Label { get; set; }
     }
 }

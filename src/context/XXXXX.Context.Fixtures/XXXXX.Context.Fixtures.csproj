@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\XXXXX.Context.Core\XXXXX.Context.Core.csproj" />
+    <ProjectReference Include="..\XXXXX.Context.Migrations.Shared\XXXXX.Context.Migrations.Shared.csproj" />
+    <ProjectReference Include="..\..\app\shell\XXXXX.Shell.Core\XXXXX.Shell.Core.csproj" />
+    <ProjectReference Include="..\..\app\admin\XXXXX.Admin.Core\XXXXX.Admin.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Fixtures/*.json"  CopyToOutputDirectory="PreserveNewest" />
+    <None Update="Fixtures/*.xml"  CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+</Project>

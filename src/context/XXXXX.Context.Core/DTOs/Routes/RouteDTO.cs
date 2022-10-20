@@ -25,7 +25,7 @@ namespace XXXXX.Context.Core.DTOs
 
     public class TranslationRouteDTO
     {
-        public Guid LanguageId { get; set; }
+        public string LanguageCode { get; set; }
         public string DrawerLabel { get; set; }
     }
 }

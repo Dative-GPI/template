@@ -1,0 +1,3 @@
+[submodule "depends/Bones"]
+	path = depends/Bones
+	url = https://RD-DATIVE@dev.azure.com/RD-DATIVE/bongard-connect/_git/Bones

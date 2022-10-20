@@ -20,11 +20,16 @@ services:
         PROJECT: src/app/shell/XXXXX.Shell.API
     networks:
       - XXXXX
+    extra_hosts:
+      - "foundation-admin.localhost:172.17.0.1"
+      - "foundation.localhost:172.17.0.1"
     environment:
       MEDIATOR__ENDPOINTURI: amqp://rabbitmq
       DOTNET_ENVIRONMENT: Development
       DOTNET_URLS: http://+:80
       CUSTOMCONNSTR_PGSQL: Host=db;Database=data-extension;Username=postgres;Password=example
+      IMAGE__RAWFOLDER: /images/raw
+      IMAGE__THUMBNAILFOLDER: /images/thumbnails
   
   admin:
     build: 
@@ -34,11 +39,16 @@ services:
         PROJECT: src/app/admin/XXXXX.Admin.API
     networks:
       - XXXXX
+    extra_hosts:
+      - "foundation-admin.localhost:172.17.0.1"
+      - "foundation.localhost:172.17.0.1"
     environment:
       MEDIATOR__ENDPOINTURI: amqp://rabbitmq
       DOTNET_ENVIRONMENT: Development
       DOTNET_URLS: http://+:80
       CUSTOMCONNSTR_PGSQL: Host=db;Database=data-extension;Username=postgres;Password=example
+      IMAGE__RAWFOLDER: /images/raw
+      IMAGE__THUMBNAILFOLDER: /images/thumbnails
 
   gateway:
     build: 
@@ -49,12 +59,15 @@ services:
     networks:
       - XXXXX
     extra_hosts:
+      - "foundation.localhost:172.17.0.1"
       - "foundation-admin.localhost:172.17.0.1"
     environment:
       MEDIATOR__ENDPOINTURI: amqp://rabbitmq
       DOTNET_ENVIRONMENT: Development
       DOTNET_URLS: http://+:80
       CUSTOMCONNSTR_PGSQL: Host=db;Database=data-extension;Username=postgres;Password=example
+      IMAGE__RAWFOLDER: /images/raw
+      IMAGE__THUMBNAILFOLDER: /images/thumbnails
     labels:
       - 'custom.label=extension'
       - "traefik.enable=true"
