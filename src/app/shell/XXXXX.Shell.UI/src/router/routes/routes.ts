@@ -1,7 +1,6 @@
 import { CustomRouteConfig } from "./interfaces";
 
 import SimpleTitle from "@/components/shared/SimpleTitle.vue";
-import { trimEnd } from "lodash";
 
 export const routes: CustomRouteConfig[] = [
   {
@@ -36,6 +35,15 @@ export const routes: CustomRouteConfig[] = [
     },
     meta: {
       exact: true,
+    },
+  },
+
+  {
+    path: "/role-organisations/:roleId/permissions",
+    name: "organisation-role-permissions",
+    components: {
+      default: () => import("@/views/OrganisationRolePermissions.vue"),
+      title: SimpleTitle,
     },
   },
 ];

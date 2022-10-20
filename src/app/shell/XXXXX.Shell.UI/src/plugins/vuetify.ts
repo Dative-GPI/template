@@ -5,13 +5,17 @@ import fr from 'vuetify/src/locale/fr';
 import '@mdi/font/css/materialdesignicons.css';
  
 import { Icons } from "dat-components/icons";
+import { Icons as ExtensionIcons } from "@/icons";
+import _ from 'lodash';
  
 Vue.use(Vuetify);
+
+const allIcons = _.merge(Icons, ExtensionIcons);
  
 export default new Vuetify({
   icons: {
     iconfont: 'mdi',
-    values: Icons,
+    values: allIcons,
   },
   theme: {
     options: {

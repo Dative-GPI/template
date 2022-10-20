@@ -1,6 +1,6 @@
-import { RouteConfig } from "vue-router"
-import Vue, { AsyncComponent } from "vue"
-import { ComponentOptions } from "vue/types/umd"
+import { RouteConfig } from "vue-router";
+import Vue, { AsyncComponent } from "vue";
+import { ComponentOptions } from "vue/types/umd";
 
 import SimpleTitle from "@/components/shared/SimpleTitle.vue";
 

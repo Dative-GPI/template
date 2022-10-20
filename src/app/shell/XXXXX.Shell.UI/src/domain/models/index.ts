@@ -1,4 +1,6 @@
-export * from "./shared";
+export * from "./exemple";
 
-export * from "./exempleInfos";
-export * from "./exempleDetails";
+export * from "./images";
+
+export * from "./permissions";
+export * from "./translations";

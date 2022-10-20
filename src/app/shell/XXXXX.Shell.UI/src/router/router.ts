@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
 
-import { drawerRoutes, routes } from "./routes";
+import { drawerRoutes, drawers, routes } from "./routes";
 
 Vue.use(VueRouter)
 
@@ -13,4 +13,4 @@ const router = new VueRouter({
     .concat(routes)
 })
 
-export default router
+export default router;

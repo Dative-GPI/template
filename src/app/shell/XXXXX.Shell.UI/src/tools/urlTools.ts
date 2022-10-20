@@ -1,24 +1,18 @@
 import axiosBuildURL from 'axios/lib/helpers/buildURL';
 
-function deepFlat(key: string, value: any): { key: string, value: any }[] {
-    if ((typeof value !== 'object' || value === null || value instanceof Date)) {
-        return [{ key, value }]
+
+export function buildURL(url: string, params?: any, paramsSerializer?: (params: any[]) => any[]) {
+    if (params) {
+        params = clear(params);
+        params = flat(params);
     }
-    else if (Array.isArray(value)) {
-        return value.map(i => {
-            return { key, value: i };
-        })
-    }
-    else {
-        const result = [];
-        for (const subKey in value) {
-            result.push(...deepFlat(key + "." + subKey, value[subKey]))
-        }
-        return result;
-    }
+
+    return axiosBuildURL(url, params, paramsSerializer);
 }
 
+
 function clear(params: any) {
+    // Filtering params's properties
     for (const param in params) {
         if (!params[param])
             delete params[param];
@@ -39,13 +33,18 @@ function flat(obj: any) {
 }
 
 
-export function buildURL(url: string, params?: any, paramsSerializer?: (params: any[]) => any[]) {
-
-    if (params) {
-        params = clear(params);
-
-        params = flat(params);
+function deepFlat(key: string, value: any): { key: string, value: any }[] {
+    if ((typeof value !== 'object' || value === null || value instanceof Date)) {
+        return [{ key, value }]
     }
-
-    return axiosBuildURL(url, params, paramsSerializer);
+    else if (Array.isArray(value)) {
+        return value.map(i => ({ key, value: i }));
+    }
+    else {
+        const result = [];
+        for (const subKey in value) {
+            result.push(...deepFlat(key + "." + subKey, value[subKey]))
+        }
+        return result;
+    }
 }
