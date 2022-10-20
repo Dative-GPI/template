@@ -50,7 +50,7 @@ namespace XXXXX.Admin.API.Middlewares
             catch (UnauthorizedAccessException ex)
             {
                 context.Response.Clear();
-                context.Response.StatusCode = 403; // unauthorized
+                context.Response.StatusCode = 403; // forbidden (unauthorized)
                 context.Response.ContentType = "text/plain";
                 await context.Response.WriteAsync(string.IsNullOrWhiteSpace(controllerName) ? ex.Message : controllerName);
             }

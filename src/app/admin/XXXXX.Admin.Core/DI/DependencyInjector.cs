@@ -4,6 +4,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Bones.Flow;
 using AutoMapper;
 
+using XXXXX.Admin.Core.Abstractions;
+using XXXXX.Admin.Core.Tools;
+
 namespace XXXXX.Admin.Core.DI
 {
     public static class DependencyInjector
@@ -16,9 +19,20 @@ namespace XXXXX.Admin.Core.DI
             services.AddAutoMapper();
 
             services.AddPermissions();
+            services.AddPermissionCategories();
             services.AddOrganisationTypePermissions();
             services.AddRolePermissions();
+
+            services.AddPermissionAdmins();
+            services.AddPermissionAdminCategories();
+            services.AddRoleAdminPermissions();
+
             services.AddRoutes();
+            services.AddTranslations();
+            services.AddApplicationTranslations();
+
+            services.AddScoped<IFoundationClientFactory, FoundationClientFactory>();
+            services.AddScoped<IPermissionProvider, PermissionProvider>();
 
             return services;
         }

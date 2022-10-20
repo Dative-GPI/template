@@ -24,7 +24,10 @@ namespace XXXXX.Admin.Core.Handlers
         {
             var filter = new PermissionsFilter()
             {
-                Search = request.Search
+                Search = request.Search,
+                OrganisationTypeId = request.OrganisationTypeId,
+                RoleId = request.RoleId,
+                PermissionIds = request.PermissionIds
             };
 
             return await _permissionRepository.GetMany(filter);

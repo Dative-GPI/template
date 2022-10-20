@@ -26,13 +26,5 @@ namespace XXXXX.Admin.API.Controllers
             var result = await _permissionService.GetMany(GetAppId(), GetActorId(), filter);
             return Ok(result);
         }
-
-        [Route("permissions-categories")]
-        [HttpGet]
-        public async Task<IActionResult> GetCategories()
-        {
-            var result = await _permissionService.GetCategories(GetAppId(), GetActorId());
-            return Ok(result);
-        }
     }
 }

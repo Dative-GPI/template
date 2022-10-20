@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Bones.Flow;
 
-namespace XXXXX.Domain
+namespace XXXXX.Shell.Core
 {
     public interface IAuthorizedRequest : IRequest
     {

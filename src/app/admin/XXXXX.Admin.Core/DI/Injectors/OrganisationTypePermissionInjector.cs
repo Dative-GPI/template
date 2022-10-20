@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -16,7 +17,7 @@ namespace XXXXX.Admin.Core.DI
             services.AddScoped<IQueryHandler<OrganisationTypePermissionsQuery, IEnumerable<PermissionInfos>>>(sp =>
             {
                 var pipeline = sp.GetPipelineFactory<OrganisationTypePermissionsQuery, IEnumerable<PermissionInfos>>()
-                    // .With<PermissionsMiddleware>()
+                    .With<PermissionsMiddleware>()
                     .Add<OrganisationTypePermissionsQueryHandler>()
                     .Build();
 
@@ -28,7 +29,7 @@ namespace XXXXX.Admin.Core.DI
             services.AddScoped<ICommandHandler<UpdateOrganisationTypePermissionsCommand>>(sp =>
             {
                 var pipeline = sp.GetPipelineFactory<UpdateOrganisationTypePermissionsCommand>()
-                    // .Add<PermissionsMiddleware>()
+                    .Add<PermissionsMiddleware>()
                     .Add<UpdateOrganisationTypePermissionsCommandHandler>()
                     .Build();
 

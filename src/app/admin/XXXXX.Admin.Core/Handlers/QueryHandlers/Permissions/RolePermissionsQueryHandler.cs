@@ -36,10 +36,15 @@ namespace XXXXX.Admin.Core.Handlers
 
             var permissions = await _permissionRepository.GetMany(new PermissionsFilter()
             {
-                PermissionIds = rolePermissions.Select(p => p.PermissionId)
+                PermissionIds = rolePermissions.Select(rp => rp.PermissionId)
             });
 
-            return permissions;
+            return rolePermissions.Join(
+                permissions,
+                rp => rp.PermissionId,
+                p => p.Id,
+                (rp, p) => p
+            );
         }
     }
 }

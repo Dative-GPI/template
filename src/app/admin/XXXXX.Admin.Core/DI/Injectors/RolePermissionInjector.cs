@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -5,7 +6,6 @@ using Bones.Flow;
 
 using XXXXX.Domain.Models;
 using XXXXX.Admin.Core.Handlers;
-using System;
 
 namespace XXXXX.Admin.Core.DI
 {
@@ -17,7 +17,7 @@ namespace XXXXX.Admin.Core.DI
             services.AddScoped<IQueryHandler<RolePermissionsQuery, IEnumerable<PermissionInfos>>>(sp =>
             {
                 var pipeline = sp.GetPipelineFactory<RolePermissionsQuery, IEnumerable<PermissionInfos>>()
-                    // .With<PermissionsMiddleware>()
+                    .With<PermissionsMiddleware>()
                     .Add<RolePermissionsQueryHandler>()
                     .Build();
 
@@ -29,7 +29,7 @@ namespace XXXXX.Admin.Core.DI
             services.AddScoped<ICommandHandler<UpdateRolePermissionsCommand>>(sp =>
             {
                 var pipeline = sp.GetPipelineFactory<UpdateRolePermissionsCommand>()
-                    // .Add<PermissionsMiddleware>()
+                    .Add<PermissionsMiddleware>()
                     .Add<UpdateRolePermissionsCommandHandler>()
                     .Build();
 

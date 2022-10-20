@@ -1,7 +1,7 @@
 using System;
 using Bones.Flow;
 
-namespace XXXXX.Domain
+namespace XXXXX.Shell.Core
 {
     public interface IActorRequest : IRequest
     {

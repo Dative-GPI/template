@@ -5,16 +5,15 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 
 using XXXXX.Admin.Core.Interfaces;
-using XXXXX.Admin.Core.ViewModels;
 
 namespace XXXXX.Admin.API.Controllers
 {
     [Route("api/admin/v1")]
-    public class RolePermissionscontroller : AppController
+    public class RolePermissionsController : AppController
     {
         private readonly IRolePermissionService _rolePermissionService;
 
-        public RolePermissionscontroller(IRolePermissionService rolePermissionService)
+        public RolePermissionsController(IRolePermissionService rolePermissionService)
         {
             _rolePermissionService = rolePermissionService;
         }

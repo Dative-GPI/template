@@ -39,7 +39,12 @@ namespace XXXXX.Admin.Core.Handlers
                 PermissionIds = orgTypePermissions.Select(p => p.PermissionId)
             });
 
-            return permissions;
+            return orgTypePermissions.Join(
+                permissions,
+                otp => otp.PermissionId,
+                p => p.Id,
+                (otp, p) => p
+            );
         }
     }
 }

@@ -11,7 +11,6 @@ using XXXXX.Domain.Repositories.Interfaces;
 
 using XXXXX.Admin.Core.Interfaces;
 using XXXXX.Admin.Core.ViewModels;
-using XXXXX.Domain.Repositories.Filters;
 
 namespace XXXXX.Admin.Core.Services
 {
