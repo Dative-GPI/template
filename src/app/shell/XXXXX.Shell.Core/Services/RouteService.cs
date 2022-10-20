@@ -10,36 +10,38 @@ using Bones.Repository.Interfaces;
 
 using XXXXX.Domain.Models;
 using XXXXX.Domain.Repositories.Interfaces;
-using XXXXX.shell.Core.Interfaces;
+using XXXXX.Shell.Core.Interfaces;
 using XXXXX.Shell.Core.ViewModels;
 
 namespace XXXXX.Shell.Core.Services
 {
     public class RouteService : IRouteService
     {
-        private IQueryHandler<RoutesQuery, IEnumerable<RouteInfos>> _extensionsQueryHandler;
-        private IRouteRepository _extensionRepository;
+        private IQueryHandler<RoutesQuery, IEnumerable<RouteInfos>> _routesQueryHandler;
+        private IRouteRepository _routeRepository;
         private IMapper _mapper;
 
         public RouteService(
-            IQueryHandler<RoutesQuery, IEnumerable<RouteInfos>> extensionsQueryHandler,
-            IRouteRepository extensionRepository,
+            IQueryHandler<RoutesQuery, IEnumerable<RouteInfos>> routesQueryHandler,
+            IRouteRepository routeRepository,
             IMapper mapper
         ) {
-            _extensionsQueryHandler = extensionsQueryHandler;
-            _extensionRepository = extensionRepository;
+            _routesQueryHandler = routesQueryHandler;
+            _routeRepository = routeRepository;
             _mapper = mapper;
         }
-        public async Task<IEnumerable<RouteInfosViewModel>> GetMany(Guid appId, Guid actorId, RoutesFilterViewModel filter)
+
+        public async Task<IEnumerable<RouteInfosViewModel>> GetMany(RequestHeaders headers, Guid organisationId, RoutesFilterViewModel filter)
         {
             var query = new RoutesQuery()
             {
-                ApplicationId = appId,
-                ActorId = actorId,
+                ApplicationId = headers.ApplicationId,
+                ActorId = headers.ActorId,
+                OrganisationId = organisationId,
                 Search = filter.Search
             };
 
-            var result = await _extensionsQueryHandler.HandleAsync(query);
+            var result = await _routesQueryHandler.HandleAsync(query);
 
             return _mapper.Map<IEnumerable<RouteInfos>, IEnumerable<RouteInfosViewModel>>(result);
         }

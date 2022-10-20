@@ -17,7 +17,7 @@ To initialize your extension before coding, launch the following command : `bash
 This will rename files and folders containing XXXXX placeholders, as well as replace those placeholders in files.  
 They are usually found in C# files in the namespaces.
 
-You should also modify the value of COMPOSE_PROJECT_NAME in the *.env* file.
+You should also modify the value of COMPOSE_PROJECT_NAME in the *.env* file and the routes in the controllers.
 
 ## Testing the extension
 

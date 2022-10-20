@@ -5,20 +5,23 @@ using Bones.Exceptions;
 
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Controllers;
+using Microsoft.Extensions.Logging;
 
 namespace XXXXX.Shell.API.Middlewares
 {
-  public class CustomExceptionHandlerMiddleware
-  {
+    public class CustomExceptionHandlerMiddleware
+    {
+        private readonly ILogger<CustomExceptionHandlerMiddleware> _logger;
         private readonly RequestDelegate _next;
 
-        public CustomExceptionHandlerMiddleware(RequestDelegate next)
+        public CustomExceptionHandlerMiddleware(RequestDelegate next, ILogger<CustomExceptionHandlerMiddleware> logger)
         {
+            _logger = logger;
             _next = next;
         }
 
         public async Task InvokeAsync(HttpContext context)
-        {   
+        {
             var controllerName = string.Empty;
 
             try
@@ -40,54 +43,21 @@ namespace XXXXX.Shell.API.Middlewares
                 // Call the next delegate/middleware in the pipeline
                 await _next(context);
             }
-            catch (DbUpdateException ex)
+            catch (UnauthorizedAccessException unauthorizedException)
             {
+                _logger.LogError(unauthorizedException, "Access denied.");
+
                 context.Response.Clear();
-                context.Response.StatusCode = 449; // retry
-                context.Response.ContentType = "text/plain";
-                await context.Response.WriteAsync(string.IsNullOrWhiteSpace(controllerName) ? ex.Message : controllerName);
+                context.Response.StatusCode = 401;
+                await context.Response.WriteAsync("Access denied");
             }
-            catch (UnauthorizedAccessException ex)
+            catch (Exception exception)
             {
+                _logger.LogError(exception, "An error occured");
+
                 context.Response.Clear();
-                context.Response.StatusCode = 403; // unauthorized
-                context.Response.ContentType = "text/plain";
-                await context.Response.WriteAsync(string.IsNullOrWhiteSpace(controllerName) ? ex.Message : controllerName);
-            }
-            catch (ArgumentNullException ex)
-            {
-                context.Response.Clear();
-                context.Response.StatusCode = 400; // bad request
-                context.Response.ContentType = "text/plain";
-                await context.Response.WriteAsync(string.IsNullOrWhiteSpace(controllerName) ? ex.Message : controllerName);
-            }
-            catch (NullReferenceException ex)
-            {
-                context.Response.Clear();
-                context.Response.StatusCode = 400; // bad request
-                context.Response.ContentType = "text/plain";
-                await context.Response.WriteAsync(string.IsNullOrWhiteSpace(controllerName) ? ex.Message : controllerName);
-            }
-            catch (InvalidOperationException ex)
-            {
-                context.Response.Clear();
-                context.Response.StatusCode = 404; // not found
-                context.Response.ContentType = "text/plain";
-                await context.Response.WriteAsync(string.IsNullOrWhiteSpace(controllerName) ? ex.Message : controllerName);
-            }
-            catch (ArgumentException ex)
-            {
-                context.Response.Clear();
-                context.Response.StatusCode = 409; // conflict
-                context.Response.ContentType = "text/plain";
-                await context.Response.WriteAsync(string.IsNullOrWhiteSpace(controllerName) ? ex.Message : controllerName);
-            }
-            catch (Exception ex)
-            {
-                context.Response.Clear();
-                context.Response.StatusCode = 500; // server error
-                context.Response.ContentType = "text/plain";
-                await context.Response.WriteAsync(string.IsNullOrWhiteSpace(controllerName) ? ex.Message : controllerName);
+                context.Response.StatusCode = 500;
+                await context.Response.WriteAsync("It's an error");
             }
 
             return;

@@ -1,8 +1,11 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-using Bones.Flow;
 using AutoMapper;
+
+using Bones.Flow;
+using XXXXX.Shell.Core.Abstractions;
+using XXXXX.Shell.Core.Tools;
 
 namespace XXXXX.Shell.Core.DI
 {
@@ -13,10 +16,17 @@ namespace XXXXX.Shell.Core.DI
             services.AddFlow();
             services.AddServices();
             services.AddMiddlewares();
+
+            services.AddPermissions();
+            services.AddOrganisationPermissions();
+            services.AddRolePermissions();
+
+            services.AddRoutes();
             
             services.AddAutoMapper();
 
-            services.AddRoutes();
+            services.AddScoped<IFoundationClientFactory, FoundationClientFactory>();
+            services.AddScoped<IPermissionProvider, PermissionProvider>();
 
             return services;
         }

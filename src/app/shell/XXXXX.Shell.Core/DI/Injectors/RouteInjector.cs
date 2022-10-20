@@ -20,7 +20,7 @@ namespace XXXXX.Shell.Core.DI
             services.AddScoped<IQueryHandler<RoutesQuery, IEnumerable<RouteInfos>>>(sp =>
             {
                 var pipeline = sp.GetPipelineFactory<RoutesQuery, IEnumerable<RouteInfos>>()
-                    // .With<PermissionsMiddleware>()
+                    .With<PermissionsMiddleware>()
 					.Add<RoutesQueryHandler>()
                     .Build();
 

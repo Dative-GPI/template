@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Net.Http;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -11,6 +8,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 
 using XXXXX.Context.Core.DI;
+using XXXXX.CrossCutting.DI;
+using XXXXX.Shell.API.DI;
 using XXXXX.Shell.Core.DI;
 
 namespace XXXXX.Shell.API
@@ -29,8 +28,17 @@ namespace XXXXX.Shell.API
         {
             services.AddContext(Configuration);
             services.AddCore(Configuration);
+            services.AddCrossCutting(Configuration);
 
-            services.AddHttpClient();
+            services.AddCustomContext();
+
+            services.AddHttpClient(string.Empty, c => { }).ConfigurePrimaryHttpMessageHandler(() =>
+                 new HttpClientHandler
+                 {
+                     ClientCertificateOptions = ClientCertificateOption.Manual,
+                     ServerCertificateCustomValidationCallback = (httpRequestMessage, cert, certChain, policyErrors) => true
+                 }
+            );
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -52,6 +60,11 @@ namespace XXXXX.Shell.API
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseAuthorization();
+
+            app.UseCustomExceptionHandler();
+            app.UseCustomContext();
 
             app.UseEndpoints(endpoints =>
             {
