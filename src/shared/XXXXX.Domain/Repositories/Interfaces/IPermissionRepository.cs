@@ -9,6 +9,5 @@ namespace XXXXX.Domain.Repositories.Interfaces
     public interface IPermissionRepository
     {
         Task<IEnumerable<PermissionInfos>> GetMany(PermissionsFilter filter);
-        Task<IEnumerable<PermissionCategory>> GetCategories();
     }
 }

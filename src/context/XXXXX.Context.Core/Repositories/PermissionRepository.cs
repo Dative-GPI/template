@@ -45,9 +45,9 @@ namespace XXXXX.Context.Core.Repositories
                 .Include(p => p.OrganisationTypePermissions)
                 .AsQueryable();
 
-            if (filter.Ids != null)
+            if (filter.PermissionIds != null)
             {
-                set = set.Where(p => filter.Ids.Contains(p.Id));
+                set = set.Where(p => filter.PermissionIds.Contains(p.Id));
             }
 
             if (!String.IsNullOrWhiteSpace(filter.Search))

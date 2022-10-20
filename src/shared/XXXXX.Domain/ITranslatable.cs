@@ -10,6 +10,6 @@ namespace XXXXX.Domain.Models
 
     public interface ITranslation
     {
-        Guid LanguageId { get; }
+        string LanguageCode { get; }
     }
 }

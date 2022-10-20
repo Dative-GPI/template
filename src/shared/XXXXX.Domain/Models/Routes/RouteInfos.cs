@@ -6,6 +6,7 @@ namespace XXXXX.Domain.Models
 	public class RouteInfos
 	{
 		public Guid Id { get; set; }
+        public IEnumerable<string> Authorizations { get; set; }
 
         public bool ShowOnDrawer { get; set; }
         public string DrawerIcon { get; set; }

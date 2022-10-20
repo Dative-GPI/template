@@ -1,7 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Http" Version="5.0.0"/>
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="5.0.0"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\XXXXX.Domain\XXXXX.Domain.csproj"/>
     <ProjectReference Include="..\..\context\XXXXX.Context.Core\XXXXX.Context.Core.csproj" />
+    <ProjectReference Include="..\Foundation.Clients\Foundation.Clients.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

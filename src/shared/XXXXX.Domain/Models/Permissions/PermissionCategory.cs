@@ -12,7 +12,7 @@ namespace XXXXX.Domain.Models
 
     public class TranslationPermissionCategory: ITranslation
     {
-        public Guid LanguageId { get; set; }
+        public string LanguageCode { get; set; }
         public string Label { get; set; }
     }
 }

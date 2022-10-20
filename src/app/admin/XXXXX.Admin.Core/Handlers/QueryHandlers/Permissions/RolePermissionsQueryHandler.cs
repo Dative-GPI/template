@@ -36,7 +36,7 @@ namespace XXXXX.Admin.Core.Handlers
 
             var permissions = await _permissionRepository.GetMany(new PermissionsFilter()
             {
-                Ids = rolePermissions.Select(p => p.PermissionId)
+                PermissionIds = rolePermissions.Select(p => p.PermissionId)
             });
 
             return permissions;
