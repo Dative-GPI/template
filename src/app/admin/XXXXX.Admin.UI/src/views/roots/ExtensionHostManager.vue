@@ -2,7 +2,6 @@
   <div>
     <slot
       :token="token"
-      :languageId="languageId"
       :languageCode="languageCode"
       :userApplicationId="userApplicationId"
     />
@@ -20,11 +19,13 @@ import {
   Watch
 } from "vue-property-decorator";
 
-import { ORGANISATION, PROVIDER, SERVICES as S } from "@/config";
+import { ORGANISATION, PROVIDER, SERVICES as S} from "@/config";
 import { IExtensionCommunicationService } from "@/interfaces";
 
 @Component({})
 export default class ExtensionHostManager extends Vue {
+  // Properties
+
   @ProvideReactive(ORGANISATION)
   get organisationId() {
     return new URL(window.location.toString()).searchParams.get(
@@ -35,26 +36,19 @@ export default class ExtensionHostManager extends Vue {
   @Inject(PROVIDER)
   container!: DependencyContainer;
 
-  fetching = true;
+  // Data
 
+  fetching = true;
   subscriberIds: number[] = [];
 
-  mounted(): void {
-    // this.extensionService.subscribe();
-    setInterval(this.notify, 10);
-    this.notify();
-  }
+  // Computed Properties
 
   get token() {
     return new URL(window.location.toString()).searchParams.get("token");
   }
 
-  get languageId() {
-    return new URL(window.location.toString()).searchParams.get("languageCode");
-  }
-
   get languageCode() {
-    return new URL(window.location.toString()).searchParams.get("languageId");
+    return new URL(window.location.toString()).searchParams.get("languageCode");
   }
 
   get userApplicationId() {
@@ -63,35 +57,38 @@ export default class ExtensionHostManager extends Vue {
     );
   }
 
-  get extensionCommunicationService() {
-    return this.container.resolve<IExtensionCommunicationService>(
-      S.EXTENSIONCOMMUNICATIONSERVICE
-    );
+  get extensionCommunicationService(){
+    return this.container.resolve<IExtensionCommunicationService>(S.EXTENSIONCOMMUNICATIONSERVICE);
   }
 
-  get currentRoute() {
+  get currentRoute(){
     return this.$route;
+  } 
+
+  // Methods
+
+  goTo(){
+    if(this.$route.meta && !this.$route.meta.drawer) {
+      this.extensionCommunicationService.goTo(this.$route.path);
+    } 
   }
 
-  unmounted() {
-    _.forEach(this.subscriberIds, s => {
-      this.extensionCommunicationService.unsubscribe(s);
-    });
+  // Lifecycle
+
+  mounted(): void {
+    setInterval(this.notify, 10);
+    this.notify();
   }
+
+  beforeDestroy(){
+    _.forEach(this.subscriberIds, s => {
+      this.extensionCommunicationService.unsubscribe(s)
+    });
+  } 
 
   notify() {
-    if (this.$route.path != "/") {
-      //todo there is maybe a better solution
-      this.extensionCommunicationService.setHeight(
-        document.body.scrollHeight,
-        this.$route.path
-      );
-    }
-  }
-
-  goTo() {
-    if (this.$route.meta && !this.$route.meta.drawer) {
-      this.extensionCommunicationService.goTo(this.$route.path);
+    if(this.$route.path != "/"){//todo there is maybe a better solution 
+      this.extensionCommunicationService.setHeight(document.body.scrollHeight, this.$route.path);
     }
   }
 

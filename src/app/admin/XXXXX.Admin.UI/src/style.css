@@ -13,3 +13,9 @@ html::-webkit-scrollbar {
   min-height: auto;
   display: block;
 }
+
+/** Maybe remove those */
+
+.theme--light.v-input input, .theme--light.v-input textarea {
+  color: var(--v-grey-3-base) !important;
+}

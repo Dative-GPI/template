@@ -1,5 +1,7 @@
 <template>
-  <div><slot></slot></div>
+  <div>
+    <slot></slot>
+  </div>
 </template>
 
 <script lang="ts">
@@ -10,29 +12,58 @@ import {
   Inject,
   Watch,
   Prop,
+  InjectReactive,
 } from "vue-property-decorator";
 
-import { PROVIDER } from "@/config";
+import { ORGANISATION, PROVIDER, SERVICES } from "@/config";
+import { IPermissionAdminService } from "@/interfaces";
 
 @Component
-export default class App extends Vue {
+export default class PermissionsProvider extends Vue {
+  // Properties
+
+  @InjectReactive(ORGANISATION)
+  organisationId!: string;
+
   @Inject(PROVIDER)
   container!: DependencyContainer;
 
-  @Prop({required: true, default: null})
-  userApplicationId!: string | null;
+  @Prop({ required: true })
+  userApplicationId!: string;
 
-  mounted(): void {
-    this.reset();
+  // Data
+
+  fetching = true;
+
+  // Computed Properties
+
+  get permissionAdminService(): IPermissionAdminService {
+    return this.container.resolve<IPermissionAdminService>(
+      SERVICES.PERMISSIONADMINSERVICE
+    );
   }
 
-  reset() {
-    // if (this.userApplicationId)
-    // Get the permissions for the v-right directive
-    // this.$pm.set(permission);
+  // Methods
+  // Lifecycle
+
+  mounted(): void {
+    this.fetch();
+  }
+
+  async fetch() {
+    this.fetching = true;
+
+    try {
+      const permissions = await this.permissionAdminService.getCurrent();
+
+      // Get the permissions for the v-right directive
+      this.$pm.set(permissions);
+    } finally {
+      this.fetching = false;
+    }
   }
 
   @Watch("userApplicationId")
-  onUserOrganisationChanged = this.reset;
+  onUserApplicationIdChanged = this.fetch;
 }
 </script>

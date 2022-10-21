@@ -9,8 +9,6 @@ export const routes: CustomRouteConfig[] = [
         components: {
             default: () => import("@/views/OrganisationTypePermissions.vue"),
             title: SimpleTitle
-            // crumbs: () => import("@/components/organisationTypes/nav/OrganisationTypePermissionsCrumbs.vue"),
-            // title: () => import("@/components/organisationTypes/nav/OrganisationTypeTitle.vue")
         }
     },
     {
@@ -19,10 +17,26 @@ export const routes: CustomRouteConfig[] = [
         components: {
             default: () => import("@/views/OrganisationTypeRolePermissions.vue"),
             title: SimpleTitle
-            // crumbs: () => import("@/components/organisationTypes/nav/OrganisationTypePermissionsCrumbs.vue"),
-            // title: () => import("@/components/organisationTypes/nav/OrganisationTypeTitle.vue")
         }
     },
+    {
+      path: "/role-admin/:roleAdminId/permissions",
+      name: "application-role-permissions",
+      components: {
+        default: () => import("@/views/ApplicationRolePermissions.vue"),
+        title: SimpleTitle
+      },
+    },
+    {
+      path: "/application-translations",
+      name: "application-translations",
+      components: {
+        default: () => import("@/views/Translations.vue"),
+        title: SimpleTitle,
+      },
+    },
+
+
     {
         path: "/applications/exemple",
         name: "Exemple",

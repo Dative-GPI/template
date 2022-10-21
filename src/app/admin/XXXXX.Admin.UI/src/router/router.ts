@@ -1,16 +1,17 @@
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
 
-import { drawerRoutes, routes } from "./routes";
+import { drawerRoutes, routes, drawers } from "./routes";
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: ([] as RouteConfig[])
+    .concat(drawers)
     .concat(drawerRoutes)
     .concat(routes)
 })
 
-export default router
+export default router;

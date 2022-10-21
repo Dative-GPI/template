@@ -1,1 +1,1 @@
-export const BASE_PATH = "/applications"
+export const BASE_PATH = "/extension"
