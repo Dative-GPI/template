@@ -12,7 +12,7 @@ namespace XXXXX.Context.Migrations
         {
             IEnumerable<DbContext> contexts = new List<DbContext>()
             {
-                new ApplicationContextDesignFactory().CreateDbContext(null),
+                new CustomApplicationContextDesignFactory().CreateDbContext(null),
             };
 
             foreach (var context in contexts)

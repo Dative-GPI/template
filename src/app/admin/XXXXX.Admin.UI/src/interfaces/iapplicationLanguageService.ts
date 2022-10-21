@@ -1,6 +1,5 @@
 import { Language } from "@/domain/models";
-import { INotifyService } from ".";
 
-export interface IApplicationLanguageService extends INotifyService<Language> {
+export interface IApplicationLanguageService {
     getMany(): Promise<Language[]>
 }

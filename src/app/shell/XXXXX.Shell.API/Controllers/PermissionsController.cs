@@ -7,7 +7,7 @@ using XXXXX.Shell.Core.Interfaces;
 
 namespace XXXXX.Shell.API.Controllers
 {
-    [Route("api/v1/XXXXX")]
+    [Route("api/v1")]
     public class PermissionsController : AppController
     {
         private readonly IPermissionService _permissionService;

@@ -7,21 +7,13 @@ import {
   CollectionChangedEventArgs,
 } from "@/domain/events";
 
-export abstract class NotifyService<TInfos, TDetails extends TInfos>
-  implements INotifyService<TInfos, TDetails> {
+export abstract class NotifyService<TInfos, TDetails extends TInfos> implements INotifyService<TInfos, TDetails> {
   abstract type: string;
-  // eventQueue: IEventQueue;
   counter = 0;
   ajv: Ajv;
   sent: string[] = [];
 
   subscribers: Subscriber<TInfos, TDetails>[] = [];
-
-  // constructor(eventQueue: IEventQueue)
-  // {
-  //     this.eventQueue = eventQueue;
-  // }
-
   extensionCommunicationService: IExtensionCommunicationService;
 
   constructor(service: IExtensionCommunicationService) {

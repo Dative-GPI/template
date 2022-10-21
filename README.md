@@ -18,7 +18,7 @@ This will rename files and folders containing XXXXX placeholders, as well as rep
 They are usually found in C# files in the namespaces.
 
 You should also modify the value of COMPOSE_PROJECT_NAME in the *.env* file and the routes in the controllers and frontends' urls.  
-There are exemple routes and components that have been set up. These are here so you can use them as a template for your own routes and components.  
+There are example routes and components that have been set up. These are here so you can use them as a template for your own routes and components.  
 They are not meant to stay, so you can delete them, they are not mandatory.
 
 ## Testing the extension

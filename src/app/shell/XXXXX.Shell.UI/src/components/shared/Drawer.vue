@@ -1,5 +1,5 @@
 <template>
-  <div name="drawer" style="height: 100vh" width="100%" class="pa-3">
+  <div name="drawer" style="height: 100vh" class="pa-3">
     <slot name="header">
       <v-row
         no-gutters
@@ -22,7 +22,7 @@
     <slot></slot>
 
     <div style="height:40px" />
-    <v-footer fixed v-if="$scopedSlots['actions']" color="transparent" style="background-color:white!important">
+    <v-footer fixed v-if="$scopedSlots['actions']" color="transparent" style="background-color:white">
       <slot name="actions"></slot>
     </v-footer>
   </div>
@@ -41,7 +41,9 @@ import { IExtensionCommunicationService } from "@/interfaces";
 @Component({
   components: {}
 })
-export default class ExempleDrawer extends Vue {
+export default class Drawer extends Vue {
+  // Properties
+
   @Inject(PROVIDER)
   container!: DependencyContainer;
   
@@ -54,11 +56,16 @@ export default class ExempleDrawer extends Vue {
   @Prop({required: false, default: 256})
   width!: number
 
+  // Data
+  // Computed Properties
+
   get extensionCommunicationService() {
     return this.container.resolve<IExtensionCommunicationService>(
       S.EXTENSIONCOMMUNICATIONSERVICE
     );
   }
+
+  // Methods
 
   close(success: boolean) {
     this.extensionCommunicationService.closeDrawer(
@@ -69,6 +76,12 @@ export default class ExempleDrawer extends Vue {
 
   setWidth() {
     this.extensionCommunicationService.setWidth(this.width, this.$route.path);
+  }
+  
+  // Lifecycle
+
+  mounted(){
+    this.setWidth();
   }
 
   @Watch("width")

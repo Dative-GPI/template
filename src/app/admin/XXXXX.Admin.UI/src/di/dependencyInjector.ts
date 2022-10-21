@@ -1,7 +1,6 @@
 import { SERVICES as S } from "@/config"
-import { IApplicationLanguageService, IApplicationTranslationService, IExtensionCommunicationService, IOrganisationTypePermissionService, IPermissionAdminService, IPermissionService, IRoleAdminPermissionService, IRolePermissionService, ITranslationService } from "@/interfaces";
-import { ApplicationLanguageService, ApplicationTranslationService, ExtensionCommunicationService, OrganisationTypePermissionService, PermissionAdminService, PermissionService, RoleAdminPermissionService, TranslationService } from "@/services";
-import { RolePermissionService } from "@/services/rolePermissionService";
+import { IApplicationLanguageService, IApplicationTranslationService, IExampleService, IExtensionCommunicationService, IOrganisationTypePermissionService, IPermissionAdminService, IPermissionService, IRoleAdminPermissionService, IRolePermissionService, ITranslationService } from "@/interfaces";
+import { ApplicationLanguageService, ApplicationTranslationService, ExampleService, ExtensionCommunicationService, OrganisationTypePermissionService, PermissionAdminService, PermissionService, RoleAdminPermissionService, RolePermissionService, TranslationService } from "@/services";
 import { container } from "tsyringe";
 
 export { container };
@@ -17,3 +16,6 @@ container.registerSingleton<IRoleAdminPermissionService>(S.ROLEADMINPERMISSIONSE
 
 container.registerSingleton<IApplicationTranslationService>(S.APPLICATIONTRANSLATIONSERVICE, ApplicationTranslationService);
 container.registerSingleton<ITranslationService>(S.TRANSLATIONSERVICE, TranslationService);
+
+
+container.registerSingleton<IExampleService>(S.EXAMPLESERVICE, ExampleService);

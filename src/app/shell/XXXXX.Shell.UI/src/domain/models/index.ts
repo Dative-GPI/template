@@ -1,4 +1,4 @@
-export * from "./exemple";
+export * from "./example";
 
 export * from "./images";
 

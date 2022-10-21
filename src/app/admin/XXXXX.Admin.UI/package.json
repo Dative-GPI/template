@@ -18,7 +18,6 @@
     "axios": "^0.21.1",
     "blurhash": "^1.1.4",
     "core-js": "^3.16.2",
-    "dat-components": "0.0.15",
     "date-fns": "^2.23.0",
     "reflect-metadata": "^0.1.13",
     "roboto-fontface": "*",

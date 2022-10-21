@@ -8,9 +8,9 @@ using XXXXX.Context.Core;
 
 namespace XXXXX.Context.Migrations
 {
-    public class ApplicationContextDesignFactory : IDesignTimeDbContextFactory<ApplicationContext>
+    public class CustomApplicationContextDesignFactory : IDesignTimeDbContextFactory<CustomApplicationContext>
     {
-        public ApplicationContext CreateDbContext(string[] args)
+        public CustomApplicationContext CreateDbContext(string[] args)
         {
             IConfigurationRoot configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
@@ -27,7 +27,7 @@ namespace XXXXX.Context.Migrations
             builder.UseNpgsql(connectionString, otp => otp.MigrationsAssembly(this.GetType().Assembly.FullName));
 
             // Create our DbContext.
-            return new ApplicationContext(builder.Options);
+            return new CustomApplicationContext(builder.Options);
         }
     }
 }

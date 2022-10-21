@@ -14,13 +14,11 @@
 import { DependencyContainer } from "tsyringe";
 import { Component, Inject, Prop, Vue } from "vue-property-decorator";
 
-import { PROVIDER, SERVICES as S, TABLES as T } from "@/config";
+import { PROVIDER, SERVICES as S } from "@/config";
 import { IApplicationLanguageService } from "@/interfaces";
 import { Language } from "@/domain/models";
 
-@Component({
-  data: () => ({ T }),
-})
+@Component({})
 export default class SelectApplicationLanguage extends Vue {
   // Properties
 

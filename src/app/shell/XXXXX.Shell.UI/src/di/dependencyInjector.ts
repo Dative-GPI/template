@@ -4,7 +4,7 @@ import { SERVICES as S } from "@/config";
 
 import { 
     IExtensionCommunicationService,
-    IExempleService,
+    IExampleService,
     IApplicationTranslationService,
     IOrganisationPermissionService,
     IPermissionService,
@@ -13,14 +13,14 @@ import {
 
 import { 
     ExtensionCommunicationService,
-    ExempleService,
+    ExampleService,
     ApplicationTranslationService,
     OrganisationPermissionService,
     PermissionService,
     RolePermissionService
 } from "@/services";
 
-container.registerSingleton<IExempleService>(S.EXEMPLESERVICE, ExempleService);
+container.registerSingleton<IExampleService>(S.EXAMPLESERVICE, ExampleService);
 
 container.registerSingleton<IExtensionCommunicationService>(S.EXTENSIONCOMMUNICATIONSERVICE, ExtensionCommunicationService);
 

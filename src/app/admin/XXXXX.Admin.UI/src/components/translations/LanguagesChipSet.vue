@@ -49,11 +49,6 @@ export default class LanguagesChipSet extends Vue {
   // Lifecycle
 
   mounted() {
-    this.applicationLanguageService.subscribe(
-      "all",
-      onCollectionChanged(() => this.appLanguages)
-    );
-
     this.fetch();
   }
 

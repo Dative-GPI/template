@@ -9,6 +9,7 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: ([] as RouteConfig[])
+    .concat(drawers)
     .concat(drawerRoutes)
     .concat(routes)
 })

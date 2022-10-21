@@ -11,10 +11,19 @@ namespace XXXXX.Context.Core.DI
         public static IServiceCollection AddRepositories(this IServiceCollection services)
         {
             services.AddScoped<IApplicationRepository, ApplicationRepository>();
+            services.AddScoped<IRouteRepository, RouteRepository>();
+            services.AddScoped<IImageRepository, ImageRepository>();
+
             services.AddScoped<IPermissionRepository, PermissionRepository>();
+            services.AddScoped<IPermissionCategoryRepository, PermissionCategoryRepository>();
             services.AddScoped<IOrganisationTypePermissionRepository, OrganisationTypePermissionRepository>();
             services.AddScoped<IRolePermissionRepository, RolePermissionRepository>();
-            services.AddScoped<IRouteRepository, RouteRepository>();
+            services.AddScoped<IPermissionAdminRepository, PermissionAdminRepository>();
+            services.AddScoped<IPermissionAdminCategoryRepository, PermissionAdminCategoryRepository>();
+            services.AddScoped<IRoleAdminPermissionRepository, RoleAdminPermissionRepository>();
+
+            services.AddScoped<IApplicationTranslationRepository, ApplicationTranslationRepository>();
+            services.AddScoped<ITranslationRepository, TranslationRepository>();
 
             return services;
         }

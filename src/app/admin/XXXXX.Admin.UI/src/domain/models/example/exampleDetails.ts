@@ -1,14 +1,14 @@
-export class ExempleDetails {
+export class ExampleDetails {
   id: string;
   label: string;
 
-  constructor(params: ExempleDetailsDTO) {
+  constructor(params: ExampleDetailsDTO) {
     this.id = params.id;
     this.label = params.label;
   }
 }
 
-export interface ExempleDetailsDTO {
+export interface ExampleDetailsDTO {
   id: string;
   label: string;
 }

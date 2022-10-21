@@ -9,3 +9,6 @@ export * from "./roleAdminPermissionService";
 export * from "./applicationLanguageService";
 export * from "./applicationTranslationService";
 export * from "./translationService";
+export * from "./organisationTypeService";
+
+export * from "./exampleService";

@@ -9,7 +9,7 @@ import { inject, injectable } from "tsyringe";
 import { buildURL } from "@/tools";
 
 @injectable()
-export class ApplicationTranslationService extends NotifyService<ApplicationTranslation> implements IApplicationTranslationService {
+export class ApplicationTranslationService extends NotifyService<ApplicationTranslation, ApplicationTranslation> implements IApplicationTranslationService {
     type: string = "ApplicationTranslationService";
 
     constructor(
@@ -39,7 +39,7 @@ export class ApplicationTranslationService extends NotifyService<ApplicationTran
         await axios.post(APPLICATION_TRANSLATIONS_URL, payload);
 
         this.notifyAll({
-            action: "update",
+            action: "reset",
             type: this.type,
             items: payload.map(t => new ApplicationTranslation(t))
         });

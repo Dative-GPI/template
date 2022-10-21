@@ -1,4 +1,4 @@
-export * from "./exempleService";
+export * from "./exampleService";
 
 export * from "./extensionCommunicationService";
 

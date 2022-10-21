@@ -20,7 +20,7 @@ import { inject, injectable } from "tsyringe";
 
 @injectable()
 export class PermissionAdminService
-  extends NotifyService<PermissionAdminInfos>
+  extends NotifyService<PermissionAdminInfos, PermissionAdminInfos>
   implements IPermissionAdminService {
   type: string = "permissionadmins";
 

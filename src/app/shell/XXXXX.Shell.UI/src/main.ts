@@ -24,9 +24,6 @@ Vue.config.productionTip = false;
 import { Shards } from "@dative-gpi/shards";
 Vue.use(Shards);
 
-import Drawer from "@/components/shared/Drawer.vue";
-Vue.component("drawer", Drawer);
-
 new Vue({
   router,
   vuetify,

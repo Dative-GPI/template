@@ -35,7 +35,7 @@ import _ from "lodash";
 import { DependencyContainer } from "tsyringe";
 import { Component, Inject, Prop, Vue, Watch } from "vue-property-decorator";
 
-import { PROVIDER, SERVICES, UPDATE_TRANSLATION_DRAWER_URL } from "@/config";
+import { PROVIDER, SERVICES, UPDATE_TRANSLATION_DRAWER_PATH } from "@/config";
 import {
   ApplicationTranslation,
   Language,
@@ -176,7 +176,7 @@ export default class TranslationList extends Vue {
 
   async edit(item: Translation) {
     await this.extensionCommunicationService.openDrawer(
-      UPDATE_TRANSLATION_DRAWER_URL(item.code)
+      UPDATE_TRANSLATION_DRAWER_PATH(item.code)
     );
   }
 
@@ -245,8 +245,8 @@ export default class TranslationList extends Vue {
       this.updateTranslations
     );
 
-    this.applicationTranslationService.subscribe("update", (ev) => {
-      if (ev.action == "update") {
+    this.applicationTranslationService.subscribe("reset", (ev) => {
+      if (ev.action == "reset") {
         this.applicationTranslations = ev.items;
       }
     });

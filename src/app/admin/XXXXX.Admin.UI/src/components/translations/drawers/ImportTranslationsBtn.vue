@@ -7,7 +7,7 @@
 </template>
 
 <script lang="ts">
-import { IMPORT_TRANSLATIONS_DRAWER_URL, PROVIDER, SERVICES } from "@/config";
+import { IMPORT_TRANSLATIONS_DRAWER_PATH, PROVIDER, SERVICES } from "@/config";
 import { IExtensionCommunicationService } from "@/interfaces";
 import { DependencyContainer } from "tsyringe";
 import { Component, Vue, Prop, Inject } from "vue-property-decorator";
@@ -29,7 +29,7 @@ export default class ImportTranslationsBtn extends Vue {
   // Methods
 
   openDrawer() {
-    this.extensionCommunicationService.openDrawer(IMPORT_TRANSLATIONS_DRAWER_URL);
+    this.extensionCommunicationService.openDrawer(IMPORT_TRANSLATIONS_DRAWER_PATH);
   }
 
   // Lifecycle

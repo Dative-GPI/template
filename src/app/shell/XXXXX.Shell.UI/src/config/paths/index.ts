@@ -1,2 +1,1 @@
-export * from "./exemples";
-export * from "./goto";
+export * from "./examples";

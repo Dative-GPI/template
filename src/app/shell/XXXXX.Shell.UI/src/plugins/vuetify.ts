@@ -4,7 +4,7 @@ import fr from 'vuetify/src/locale/fr';
  
 import '@mdi/font/css/materialdesignicons.css';
  
-import { Icons } from "dat-components/icons";
+import { Icons } from "@dative-gpi/shards/src/icons";
 import { Icons as ExtensionIcons } from "@/icons";
 import _ from 'lodash';
  

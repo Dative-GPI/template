@@ -9,6 +9,7 @@ namespace XXXXX.Admin.Core
         private static readonly RouteInfos[] ROUTES = new RouteInfos[] {
             new RouteInfos()
             {
+                Authorizations = new string[] {},
                 Path = "/organisation-types/:organisationTypeId/permissions",
                 Name = "apps.organisation-type-permissions",
                 DrawerCategory = "Extension",
@@ -21,6 +22,7 @@ namespace XXXXX.Admin.Core
             },
             new RouteInfos()
             {
+                Authorizations = new string[] {},
                 Path = "/organisation-types/:organisationTypeId/roles/:roleId/permissions",
                 Name = "apps.role-permissions",
                 DrawerCategory = "Extension",
@@ -31,29 +33,34 @@ namespace XXXXX.Admin.Core
                 ShowOnDrawer = false,
                 Uri = "https://extension-admin.localhost"
             },
+
+
+
             new RouteInfos()
             {
-                Path = "/applications/exemple",
-                Name = "apps.exemple",
+                Authorizations = new string[] {},
+                Path = "/XXXXX/examples",
+                Name = "apps.example",
                 DrawerCategory = "Extension",
                 DrawerIcon = "supervised_user_circle",
-                DrawerLabel = "Exemple",
+                DrawerLabel = "Example",
                 Exact = true,
                 Id = System.Guid.NewGuid(),
                 ShowOnDrawer = true,
-                Uri = "https://extension-admin.localhost"
+                Uri = "https://extension.localhost"
             },
             new RouteInfos()
             {
-                Path = "/applications/secret/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba/da3b3f44-d3b8-41e4-b89b-0e5dbedf1dba",
-                Name = "apps.secret",
+                Authorizations = new string[] {},
+                Path = "/XXXXX/examples/drawer",
+                Name = "apps.example.drawer",
                 DrawerCategory = "Extension",
                 DrawerIcon = "supervised_user_circle",
-                DrawerLabel = "secret",
-                Exact = true,
+                DrawerLabel = "Example drawer",
+                Exact = false,
                 Id = System.Guid.NewGuid(),
-                ShowOnDrawer = true,
-                Uri = "https://extension-admin.localhost"
+                ShowOnDrawer = false,
+                Uri = "https://extension.localhost"
             },
         };
 

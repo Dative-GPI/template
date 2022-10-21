@@ -7,7 +7,7 @@ import { IExtensionCommunicationService, IRoleAdminPermissionService } from "@/i
 import { inject, injectable } from "tsyringe";
 
 @injectable()
-export class RoleAdminPermissionService extends NotifyService<PermissionAdminInfos> implements IRoleAdminPermissionService {
+export class RoleAdminPermissionService extends NotifyService<PermissionAdminInfos, PermissionAdminInfos> implements IRoleAdminPermissionService {
     type: string = "rolePermissionAdmins";
 
     constructor(@inject(S.EXTENSIONCOMMUNICATIONSERVICE) service: IExtensionCommunicationService) {

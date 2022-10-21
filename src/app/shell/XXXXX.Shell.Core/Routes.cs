@@ -10,11 +10,12 @@ namespace XXXXX.Shell.Core
         private static readonly RouteInfos[] ROUTES = new RouteInfos[] {
             new RouteInfos()
             {
-                Path = "/applications/exemples",
-                Name = "apps.exemples",
+                Authorizations = new string[] {},
+                Path = "/XXXXX/examples",
+                Name = "apps.example",
                 DrawerCategory = "Extension",
                 DrawerIcon = "supervised_user_circle",
-                DrawerLabel = "Exemple",
+                DrawerLabel = "Example",
                 Exact = true,
                 Id = System.Guid.NewGuid(),
                 ShowOnDrawer = true,
@@ -22,11 +23,12 @@ namespace XXXXX.Shell.Core
             },
             new RouteInfos()
             {
-                Path = "/applications/exemples/drawer",
-                Name = "apps.exemples.drawer",
+                Authorizations = new string[] {},
+                Path = "/XXXXX/examples/drawer",
+                Name = "apps.example.drawer",
                 DrawerCategory = "Extension",
                 DrawerIcon = "supervised_user_circle",
-                DrawerLabel = "Exemple drawer",
+                DrawerLabel = "Example drawer",
                 Exact = false,
                 Id = System.Guid.NewGuid(),
                 ShowOnDrawer = false,

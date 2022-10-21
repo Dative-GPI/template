@@ -11,8 +11,8 @@ namespace XXXXX.Context.Fixtures
         static string[] FILES_PATTERN = new[] { ".vue", ".ts" };
         const string REGEX_PATTERN = @"\$tr\(\s*['""]([\w\.-]*)['""],\s*(?:[']([^']*)[']|[""]([^""]*)[""])\s*\)";
         static List<string> Projects = new List<string>() {
-            "../../app/admin/ui/src",
-            "../../app/shell/ui/src"
+            "../../app/admin/XXXXX.Admin.UI/src",
+            "../../app/shell/XXXXX.Shell.UI/src"
         };
 
         static Regex Regex = new Regex(REGEX_PATTERN);

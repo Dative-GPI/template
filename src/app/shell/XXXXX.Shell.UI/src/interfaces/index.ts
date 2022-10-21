@@ -1,4 +1,4 @@
-export * from "./iexempleService";
+export * from "./iexampleService";
 
 export * from "./iextensionCommunicationService";
 export * from "./inotifyService";

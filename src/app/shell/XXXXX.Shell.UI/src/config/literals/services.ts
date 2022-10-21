@@ -1,4 +1,4 @@
-export const EXEMPLESERVICE = "ExempleService";
+export const EXAMPLESERVICE = "ExampleService";
 
 export const EXTENSIONCOMMUNICATIONSERVICE = "ExtensionCommunicationService";
 

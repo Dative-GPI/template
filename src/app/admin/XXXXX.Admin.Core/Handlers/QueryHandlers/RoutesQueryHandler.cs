@@ -7,9 +7,6 @@ using System.Threading.Tasks;
 using Bones.Flow;
 
 using XXXXX.Domain.Models;
-using XXXXX.Domain.Repositories.Filters;
-using XXXXX.Domain.Repositories.Interfaces;
-using XXXXX.Admin.Core;
 using XXXXX.Admin.Core.Abstractions;
 
 namespace XXXXX.Admin.Core.Handlers
