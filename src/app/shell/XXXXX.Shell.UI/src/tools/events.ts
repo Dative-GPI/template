@@ -1,9 +1,10 @@
 import _ from "lodash";
 import { CollectionChangedEventArgs } from "@/domain/events";
 
-export function onCollectionChanged<TInfos extends { id: string | number; }, TDetails extends TInfos>(
+export function onCollectionChanged<TInfos extends { id?: string | number; }, TDetails extends TInfos>(
   accessor: () => TInfos[],
-  filter: (el: TInfos) => boolean = (el: TInfos) => true
+  filter: (el: TInfos) => boolean = (el: TInfos) => true,
+  comparer: (e1: TInfos, e2: TInfos) => boolean = (e1, e2) => !!e1.id && !!e2.id && e1.id == e2.id
 ): (ev: CollectionChangedEventArgs<TInfos, TDetails>) => void {
 
   return (ev: CollectionChangedEventArgs<TInfos, TDetails>) => {
@@ -11,16 +12,16 @@ export function onCollectionChanged<TInfos extends { id: string | number; }, TDe
       case "add":
         return onCollectionAdd(accessor, filter)(ev);
       case "delete":
-        return onCollectionDelete(accessor, filter)(ev);
+        return onCollectionDelete(accessor)(ev);
       case "reset":
         return onCollectionReset(accessor, filter)(ev);
       case "update":
-        return onCollectionUpdate(accessor, filter)(ev);
+        return onCollectionUpdate(accessor, filter, comparer)(ev);
     }
-  }
+  };
 }
 
-function onCollectionReset<TInfos extends { id: string | number; }, TDetails extends TInfos>(
+function onCollectionReset<TInfos extends { id?: string | number; }, TDetails extends TInfos>(
   accessor: () => TInfos[],
   filter: (el: TInfos) => boolean = (el: TInfos) => true
 ): (ev: CollectionChangedEventArgs<TInfos, TDetails>) => void {
@@ -32,17 +33,18 @@ function onCollectionReset<TInfos extends { id: string | number; }, TDetails ext
   };
 }
 
-function onCollectionDelete<TInfos extends { id: string | number; }, TDetails extends TInfos>(
-  accessor: () => TInfos[],
-  filter: (el: TInfos) => boolean = (el: TInfos) => true
+function onCollectionDelete<TInfos extends { id?: string | number; }, TDetails extends TInfos>(
+  accessor: () => TInfos[]
 ): (ev: CollectionChangedEventArgs<TInfos, TDetails>) => void {
 
   return (ev: CollectionChangedEventArgs<TInfos, TDetails>) => {
     if (ev.action == "delete") {
-      const idToCurrentObject = new Map<string | number, { value: TInfos, index: number }>();
+      const idToCurrentObject = new Map<string | number, { value: TInfos, index: number; }>();
 
       for (let i = accessor().length - 1; i >= 0; i--) { // Reverse loop for efficiency
         const element = accessor()[i];
+        if (!element.id) continue;
+
         idToCurrentObject.set(element.id, { value: element, index: i });
       }
 
@@ -55,14 +57,15 @@ function onCollectionDelete<TInfos extends { id: string | number; }, TDetails ex
   };
 }
 
-function onCollectionUpdate<TInfos extends { id: string | number; }, TDetails extends TInfos>(
+function onCollectionUpdate<TInfos extends { id?: string | number; }, TDetails extends TInfos>(
   accessor: () => TInfos[],
-  filter: (el: TInfos) => boolean = (el: TInfos) => true
+  filter: (el: TInfos) => boolean = (el: TInfos) => true,
+  comparer: (e1: TInfos, e2: TInfos) => boolean = (e1, e2) => !!e1.id && !!e2.id && e1.id == e2.id
 ): (ev: CollectionChangedEventArgs<TInfos, TDetails>) => void {
 
   return (ev: CollectionChangedEventArgs<TInfos, TDetails>) => {
     if (ev.action == "update") {
-      const index = _.findIndex(accessor(), (i) => i.id == ev.item.id);
+      const index = _.findIndex(accessor(), (i) => comparer(ev.item, i));
 
       if (index > -1) {
         accessor().splice(index, 1, ev.item);
@@ -75,7 +78,7 @@ function onCollectionUpdate<TInfos extends { id: string | number; }, TDetails ex
   };
 }
 
-function onCollectionAdd<TInfos extends { id: string | number; }, TDetails extends TInfos>(
+function onCollectionAdd<TInfos extends { id?: string | number; }, TDetails extends TInfos>(
   accessor: () => TInfos[],
   filter: (el: TInfos) => boolean = (el: TInfos) => true
 ): (ev: CollectionChangedEventArgs<TInfos, TDetails>) => void {
@@ -90,10 +93,10 @@ function onCollectionAdd<TInfos extends { id: string | number; }, TDetails exten
 }
 
 export function autoUpdate<T extends { id: string | number; }>(
-  equality: (item: T) => boolean, 
+  equality: (item: T) => boolean,
   setter: (updated: T) => void
 ): (ev: CollectionChangedEventArgs<T, T>) => void {
-  
+
   return (ev: CollectionChangedEventArgs<T, T>) => {
     if (ev.action === "update") {
       if (equality(ev.item)) {
@@ -104,7 +107,7 @@ export function autoUpdate<T extends { id: string | number; }>(
 }
 
 export function autoUpdateArray<T extends { id: string | number; }>(
-  equality: (items: T[]) => boolean, 
+  equality: (items: T[]) => boolean,
   setter: (updated: T[]) => void
 ): (ev: CollectionChangedEventArgs<T, T>) => void {
 
@@ -116,7 +119,7 @@ export function autoUpdateArray<T extends { id: string | number; }>(
 }
 
 export function autoDelete<T extends { id: string | number; }>(
-  equality: (item: string | number) => boolean, 
+  equality: (item: string | number) => boolean,
   callback: () => void
 ): (ev: CollectionChangedEventArgs<T, T>) => void {
 
