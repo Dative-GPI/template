@@ -22,7 +22,7 @@ namespace XXXXX.Gateway.Core.DI
             services.AddAutoMapper(typeof(DependencyInjector).Assembly);
 
             services.AddScoped<IFoundationClientFactory, FoundationClientFactory>();
-            services.AddScoped<ITranslationProvider, TranslationProvider>();
+            services.AddScoped<ITranslationsProvider, TranslationsProvider>();
 
             services.AddScoped<IApplicationService, ApplicationService>();
             services.AddScoped<IImageService, ImageService>();

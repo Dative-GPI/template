@@ -12,11 +12,11 @@ namespace XXXXX.Gateway.Core.Handlers
     public class ApplicationTranslationsQueryHandler : IMiddleware<ApplicationTranslationsQuery, IEnumerable<ApplicationTranslation>>
     {
         private readonly IFoundationClientFactory _foundationClientFactory;
-        private readonly ITranslationProvider _translationProvider;
+        private readonly ITranslationsProvider _translationProvider;
 
         public ApplicationTranslationsQueryHandler(
             IFoundationClientFactory foundationClientFactory,
-            ITranslationProvider translationProvider
+            ITranslationsProvider translationProvider
         )
         {
             _foundationClientFactory = foundationClientFactory;
@@ -37,9 +37,10 @@ namespace XXXXX.Gateway.Core.Handlers
 
         private async Task<IEnumerable<ApplicationTranslation>> GetDefaultTranslations(Guid applicationId, string languageCode)
         {
-            return await _translationProvider.GetDefaultTranslations(
+            return await _translationProvider.Get(
                 applicationId,
-                languageCode
+                languageCode,
+                null
             );
         }
 
@@ -48,7 +49,7 @@ namespace XXXXX.Gateway.Core.Handlers
             var foundationClient = await _foundationClientFactory.Create();
             var currentOrganisation = await foundationClient.Shell.Organisations.Get(organisationId);
 
-            return await _translationProvider.GetTranslationsForOrganisationType(
+            return await _translationProvider.Get(
                 applicationId,
                 languageCode,
                 currentOrganisation.OrganisationTypeId

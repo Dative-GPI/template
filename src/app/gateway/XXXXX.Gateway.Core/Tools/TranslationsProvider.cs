@@ -13,13 +13,13 @@ using XXXXX.Gateway.Core.Abstractions;
 
 namespace XXXXX.Gateway.Core.Tools
 {
-    public class TranslationProvider : ITranslationProvider
+    public class TranslationsProvider : ITranslationsProvider
     {
         private readonly ITranslationRepository _translationRepository;
         private readonly IApplicationTranslationRepository _applicationTranslationRepository;
         private readonly IFoundationClientFactory _foundationClientFactory;
 
-        public TranslationProvider(
+        public TranslationsProvider(
             ITranslationRepository translationRepository,
             IApplicationTranslationRepository applicationTranslationRepository,
             IFoundationClientFactory foundationClientFactory
@@ -31,52 +31,31 @@ namespace XXXXX.Gateway.Core.Tools
         }
 
 
-        public async Task<IEnumerable<ApplicationTranslation>> GetTranslationsForOrganisationType(Guid applicationId, string languageCode, Guid organisationTypeId)
+        public async Task<IEnumerable<ApplicationTranslation>> Get(Guid applicationId, string languageCode, Guid? organisationTypeId)
         {
-            var translations = await _translationRepository.GetMany();
-
-            var allTranslations = await FetchOrganisationTypeAndDefaultTranslations(applicationId, languageCode, organisationTypeId);
+            var translations = await FetchTranslations();
+            var allTranslations = await FetchApplicationTranslations(applicationId, languageCode, organisationTypeId);
             var foundationTranslation = await FetchFoundationTranslations(languageCode);
 
             var specificTranslations = SelectMostSpecificTranslations(translations, allTranslations, foundationTranslation);
             return specificTranslations;
         }
 
-        public async Task<IEnumerable<ApplicationTranslation>> GetDefaultTranslations(Guid applicationId, string languageCode)
+
+        private async Task<IEnumerable<Translation>> FetchTranslations()
         {
             var translations = await _translationRepository.GetMany();
-
-            var allTranslations = await FetchDefaultTranslations(applicationId, languageCode);
-            var foundationTranslation = await FetchFoundationTranslations(languageCode);
-
-            var specificTranslations = SelectMostSpecificTranslations(translations, allTranslations, foundationTranslation);
-            return specificTranslations;
+            return translations;
         }
 
-        private async Task<IEnumerable<ApplicationTranslation>> FetchOrganisationTypeAndDefaultTranslations(
-            Guid applicationId, string languageCode, Guid organisationTypeId
-        )
+
+        private async Task<IEnumerable<ApplicationTranslation>> FetchApplicationTranslations(Guid applicationId, string languageCode, Guid? organisationTypeId)
         {
             var filter = new ApplicationTranslationFilter()
             {
                 ApplicationId = applicationId,
                 LanguageCode = languageCode,
-                OrganisationTypeIds = new Guid?[] { null, organisationTypeId }
-            };
-
-            var allTranslations = await _applicationTranslationRepository.GetMany(filter);
-            return allTranslations;
-        }
-
-        private async Task<IEnumerable<ApplicationTranslation>> FetchDefaultTranslations(
-            Guid applicationId, string languageCode
-        )
-        {
-            var filter = new ApplicationTranslationFilter()
-            {
-                ApplicationId = applicationId,
-                LanguageCode = languageCode,
-                OrganisationTypeIds = new Guid?[] { null }
+                OrganisationTypeIds = (new Guid?[] { null, organisationTypeId }).Distinct()
             };
 
             var allTranslations = await _applicationTranslationRepository.GetMany(filter);
@@ -128,9 +107,18 @@ namespace XXXXX.Gateway.Core.Tools
                     {
                         return tr.ApplicationTranslation;
                     }
+                    else if (fTrs.Any())
+                    {
+                        return fTrs.First();
+                    }
                     else
                     {
-                        return fTrs.FirstOrDefault();
+                        return new ApplicationTranslation()
+                        {
+                            Id = tr.Translation.Id,
+                            TranslationCode = tr.Translation.Code,
+                            Value = tr.Translation.Value
+                        };
                     }
                 }
             );
