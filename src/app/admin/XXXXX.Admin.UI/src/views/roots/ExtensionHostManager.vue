@@ -18,6 +18,7 @@ import {
   Vue,
   Watch
 } from "vue-property-decorator";
+import { Route } from "vue-router";
 
 import { ORGANISATION, PROVIDER, SERVICES as S} from "@/config";
 import { IExtensionCommunicationService } from "@/interfaces";
@@ -67,10 +68,12 @@ export default class ExtensionHostManager extends Vue {
 
   // Methods
 
-  goTo(){
-    if(this.$route.meta && !this.$route.meta.drawer) {
-      this.extensionCommunicationService.goTo(this.$route.path);
-    } 
+  goTo(newRoute: Route, prevRoute: Route) {
+    if (!prevRoute.name) return; // Do not notify the host about the initial route (he already knows about it)
+
+    if (newRoute.meta && !newRoute.meta.drawer) {
+      this.extensionCommunicationService.goTo(newRoute.path);
+    }
   }
 
   // Lifecycle
