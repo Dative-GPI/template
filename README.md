@@ -17,6 +17,10 @@ To initialize your extension before coding, launch the following command : `bash
 This will rename files and folders containing XXXXX placeholders, as well as replace those placeholders in files.  
 They are usually found in C# files in the namespaces.
 
+Then, in the `/dev/docker-compose.yml` file, replace occurences of *extension* with the name of your project (except maybe in the network name).
+
+If you are working with a local version of DAT'Foundation, create fixtures, a migration, an extension in the Foundation database and modify Foundation's `docker-compose.yml` file to add your network as well as extra_hosts for *shell* and *admin*.
+
 You should also modify the value of COMPOSE_PROJECT_NAME in the *.env* file and the routes in the controllers and frontends' urls.  
 There are example routes and components that have been set up. These are here so you can use them as a template for your own routes and components.  
 They are not meant to stay, so you can delete them, they are not mandatory.
