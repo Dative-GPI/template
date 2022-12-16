@@ -18,25 +18,28 @@ namespace XXXXX.Admin.Core.Services
     public class RolePermissionService : IRolePermissionService
     {
         private IQueryHandler<RolePermissionsQuery, IEnumerable<PermissionInfos>> _rolePermissionsQueryHandler;
-        private ICommandHandler<UpdateRolePermissionsCommand> _updateRolePermissionsCommand;        private IMapper _mapper;
+        private ICommandHandler<UpdateRolePermissionsCommand> _updateRolePermissionsCommand;
+        private IMapper _mapper;
 
         public RolePermissionService(
             IQueryHandler<RolePermissionsQuery, IEnumerable<PermissionInfos>> rolePermissionsQuery,
             ICommandHandler<UpdateRolePermissionsCommand> updateRolePermissionsCommand,
             IPermissionRepository permissionRepository,
             IMapper mapper
-        ) {
+        )
+        {
             _rolePermissionsQueryHandler = rolePermissionsQuery;
             _updateRolePermissionsCommand = updateRolePermissionsCommand;
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<PermissionInfosViewModel>> GetMany(Guid appId, Guid actorId, Guid organisationTypeId)
+        public async Task<IEnumerable<PermissionInfosViewModel>> GetMany(Guid appId, Guid actorId, Guid roleId)
         {
-            var query = new RolePermissionsQuery(){
+            var query = new RolePermissionsQuery()
+            {
                 ApplicationId = appId,
                 ActorId = actorId,
-                RoleId = organisationTypeId
+                RoleId = roleId
             };
 
             var result = await _rolePermissionsQueryHandler.HandleAsync(query);

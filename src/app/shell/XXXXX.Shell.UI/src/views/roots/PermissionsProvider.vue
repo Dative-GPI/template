@@ -1,5 +1,6 @@
 <template>
-  <div><slot></slot></div>
+  <div v-if="fetching"></div>
+  <div v-else><slot></slot></div>
 </template>
 
 <script lang="ts">
@@ -8,33 +9,62 @@ import {
   Component,
   Vue,
   Inject,
-  InjectReactive,
   Watch,
   Prop,
+  InjectReactive,
 } from "vue-property-decorator";
 
-import { UserApplicationDetails } from "@/domain/models";
-import { PROVIDER, USER_APPLICATION } from "@/config";
+import { ORGANISATION, PROVIDER, SERVICES } from "@/config";
+import { IPermissionService } from "@/interfaces";
 
 @Component
-export default class App extends Vue {
+export default class PermissionsProvider extends Vue {
+  // Properties
+
+  @InjectReactive(ORGANISATION)
+  organisationId!: string;
+
   @Inject(PROVIDER)
   container!: DependencyContainer;
 
-  @Prop({required: true, default: null})
-  userOrganisationId: string | null;
+  @Prop({ required: true })
+  userOrganisationId!: string;
+
+  // Data
+
+  fetching = true;
+
+  // Computed Properties
+
+  get permissionService(): IPermissionService {
+    return this.container.resolve<IPermissionService>(
+      SERVICES.PERMISSIONSERVICE
+    );
+  }
+
+  // Methods
+  // Lifecycle
 
   mounted(): void {
-    this.reset();
+    this.fetch();
   }
 
-  reset() {
-    // if (this.userOrganisationId)
-    // Get the permissions for the v-right directive
-    // this.$pm.set(permission);
+  async fetch() {
+    this.fetching = true;
+
+    try {
+      const permissions = await this.permissionService.getCurrent(
+        this.organisationId
+      );
+
+      // Get the permissions for the v-right directive
+      this.$pm.set(permissions);
+    } finally {
+      this.fetching = false;
+    }
   }
 
-  @Watch("userOrganisation")
-  onUserOrganisationChanged = this.reset;
+  @Watch("userOrganisationId")
+  onUserOrganisationIdChanged = this.fetch;
 }
 </script>

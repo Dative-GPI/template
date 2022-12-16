@@ -1,6 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
+
 using XXXXX.Shell.Core.Services;
-using XXXXX.shell.Core.Interfaces;
+using XXXXX.Shell.Core.Interfaces;
 
 namespace XXXXX.Shell.Core.DI
 {
@@ -9,6 +10,10 @@ namespace XXXXX.Shell.Core.DI
         public static IServiceCollection AddServices(this IServiceCollection services)
         {
             services.AddScoped<IRouteService, RouteService>();
+            
+            services.AddScoped<IPermissionService, PermissionService>();
+            services.AddScoped<IOrganisationPermissionService, OrganisationPermissionService>();
+            services.AddScoped<IRolePermissionService, RolePermissionService>();
 
             return services;
         }

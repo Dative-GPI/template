@@ -13,6 +13,7 @@ export class RolePermissionService extends NotifyService<PermissionInfos, Permis
     constructor(@inject(S.EXTENSIONCOMMUNICATIONSERVICE) service: IExtensionCommunicationService) {
         super(service);
     }
+    
     async getMany(roleId: string, filter: PermissionsFilter): Promise<PermissionInfos[]> {
         const response = await axios.get(buildURL(ROLE_PERMISSIONS_URL(roleId), filter));
         const dto: PermissionInfosDTO[] = response.data;

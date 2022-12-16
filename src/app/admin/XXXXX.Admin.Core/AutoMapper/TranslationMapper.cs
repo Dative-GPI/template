@@ -35,18 +35,16 @@ namespace XXXXX.Admin.Core.AutoMapper
                 var translationPropertyInfo = source.GetMember(TranslationsPropertyName) as PropertyInfo;
 
                 if (translationPropertyInfo == null)
-                {
-                    throw new Exception(ErrorCode.UnexpectedError);
-                }
+                    throw new Exception("This should not happen");
 
                 // on récupère le type de la classe qui contient la traduction : ModelTranslation par exemple
                 var translationType = translationPropertyInfo.PropertyType.GenericTypeArguments[0];
 
                 // on récupère les propriétés de cette classe ModelTranslation : par exemple Label, Description 
-                // (seulement les strings et pas LanguageId)
+                // (seulement les strings et pas LanguageCode)
                 var translationProperties = translationType.GetMembers()
                     .OfType<PropertyInfo>()
-                    .Where(m => m.Name != nameof(ITranslation.LanguageId) && m.PropertyType == StringType)
+                    .Where(m => m.Name != nameof(ITranslation.LanguageCode) && m.PropertyType == StringType)
                     .ToList();
 
                 // pour chacune de ces propriétés (Label, Description)
@@ -78,11 +76,11 @@ namespace XXXXX.Admin.Core.AutoMapper
                                     string result = sourceMember.GetValue(src) as string;
 
                                     // si le language est setté dans le context on va chercher la bonne traduction
-                                    if (context.Options.Items.TryGetValue(LANGUAGE, out object contextLanguage) && contextLanguage is Guid languageId)
+                                    if (context.Options.Items.TryGetValue(LANGUAGE, out object contextLanguage) && contextLanguage is string languageCode)
                                     {
                                         var srcTranslations = (IEnumerable<ITranslation>)translationPropertyInfo.GetValue(src);
 
-                                        var translation = srcTranslations.FirstOrDefault(t => t.LanguageId == languageId);
+                                        var translation = srcTranslations.FirstOrDefault(t => t.LanguageCode == languageCode);
 
                                         if (translation != null)
                                         {
@@ -101,7 +99,7 @@ namespace XXXXX.Admin.Core.AutoMapper
                     }
                     else
                     {
-                        throw new Exception(ErrorCode.UnexpectedError);
+                        throw new Exception("It is a bug");
                     }
                 }
             }
@@ -121,13 +119,13 @@ namespace XXXXX.Admin.Core.AutoMapper
                 {
                     string result = sourceProperty.GetValue(src) as string; // Get value from source as if it was the mapper 
 
-                    if (context.Options.Items.TryGetValue(LANGUAGE, out object contextLanguage) && contextLanguage is Guid languageId)
+                    if (context.Options.Items.TryGetValue(LANGUAGE, out object contextLanguage) && contextLanguage is string languageCode)
                     {
                         var translations = getTranslations(src);
 
                         if (translations != null)
                         {
-                            var translation = translations.FirstOrDefault(t => t.LanguageId == languageId);
+                            var translation = translations.FirstOrDefault(t => t.LanguageCode == languageCode);
 
                             if (translation != null)
                             {
@@ -145,7 +143,7 @@ namespace XXXXX.Admin.Core.AutoMapper
             }
             else
             {
-                throw new Exception(ErrorCode.NoMappableProperty);
+                throw new Exception($"Can't map property {opt.DestinationMember.Name} from {source.Name}");
             }
         }
     }

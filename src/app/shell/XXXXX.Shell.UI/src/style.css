@@ -13,3 +13,17 @@ html::-webkit-scrollbar {
   min-height: auto;
   display: block;
 }
+
+/** Maybe those should be removed */
+
+.theme--light.v-input input, .theme--light.v-input textarea {
+  color: var(--v-grey-3-base) !important;
+}
+
+.d-modulable-tabs .d-modulable-tabs-bar .d-tabs * {
+  background-color: transparent!important;
+}
+
+.d-data-table.v-data-table--fixed-header > .v-data-table__wrapper {
+  overflow-y: hidden;
+}

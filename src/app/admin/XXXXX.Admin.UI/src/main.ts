@@ -19,10 +19,9 @@ import { container } from "@/di/dependencyInjector";
 
 import "./style.css";
 
-import { Shards } from "@dative-gpi/shards";
-
 Vue.config.productionTip = false
 
+import { Shards } from "@dative-gpi/shards";
 Vue.use(Shards);
 
 new Vue({

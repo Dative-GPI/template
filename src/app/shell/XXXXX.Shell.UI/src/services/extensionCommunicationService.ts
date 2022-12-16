@@ -7,18 +7,22 @@ import { injectable } from "tsyringe";
 export class ExtensionCommunicationService
   implements IExtensionCommunicationService {
   title: string;
-  crumbs: any[] = [];
   height: number;
   ajv: Ajv;
   counter = 0;
   subscribers: Subscriber[] = [];
   unsafeSubscribers: UnsafeSubscriber[] = [];
+  crumbs: any[] = [];
 
   constructor() {
     this.ajv = new Ajv();
     this.height = 0;
     this.title = "";
-    window.addEventListener("message", this.onMessageReceived.bind(this), false);
+    window.addEventListener(
+      "message",
+      this.onMessageReceived.bind(this),
+      false
+    );
   }
 
   async goTo(path: string): Promise<void> {
@@ -26,9 +30,16 @@ export class ExtensionCommunicationService
   }
 
   setTitle(title: string): void {
-    if (this.title != title) {
+    // if (this.title != title) {
       this.title = title;
       this.notifyTitle();
+    // }
+  }
+
+  setCrumbs(crumbs: any[]) {
+    if (this.crumbs != crumbs) {
+      this.crumbs = crumbs;
+      this.notifyCrumbs();
     }
   }
 
@@ -40,11 +51,11 @@ export class ExtensionCommunicationService
   }
 
   setWidth(width: number, path: string): void {
-      const payload = {
-        width,
-        path
-      }
-      this.notify(payload);
+    const payload = {
+      width,
+      path,
+    };
+    this.notify(payload);
   }
 
   openDialog(path: string): Promise<void> {
@@ -55,15 +66,6 @@ export class ExtensionCommunicationService
     throw new Error("Method not implemented.");
   }
 
-    
-  setCrumbs(crumbs: any[]) {
-    console.log("setCrumbs", crumbs);
-    if (this.crumbs != crumbs) {
-      this.crumbs = crumbs;
-      this.notifyCrumbs();
-    }
-  }
-
   async openDrawer(path: string): Promise<void> {
     const payload = {
       path,
@@ -72,7 +74,7 @@ export class ExtensionCommunicationService
     await this.notify(payload);
   }
 
-  async closeDrawer(path: string, success: boolean): Promise<void> {
+  async closeDrawer(path: string, success: boolean = false): Promise<void> {
     const payload = {
       path,
       success,
@@ -105,11 +107,10 @@ export class ExtensionCommunicationService
 
   notifyPath = _.debounce((path) => {
     const payload = {
-      path: path
+      path: path,
     };
     this.notify(payload);
   }, 50);
-  
 
   notify(payload: any) {
     if (window.top) {
@@ -164,8 +165,9 @@ export class ExtensionCommunicationService
     } catch (e) {
       return;
     }
+
     _(this.subscribers)
-      .filter((s) => new URL(event.origin).hostname == new URL(s.uri).hostname)
+      // .filter((s) => new URL(event.origin).hostname == new URL(s.uri).hostname)
       .map((s) => ({
         callback: s.callback,
         url: new URL(s.uri),
@@ -179,6 +181,7 @@ export class ExtensionCommunicationService
           console.log(error);
         }
       });
+
     _(this.unsafeSubscribers)
       .map((s) => ({
         callback: s.callback,

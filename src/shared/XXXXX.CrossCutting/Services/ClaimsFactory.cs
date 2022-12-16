@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -12,32 +13,36 @@ namespace XXXXX.CrossCutting.Services
 {
     public class ClaimsFactory : IClaimsFactory
     {
-
-        public ClaimsFactory()
+        public (Guid? UserId, Guid? SourceId, string RandomCookie, Guid ApplicationId, bool IsAdministrator, string LanguageCode) Get(IEnumerable<Claim> claims)
         {
-        }
+            Guid temp;
 
-        public (Guid UserId, string RandomCookie, Guid ApplicationId, bool IsAdministrator) Get(ClaimsIdentity identity)
-        {
-            var userIdClaim = identity.Claims.SingleOrDefault(c => c.Type == USER_ID);
-            Guid.TryParse(userIdClaim?.Value, out var userId);
+            var userIdClaim = claims.SingleOrDefault(c => c.Type == USER_ID);
+            Guid? userId = Guid.TryParse(userIdClaim?.Value, out temp) ? (Guid?)temp : null;
 
-            var randomCookieClaim = identity.Claims.SingleOrDefault(c => c.Type == RANDOM_COOKIE);
+            var sourceIdClaim = claims.SingleOrDefault(c => c.Type == SOURCE_ID);
+            Guid? sourceId = Guid.TryParse(sourceIdClaim?.Value, out temp) ? (Guid?)temp : null;
+
+            var randomCookieClaim = claims.SingleOrDefault(c => c.Type == RANDOM_COOKIE);
             string randomCookie = randomCookieClaim?.Value;
 
-            var applicationIdClaim = identity.Claims.SingleOrDefault(c => c.Type == APPLICATION_ID);
+            var applicationIdClaim = claims.SingleOrDefault(c => c.Type == APPLICATION_ID);
             Guid.TryParse(applicationIdClaim?.Value, out var applicationId);
 
-            var isAdministratorClaim = identity.Claims.SingleOrDefault(c => c.Type == ADMINISTRATOR);
+            var isAdministratorClaim = claims.SingleOrDefault(c => c.Type == ADMINISTRATOR);
             Boolean.TryParse(isAdministratorClaim?.Value, out var isAdministrator);
+
+            var languageClaim = claims.SingleOrDefault(c => c.Type == LANGUAGE_CODE);
+            string languageCode = languageClaim?.Value;
 
             return (
                 userId,
+                sourceId,
                 randomCookie,
                 applicationId,
-                isAdministrator
+                isAdministrator,
+                languageCode
             );
         }
-
     }
 }

@@ -2,7 +2,6 @@
   <div>
     <slot
       :token="token"
-      :languageId="languageId"
       :languageCode="languageCode"
       :userOrganisationId="userOrganisationId"
     />
@@ -17,14 +16,23 @@ import {
   Inject,
   ProvideReactive,
   Vue,
-  Watch
+  Watch,
 } from "vue-property-decorator";
+import { Route } from "vue-router";
 
-import { ORGANISATION, PROVIDER, SERVICES as S} from "@/config";
+import {
+  LANGUAGE_CODE,
+  ORGANISATION,
+  PROVIDER,
+  SERVICES as S,
+  TOKEN,
+} from "@/config";
 import { IExtensionCommunicationService } from "@/interfaces";
 
 @Component({})
 export default class ExtensionHostManager extends Vue {
+  // Properties
+
   @ProvideReactive(ORGANISATION)
   get organisationId() {
     return new URL(window.location.toString()).searchParams.get(
@@ -32,29 +40,33 @@ export default class ExtensionHostManager extends Vue {
     );
   }
 
-  @Inject(PROVIDER)
-  container!: DependencyContainer;
-
-  fetching = true;
-
-  subscriberIds: number[] = [];
-
-  mounted(): void {
-    // this.extensionService.subscribe();
-    setInterval(this.notify, 10);
-    this.notify();
-  }
-
+  @ProvideReactive(TOKEN)
   get token() {
     return new URL(window.location.toString()).searchParams.get("token");
   }
 
-  get languageId() {
+  @ProvideReactive(LANGUAGE_CODE)
+  get languageCode() {
     return new URL(window.location.toString()).searchParams.get("languageCode");
   }
 
-  get languageCode() {
-    return new URL(window.location.toString()).searchParams.get("languageId");
+  @Inject(PROVIDER)
+  container!: DependencyContainer;
+
+  // Data
+
+  subscriberIds: number[] = [];
+
+  // Computed Properties
+
+  get extensionCommunicationService() {
+    return this.container.resolve<IExtensionCommunicationService>(
+      S.EXTENSIONCOMMUNICATIONSERVICE
+    );
+  }
+
+  get currentRoute() {
+    return this.$route;
   }
 
   get userOrganisationId() {
@@ -63,34 +75,40 @@ export default class ExtensionHostManager extends Vue {
     );
   }
 
-  get extensionCommunicationService(){
-    return this.container.resolve<IExtensionCommunicationService>(S.EXTENSIONCOMMUNICATIONSERVICE);
-  }
-
-  get currentRoute(){
-    return this.$route;
-  } 
-
-  unmounted(){
-    _.forEach(this.subscriberIds, s => {
-      this.extensionCommunicationService.unsubscribe(s)
-    });
-  } 
+  // Methods
 
   notify() {
-    if(this.$route.path != "/"){//todo there is maybe a better solution 
-      this.extensionCommunicationService.setHeight(document.body.scrollHeight, this.$route.path);
+    if (this.$route.path != "/") {
+      //todo there is maybe a better solution
+      this.extensionCommunicationService.setHeight(
+        document.body.scrollHeight,
+        this.$route.path
+      );
     }
   }
 
-  goTo(){
-    if(this.$route.meta && !this.$route.meta.drawer) {
-      this.extensionCommunicationService.goTo(this.$route.path);
-    } 
+  goTo(newRoute: Route, prevRoute: Route) {
+    if (!prevRoute.name) return; // Do not notify the host about the initial route (he already knows about it)
+
+    if (newRoute.meta && !newRoute.meta.drawer) {
+      this.extensionCommunicationService.goTo(newRoute.path);
+    }
+  }
+
+  // Lifecycle
+
+  mounted(): void {
+    setInterval(this.notify, 10);
+    this.notify();
+  }
+
+  beforeDestroy() {
+    _.forEach(this.subscriberIds, (s) => {
+      this.extensionCommunicationService.unsubscribe(s);
+    });
   }
 
   @Watch("currentRoute")
   onCurrentRouteChanged = this.goTo;
-
 }
 </script>

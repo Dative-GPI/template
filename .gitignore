@@ -23,5 +23,7 @@ pnpm-debug.log*
 *.sln
 *.sw?
 src/app/ui/package-lock.json
-.vscode
+# .vscode
 launchSettings.json
+Migrations
+dist

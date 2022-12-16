@@ -7,19 +7,13 @@ import {
   CollectionChangedEventArgs,
 } from "@/domain/events";
 
-export abstract class NotifyService<TInfos, TDetails extends TInfos>
-  implements INotifyService<TInfos, TDetails> {
+export abstract class NotifyService<TInfos, TDetails extends TInfos> implements INotifyService<TInfos, TDetails> {
   abstract type: string;
-  // eventQueue: IEventQueue;
   counter = 0;
   ajv: Ajv;
-  sent: string[] = []
+  sent: string[] = [];
 
-  // constructor(eventQueue: IEventQueue)
-  // {
-  //     this.eventQueue = eventQueue;
-  // }
-
+  subscribers: Subscriber<TInfos, TDetails>[] = [];
   extensionCommunicationService: IExtensionCommunicationService;
 
   constructor(service: IExtensionCommunicationService) {
@@ -44,8 +38,6 @@ export abstract class NotifyService<TInfos, TDetails extends TInfos>
     );
   }
 
-  subscribers: Subscriber<TInfos, TDetails>[] = [];
-
   subscribe(
     event: CollectionChangedEvent,
     callback: (ev: CollectionChangedEventArgs<TInfos, TDetails>) => void
@@ -67,7 +59,7 @@ export abstract class NotifyService<TInfos, TDetails extends TInfos>
   }
   
   notify(event: CollectionChangedEventArgs<TInfos, TDetails>) {
-    var index;
+    let index;
     if(event.id && (index = this.sent.findIndex(s => s == event.id)) >= 0){
       this.sent.splice(index, 1);
       return
@@ -93,8 +85,6 @@ export abstract class NotifyService<TInfos, TDetails extends TInfos>
     this.sent.push(id);
     this.extensionCommunicationService.notify({...event, id});
   }
-
-
 }
 
 interface Subscriber<TInfos, TDetails> {

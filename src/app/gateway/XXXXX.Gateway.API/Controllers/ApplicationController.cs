@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+
 using XXXXX.Gateway.Core.Interfaces;
 using XXXXX.Gateway.Core.ViewModels;
 

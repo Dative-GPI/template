@@ -17,17 +17,14 @@ namespace XXXXX.Admin.Core.Services
 {
     public class RouteService : IRouteService
     {
-        private IQueryHandler<RoutesQuery, IEnumerable<RouteInfos>> _extensionsQueryHandler;
-        private IRouteRepository _extensionRepository;
+        private IQueryHandler<RoutesQuery, IEnumerable<RouteInfos>> _routesQueryHandler;
         private IMapper _mapper;
 
         public RouteService(
-            IQueryHandler<RoutesQuery, IEnumerable<RouteInfos>> extensionsQueryHandler,
-            IRouteRepository extensionRepository,
+            IQueryHandler<RoutesQuery, IEnumerable<RouteInfos>> routesQueryHandler,
             IMapper mapper
         ) {
-            _extensionsQueryHandler = extensionsQueryHandler;
-            _extensionRepository = extensionRepository;
+            _routesQueryHandler = routesQueryHandler;
             _mapper = mapper;
         }
 
@@ -40,7 +37,7 @@ namespace XXXXX.Admin.Core.Services
                 Search = filter.Search
             };
 
-            var result = await _extensionsQueryHandler.HandleAsync(query);
+            var result = await _routesQueryHandler.HandleAsync(query);
 
             return _mapper.Map<IEnumerable<RouteInfos>, IEnumerable<RouteInfosViewModel>>(result);
         }

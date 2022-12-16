@@ -17,25 +17,15 @@ namespace XXXXX.Admin.Core.Services
     public class PermissionService : IPermissionService
     {
         private IQueryHandler<PermissionsQuery, IEnumerable<PermissionInfos>> _permissionsQueryHandler;
-        private IPermissionRepository _permissionRepository;
         private IMapper _mapper;
 
         public PermissionService(
-            IQueryHandler<PermissionsQuery, IEnumerable<PermissionInfos>> permissionsQuery,
-            IPermissionRepository permissionRepository,
+            IQueryHandler<PermissionsQuery, IEnumerable<PermissionInfos>> permissionsQueryHandler,
             IMapper mapper
         )
         {
-            _permissionsQueryHandler = permissionsQuery;
-            _permissionRepository = permissionRepository;
+            _permissionsQueryHandler = permissionsQueryHandler;
             _mapper = mapper;
-        }
-
-        public async Task<IEnumerable<PermissionCategoryViewModel>> GetCategories(Guid appId, Guid actorId)
-        {
-            var result = await _permissionRepository.GetCategories();
-
-            return _mapper.Map<IEnumerable<PermissionCategory>, IEnumerable<PermissionCategoryViewModel>>(result);
         }
 
         public async Task<IEnumerable<PermissionInfosViewModel>> GetMany(Guid appId, Guid actorId, PermissionsFilterViewModel filter)
@@ -44,7 +34,11 @@ namespace XXXXX.Admin.Core.Services
             {
                 ApplicationId = appId,
                 ActorId = actorId,
-                Search = filter.Search
+
+                Search = filter.Search,
+                OrganisationTypeId = filter.OrganisationTypeId,
+                RoleId = filter.RoleId,
+                PermissionIds = filter.PermissionIds
             };
 
             var result = await _permissionsQueryHandler.HandleAsync(query);

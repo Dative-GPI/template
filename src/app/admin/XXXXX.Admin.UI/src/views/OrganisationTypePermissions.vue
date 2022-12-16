@@ -7,7 +7,7 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import OrganisationTypePermissionsList from "@/components/organisationTypes/OrganisationTypePermissionsList.vue";
+import OrganisationTypePermissionsList from "@/components/permissions/OrganisationTypePermissionsList.vue";
 
 @Component({
   components: {

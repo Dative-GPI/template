@@ -5,7 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Bones" Version="0.0.6"/>
+    <PackageReference Include="Bones" Version="0.0.9"/>
+    <PackageReference Include="Foundation.Clients" Version="0.0.5"/>
   </ItemGroup>
 
 </Project>

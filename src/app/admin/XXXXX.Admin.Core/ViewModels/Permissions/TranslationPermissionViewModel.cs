@@ -4,7 +4,7 @@ namespace XXXXX.Admin.Core.ViewModels
 {
     public class TranslationPermissionViewModel
     {
-        public Guid LanguageId { get; set; }
+        public string LanguageCode { get; set; }
         public string Label { get; set; }
     }
 }

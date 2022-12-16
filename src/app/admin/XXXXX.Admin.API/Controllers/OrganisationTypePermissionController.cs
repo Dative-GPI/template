@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 
 using XXXXX.Admin.Core.Interfaces;
-using XXXXX.Admin.Core.ViewModels;
 
 namespace XXXXX.Admin.API.Controllers
 {

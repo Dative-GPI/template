@@ -9,6 +9,7 @@ namespace XXXXX.Gateway.Core.AutoMapper
         public DomainToViewModelMappingProfile()
         {
             CreateMap<ApplicationDetails, ApplicationDetailsViewModel>();
+            CreateMap<ApplicationTranslation, ApplicationTranslationViewModel>();
         }
     }
 }

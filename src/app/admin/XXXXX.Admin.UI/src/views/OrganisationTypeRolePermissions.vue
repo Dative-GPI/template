@@ -8,7 +8,7 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import OrganisationTypeRolePermissionsList from "@/components/organisationTypes/OrganisationTypeRolePermissionsList .vue";
+import OrganisationTypeRolePermissionsList from "@/components/permissions/OrganisationTypeRolePermissionsList.vue";
 
 @Component({
   components: {

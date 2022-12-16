@@ -1,11 +1,11 @@
 using System;
+using System.Collections.Generic;
 using System.Security.Claims;
-using System.Threading.Tasks;
 
 namespace XXXXX.Domain.Abstractions
 {
     public interface IClaimsFactory
     {
-        (Guid UserId, string RandomCookie, Guid ApplicationId, bool IsAdministrator) Get(ClaimsIdentity identity);
+        (Guid? UserId, Guid? SourceId, string RandomCookie, Guid ApplicationId, bool IsAdministrator, string LanguageCode) Get(IEnumerable<Claim> identity);
     }
 }

@@ -3,8 +3,8 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\shared\XXXXX.Domain\XXXXX.Domain.csproj" />
     <ProjectReference Include="..\..\..\context\XXXXX.Context.Core\XXXXX.Context.Core.csproj"/>
-    <PackageReference Include="Bones" Version="0.0.6"/>
-    <PackageReference Include="Bones.Flow" Version="0.0.6"/>
+    <PackageReference Include="Bones" Version="0.0.9"/>
+    <PackageReference Include="Bones.Flow" Version="0.0.9"/>
   </ItemGroup>
 
   

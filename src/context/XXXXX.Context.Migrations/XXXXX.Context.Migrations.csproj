@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\XXXXX.Context.Core\XXXXX.Context.Core.csproj" />
+    <ProjectReference Include="..\XXXXX.Context.Migrations.Shared\XXXXX.Context.Migrations.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>

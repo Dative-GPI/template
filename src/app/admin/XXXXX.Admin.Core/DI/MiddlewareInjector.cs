@@ -1,5 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 
+using XXXXX.Admin.Core.Handlers;
 
 namespace XXXXX.Admin.Core.DI
 {
@@ -7,7 +8,7 @@ namespace XXXXX.Admin.Core.DI
     {
         public static IServiceCollection AddMiddlewares(this IServiceCollection services)
         {
-            //services.AddScoped<PermissionsMiddleware>();
+            services.AddScoped<PermissionsMiddleware>();
             
             return services;
         }

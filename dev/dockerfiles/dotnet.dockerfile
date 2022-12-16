@@ -14,6 +14,9 @@ RUN find . -type d -empty -delete
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0
 
+#install debugger for NET Core
+RUN curl -sSL https://aka.ms/getvsdbgsh | /bin/sh /dev/stdin -v latest -l ~/vsdbg
+
 ARG PROJECT
 ARG POST_RESTORE
 ARG PRE_BUILD

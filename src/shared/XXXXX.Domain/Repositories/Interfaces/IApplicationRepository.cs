@@ -11,6 +11,7 @@ namespace XXXXX.Domain.Repositories.Interfaces
     {
         Task<ApplicationDetails> Get(Guid applicationId);
         Task<IEntity<Guid>> Create(CreateApplication payload);
+        Task<IEntity<Guid>> Update(UpdateApplication payload);
         Task Remove(Guid id);
     }
 }

@@ -1,4 +1,5 @@
 using AutoMapper;
+
 using XXXXX.Admin.Core.ViewModels;
 using XXXXX.Domain.Models;
 
@@ -14,8 +15,18 @@ namespace XXXXX.Admin.Core.AutoMapper
                 .ForMember(p => p.Label, opt => opt.MapFromTranslation(e => e.Translations, t => t.Label));
             CreateMap<PermissionInfos, PermissionInfosViewModel>()
                 .ForMember(p => p.Label, opt => opt.MapFromTranslation(e => e.Translations, t => t.Label));
-            CreateMap<RouteInfos, RouteInfosViewModel>()
-                .ForMember(r => r.DrawerLabel, opt => opt.MapFromTranslation(e => e.Translations, t => t.DrawerLabel));
+
+            CreateMap<PermissionAdminCategory, PermissionAdminCategoryViewModel>()
+                .ForMember(p => p.Label, opt => opt.MapFromTranslation(e => e.Translations, t => t.Label));
+            CreateMap<PermissionAdminDetails, PermissionAdminDetailsViewModel>()
+                .ForMember(p => p.Label, opt => opt.MapFromTranslation(e => e.Translations, t => t.Label));
+            CreateMap<PermissionAdminInfos, PermissionAdminInfosViewModel>()
+                .ForMember(p => p.Label, opt => opt.MapFromTranslation(e => e.Translations, t => t.Label));
+
+            CreateMap<RouteInfos, RouteInfosViewModel>();
+
+            CreateMap<Translation, TranslationViewModel>();
+            CreateMap<ApplicationTranslation, ApplicationTranslationViewModel>();
         }
     }
 }

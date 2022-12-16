@@ -1,2 +1,4 @@
-export const PERMISSIONS_URL = "/api/admin/v1/permissions"
-export const PERMISSIONS_CATEGORIES_URL = "/api/admin/v1/permissions-categories"
+import { API_URL } from "./application";
+
+export const PERMISSIONS_URL = `${API_URL}/permissions`;
+export const PERMISSIONS_CATEGORIES_URL = `${API_URL}/permissions-categories`;
