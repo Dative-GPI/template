@@ -4,7 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using Bones.Flow;
-
+using XXXXX.Domain.Abstractions;
 using XXXXX.Domain.Models;
 using XXXXX.Domain.Repositories.Filters;
 using XXXXX.Domain.Repositories.Interfaces;
@@ -16,19 +16,22 @@ namespace XXXXX.Shell.Core.Handlers
     {
         private readonly IFoundationClientFactory _clientFactory;
         private readonly IPermissionRepository _permissionRepository;
+        private readonly IRequestContextProvider _requestContextProvider;
 
         public OrganisationPermissionsQueryHandler(
             IFoundationClientFactory clientFactory,
-            IPermissionRepository permissionRepository
+            IPermissionRepository permissionRepository,
+            IRequestContextProvider requestContextProvider
         )
         {
             _clientFactory = clientFactory;
             _permissionRepository = permissionRepository;
+            _requestContextProvider = requestContextProvider;
         }
 
         public async Task<IEnumerable<PermissionInfos>> HandleAsync(OrganisationPermissionsQuery request, Func<Task<IEnumerable<PermissionInfos>>> next, CancellationToken cancellationToken)
         {
-            var client = await _clientFactory.Create();
+            var client = await _clientFactory.CreateFromRequestContext(_requestContextProvider.Context);
 
             var organisation = await client.Shell.Organisations.Get(request.OrganisationId);
             var permissions = await _permissionRepository.GetMany(new PermissionsFilter() {

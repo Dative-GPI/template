@@ -18,16 +18,13 @@ namespace XXXXX.Shell.Core.Services
     public class RouteService : IRouteService
     {
         private IQueryHandler<RoutesQuery, IEnumerable<RouteInfos>> _routesQueryHandler;
-        private IRouteRepository _routeRepository;
         private IMapper _mapper;
 
         public RouteService(
             IQueryHandler<RoutesQuery, IEnumerable<RouteInfos>> routesQueryHandler,
-            IRouteRepository routeRepository,
             IMapper mapper
         ) {
             _routesQueryHandler = routesQueryHandler;
-            _routeRepository = routeRepository;
             _mapper = mapper;
         }
 

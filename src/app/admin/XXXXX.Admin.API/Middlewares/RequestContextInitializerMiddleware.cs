@@ -24,17 +24,18 @@ namespace XXXXX.Admin.API.Middlewares
             var request = context.Request;
             var provider = context.RequestServices.GetRequiredService<RequestContextProvider>();
 
-            provider.Accessor = () =>
-            {
-                var isAuthenticated = request.Headers.ContainsKey(HeaderNames.Authorization);
+            var actorId = new Guid(request.Headers["X-User-Id"].ToString());
+            var applicationId = new Guid(request.Headers["X-Application-Id"].ToString());
+            var languageCode = request.Headers["Accept-Language"].ToString();
+            var isAuthenticated = request.Headers.ContainsKey(HeaderNames.Authorization);
+            var jwt = isAuthenticated ? request.Headers[HeaderNames.Authorization].ToString().Substring(7) : null;
 
-                return new RequestContext()
-                {
-                    ApplicationId = new Guid(request.Headers["X-Application-Id"].ToString()),
-                    ActorId = new Guid(request.Headers["X-User-Id"].ToString()),
-                    LanguageCode = request.Headers["Accept-Language"].ToString(),
-                    Jwt = isAuthenticated ? request.Headers[HeaderNames.Authorization].ToString().Substring(7) : null
-                };
+            provider.Context = new RequestContext()
+            {
+                ApplicationId = applicationId,
+                ActorId = actorId,
+                LanguageCode = languageCode,
+                Jwt = jwt
             };
 
             await _next(context);

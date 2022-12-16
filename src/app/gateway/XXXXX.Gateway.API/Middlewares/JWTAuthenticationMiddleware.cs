@@ -1,7 +1,6 @@
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -14,8 +13,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Net.Http.Headers;
 
 using XXXXX.Domain.Abstractions;
-
-using XXXXX.Gateway.Core.Abstractions;
 
 namespace XXXXX.Gateway.API.Middlewares
 {
@@ -64,7 +61,7 @@ namespace XXXXX.Gateway.API.Middlewares
 
                 var clientFactory = sp.GetRequiredService<IFoundationClientFactory>();
 
-                var client = await clientFactory.Create(claims.ApplicationId, claims.LanguageCode, toRead);
+                var client = await clientFactory.CreateAuthenticated(claims.ApplicationId, claims.LanguageCode, toRead);
 
                 var isAuthenticated = await client.Gateway.Accounts.IsAuthenticated();
 

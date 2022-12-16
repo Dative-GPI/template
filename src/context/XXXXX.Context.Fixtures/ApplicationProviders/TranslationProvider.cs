@@ -54,6 +54,18 @@ namespace XXXXX.Context.Fixtures
                 }
             }
 
+            foreach (var route in Shell.Core.Routes.GetRoutes().Where(r => r.ShowOnDrawer))
+            {
+                result.TryAdd(route.DrawerCategoryCode, route.DrawerCategoryLabelDefault);
+                result.TryAdd(route.DrawerLabelCode, route.DrawerLabelDefault);
+            }
+
+            foreach (var route in Admin.Core.Routes.GetRoutes().Where(r => r.ShowOnDrawer))
+            {
+                result.TryAdd(route.DrawerCategoryCode, route.DrawerCategoryLabelDefault);
+                result.TryAdd(route.DrawerLabelCode, route.DrawerLabelDefault);
+            }
+
             return result;
         }
     }

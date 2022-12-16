@@ -8,6 +8,7 @@ using Foundation.Clients.ViewModels.Shell;
 using XXXXX.Domain.Repositories.Filters;
 using XXXXX.Domain.Repositories.Interfaces;
 using XXXXX.Shell.Core.Abstractions;
+using XXXXX.Domain.Abstractions;
 
 namespace XXXXX.Shell.Core.Tools
 {
@@ -16,16 +17,19 @@ namespace XXXXX.Shell.Core.Tools
         private readonly IFoundationClientFactory _foundationClientFactory;
         private readonly IRolePermissionRepository _rolePermissionRepository;
         private readonly IOrganisationTypePermissionRepository _organisationTypePermissionRepository;
+        private readonly IRequestContextProvider _requestContextProvider;
 
         public PermissionProvider(
             IFoundationClientFactory foundationClientFactory,
             IRolePermissionRepository rolePermissionRepository,
-            IOrganisationTypePermissionRepository organisationTypePermissionRepository
+            IOrganisationTypePermissionRepository organisationTypePermissionRepository,
+            IRequestContextProvider requestContextProvider
         )
         {
             _foundationClientFactory = foundationClientFactory;
             _rolePermissionRepository = rolePermissionRepository;
             _organisationTypePermissionRepository = organisationTypePermissionRepository;
+            _requestContextProvider = requestContextProvider;
         }
 
 
@@ -40,7 +44,7 @@ namespace XXXXX.Shell.Core.Tools
 
         public async Task<IEnumerable<string>> GetPermissions(Guid organisationId, Guid actorId)
         {
-            var client = await _foundationClientFactory.Create();
+            var client = await _foundationClientFactory.CreateFromRequestContext(_requestContextProvider.Context);
             var foundationPermissions = await GetFoundationPermissions(client, organisationId);
 
             var organisation = await client.Shell.Organisations.Get(organisationId);

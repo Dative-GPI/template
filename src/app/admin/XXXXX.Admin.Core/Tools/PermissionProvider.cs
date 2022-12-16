@@ -9,6 +9,7 @@ using Foundation.Clients.Abstractions;
 using XXXXX.Domain.Repositories.Filters;
 using XXXXX.Domain.Repositories.Interfaces;
 using XXXXX.Admin.Core.Abstractions;
+using XXXXX.Domain.Abstractions;
 
 namespace XXXXX.Admin.Core.Tools
 {
@@ -16,14 +17,17 @@ namespace XXXXX.Admin.Core.Tools
     {
         private readonly IFoundationClientFactory _foundationClientFactory;
         private readonly IRoleAdminPermissionRepository _roleAdminPermissionRepository;
+        private readonly IRequestContextProvider _requestContextProvider;
 
         public PermissionProvider(
             IFoundationClientFactory foundationClientFactory,
-            IRoleAdminPermissionRepository roleAdminPermissionRepository
+            IRoleAdminPermissionRepository roleAdminPermissionRepository,
+            IRequestContextProvider requestContextProvider
         )
         {
             _foundationClientFactory = foundationClientFactory;
             _roleAdminPermissionRepository = roleAdminPermissionRepository;
+            _requestContextProvider = requestContextProvider;
         }
 
 
@@ -38,7 +42,7 @@ namespace XXXXX.Admin.Core.Tools
 
         public async Task<IEnumerable<string>> GetPermissions(Guid actorId)
         {
-            var client = await _foundationClientFactory.Create();
+            var client = await _foundationClientFactory.CreateFromRequestContext(_requestContextProvider.Context);
             var foundationPermissions = await GetFoundationPermissions(client);
 
             var userApplication = await GetUserApplication(client, actorId);

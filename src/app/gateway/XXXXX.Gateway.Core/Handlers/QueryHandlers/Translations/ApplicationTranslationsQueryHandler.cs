@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using Bones.Flow;
+using XXXXX.Domain.Abstractions;
 using XXXXX.Domain.Models;
 using XXXXX.Gateway.Core.Abstractions;
 
@@ -13,46 +14,27 @@ namespace XXXXX.Gateway.Core.Handlers
     {
         private readonly IFoundationClientFactory _foundationClientFactory;
         private readonly ITranslationsProvider _translationProvider;
+        private readonly IRequestContextProvider _requestContextProvider;
 
         public ApplicationTranslationsQueryHandler(
             IFoundationClientFactory foundationClientFactory,
-            ITranslationsProvider translationProvider
+            ITranslationsProvider translationProvider,
+            IRequestContextProvider requestContextProvider
         )
         {
             _foundationClientFactory = foundationClientFactory;
             _translationProvider = translationProvider;
+            _requestContextProvider = requestContextProvider;
         }
 
         public async Task<IEnumerable<ApplicationTranslation>> HandleAsync(ApplicationTranslationsQuery request, Func<Task<IEnumerable<ApplicationTranslation>>> next, CancellationToken cancellationToken)
         {
-            if (request.OrganisationId.HasValue)
-            {
-                return await GetOrganisationTypeTranslations(request.ApplicationId, request.LanguageCode, request.OrganisationId.Value);
-            }
-            else
-            {
-                return await GetDefaultTranslations(request.ApplicationId, request.LanguageCode);
-            }
-        }
-
-        private async Task<IEnumerable<ApplicationTranslation>> GetDefaultTranslations(Guid applicationId, string languageCode)
-        {
-            return await _translationProvider.Get(
-                applicationId,
-                languageCode,
-                null
-            );
-        }
-
-        private async Task<IEnumerable<ApplicationTranslation>> GetOrganisationTypeTranslations(Guid applicationId, string languageCode, Guid organisationId)
-        {
-            var foundationClient = await _foundationClientFactory.Create();
-            var currentOrganisation = await foundationClient.Shell.Organisations.Get(organisationId);
-
-            return await _translationProvider.Get(
-                applicationId,
-                languageCode,
-                currentOrganisation.OrganisationTypeId
+            var context = _requestContextProvider.Context;
+            return await _translationProvider.GetMany(
+                context.ApplicationId,
+                context.LanguageCode,
+                context.OrganisationTypeId,
+                context.Jwt
             );
         }
     }

@@ -7,8 +7,6 @@ using Bones.Flow;
 using Foundation.Clients.DI;
 using XXXXX.Gateway.Core.Interfaces;
 using XXXXX.Gateway.Core.Services;
-using XXXXX.Gateway.Core.Abstractions;
-using XXXXX.Gateway.Core.Tools;
 
 namespace XXXXX.Gateway.Core.DI
 {
@@ -20,9 +18,6 @@ namespace XXXXX.Gateway.Core.DI
             services.AddFoundationClients(configuration);
 
             services.AddAutoMapper(typeof(DependencyInjector).Assembly);
-
-            services.AddScoped<IFoundationClientFactory, FoundationClientFactory>();
-            services.AddScoped<ITranslationsProvider, TranslationsProvider>();
 
             services.AddScoped<IApplicationService, ApplicationService>();
             services.AddScoped<IImageService, ImageService>();

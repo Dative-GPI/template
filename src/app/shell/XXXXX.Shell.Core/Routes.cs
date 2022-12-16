@@ -1,42 +1,40 @@
 using System.Collections.Generic;
-
-using Foundation.Clients;
-using XXXXX.Domain.Models;
+using XXXXX.Shell.Core.Models;
 
 namespace XXXXX.Shell.Core
 {
     public static class Routes
     {
-        private static readonly RouteInfos[] ROUTES = new RouteInfos[] {
-            new RouteInfos()
+        private static readonly RouteDefinition[] ROUTES = new RouteDefinition[] {
+            new RouteDefinition()
             {
                 Authorizations = new string[] {},
                 Path = "/XXXXX/examples",
                 Name = "apps.example",
-                DrawerCategory = "Extension",
+                DrawerCategoryLabelDefault = "XXXXX",
+                DrawerCategoryCode = "drawer.examples.category",
                 DrawerIcon = "supervised_user_circle",
-                DrawerLabel = "Example",
+                DrawerLabelDefault = "Example",
+                DrawerLabelCode = "drawer.examples.title",
                 Exact = true,
-                Id = System.Guid.NewGuid(),
-                ShowOnDrawer = true,
-                Uri = "https://extension.localhost"
+                ShowOnDrawer = true
             },
-            new RouteInfos()
+            new RouteDefinition()
             {
                 Authorizations = new string[] {},
                 Path = "/XXXXX/examples/drawer",
                 Name = "apps.example.drawer",
-                DrawerCategory = "Extension",
-                DrawerIcon = "supervised_user_circle",
-                DrawerLabel = "Example drawer",
+                DrawerCategoryLabelDefault = null,
+                DrawerCategoryCode = null,
+                DrawerIcon = null,
+                DrawerLabelDefault = null,
+                DrawerLabelCode = null,
                 Exact = false,
-                Id = System.Guid.NewGuid(),
-                ShowOnDrawer = false,
-                Uri = "https://extension.localhost"
+                ShowOnDrawer = false
             },
         };
 
-        public static IEnumerable<RouteInfos> GetRoutes()
+        public static IEnumerable<RouteDefinition> GetRoutes()
         {
             return ROUTES;
         }

@@ -1,17 +1,16 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
+using XXXXX.Domain.Abstractions;
 using XXXXX.Domain.Models;
 using XXXXX.Domain.Repositories.Filters;
 using XXXXX.Domain.Repositories.Interfaces;
 
-using XXXXX.Gateway.Core.Abstractions;
-
-namespace XXXXX.Gateway.Core.Tools
+namespace XXXXX.CrossCutting
 {
     public class TranslationsProvider : ITranslationsProvider
     {
@@ -31,18 +30,18 @@ namespace XXXXX.Gateway.Core.Tools
         }
 
 
-        public async Task<IEnumerable<ApplicationTranslation>> Get(Guid applicationId, string languageCode, Guid? organisationTypeId)
+        public async Task<IEnumerable<ApplicationTranslation>> GetMany(Guid applicationId, string languageCode, Guid? organisationTypeId, string jwt)
         {
-            var translations = await FetchTranslations();
+            var defaultTranslations = await FetchDefaultTranslations();
             var allTranslations = await FetchApplicationTranslations(applicationId, languageCode, organisationTypeId);
-            var foundationTranslation = await FetchFoundationTranslations(languageCode);
+            var foundationTranslation = await FetchFoundationTranslations(applicationId, languageCode, jwt);
 
-            var specificTranslations = SelectMostSpecificTranslations(translations, allTranslations, foundationTranslation);
+            var specificTranslations = SelectMostSpecificTranslations(defaultTranslations, allTranslations, foundationTranslation);
             return specificTranslations;
         }
 
 
-        private async Task<IEnumerable<Translation>> FetchTranslations()
+        private async Task<IEnumerable<Translation>> FetchDefaultTranslations()
         {
             var translations = await _translationRepository.GetMany();
             return translations;
@@ -62,11 +61,11 @@ namespace XXXXX.Gateway.Core.Tools
             return allTranslations;
         }
 
-        private async Task<IEnumerable<ApplicationTranslation>> FetchFoundationTranslations(string languageCode)
+        private async Task<IEnumerable<ApplicationTranslation>> FetchFoundationTranslations(Guid applicationId, string languageCode, string jwt)
         {
             try
             {
-                var client = await _foundationClientFactory.Create();
+                var client = await _foundationClientFactory.CreateAuthenticated(applicationId, languageCode, jwt);
                 var foundationTranslations = await client.Gateway.Translations.GetMany(languageCode);
 
                 return foundationTranslations.Select(tr => new ApplicationTranslation()

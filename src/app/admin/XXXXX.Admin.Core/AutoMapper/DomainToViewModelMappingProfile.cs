@@ -23,8 +23,7 @@ namespace XXXXX.Admin.Core.AutoMapper
             CreateMap<PermissionAdminInfos, PermissionAdminInfosViewModel>()
                 .ForMember(p => p.Label, opt => opt.MapFromTranslation(e => e.Translations, t => t.Label));
 
-            CreateMap<RouteInfos, RouteInfosViewModel>()
-                .ForMember(r => r.DrawerLabel, opt => opt.MapFromTranslation(e => e.Translations, t => t.DrawerLabel));
+            CreateMap<RouteInfos, RouteInfosViewModel>();
 
             CreateMap<Translation, TranslationViewModel>();
             CreateMap<ApplicationTranslation, ApplicationTranslationViewModel>();

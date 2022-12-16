@@ -10,7 +10,6 @@ namespace XXXXX.Context.Core
         #region Common
         public DbSet<ImageDTO> Images { get; set; }
         public DbSet<ApplicationDTO> Applications { get; set; }
-        public DbSet<RouteDTO> Routes { get; set; }
         #endregion
 
         #region Permissions
@@ -45,13 +44,6 @@ namespace XXXXX.Context.Core
             modelBuilder.Entity<ApplicationDTO>(m =>
             {
                 m.HasKey(a => a.Id);
-            });
-
-            modelBuilder.Entity<RouteDTO>(m =>
-            {
-                m.HasKey(r => r.Id);
-                m.Property(s => s.Translations)
-                    .HasColumnType("jsonb");
             });
             #endregion
 

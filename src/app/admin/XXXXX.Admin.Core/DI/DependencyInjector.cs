@@ -31,7 +31,6 @@ namespace XXXXX.Admin.Core.DI
             services.AddTranslations();
             services.AddApplicationTranslations();
 
-            services.AddScoped<IFoundationClientFactory, FoundationClientFactory>();
             services.AddScoped<IPermissionProvider, PermissionProvider>();
 
             return services;

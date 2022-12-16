@@ -26,3 +26,4 @@ src/app/ui/package-lock.json
 # .vscode
 launchSettings.json
 Migrations
+dist

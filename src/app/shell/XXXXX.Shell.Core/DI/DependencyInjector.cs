@@ -25,7 +25,6 @@ namespace XXXXX.Shell.Core.DI
             
             services.AddAutoMapper();
 
-            services.AddScoped<IFoundationClientFactory, FoundationClientFactory>();
             services.AddScoped<IPermissionProvider, PermissionProvider>();
 
             return services;
