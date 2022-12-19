@@ -11,6 +11,8 @@ using XXXXX.Gateway.Core.Models;
 using XXXXX.Domain.Models;
 using Foundation.Clients.ViewModels.Shell;
 using XXXXX.Domain.Abstractions;
+using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.Authorization;
 
 namespace XXXXX.Gateway.API.Middlewares
 {
@@ -25,6 +27,12 @@ namespace XXXXX.Gateway.API.Middlewares
 
         public async Task InvokeAsync(HttpContext context)
         {
+            if (context.Features.Get<IEndpointFeature>().Endpoint.Metadata.Any(m => m is AllowAnonymousAttribute))
+            {
+                await _next(context);
+                return;
+            }
+            
             var request = context.Request;
             var provider = context.RequestServices.GetRequiredService<RequestContextProvider>();
 
