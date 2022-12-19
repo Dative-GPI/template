@@ -22,7 +22,7 @@ namespace XXXXX.Gateway.API
         {
             context.AddRequestTransform(async requestContext =>
             {
-                if (requestContext.Path.StartsWithSegments("/api/core/organisations"))
+                if (requestContext.Path.StartsWithSegments("/api/core"))
                 {
                     var request = requestContext.HttpContext.Request;
                     var applicationRepository = requestContext.HttpContext.RequestServices.GetRequiredService<IApplicationRepository>();
@@ -34,7 +34,9 @@ namespace XXXXX.Gateway.API
                     if (!string.IsNullOrWhiteSpace(bearer))
                     {
                         token = bearer.ToString().Substring("Bearer ".Length);
-                    } else {
+                    }
+                    else
+                    {
                         token = request.Query["token"];
                         request.Headers.Add(HeaderNames.Authorization, "Bearer " + token);
                     }
@@ -50,17 +52,24 @@ namespace XXXXX.Gateway.API
                     newUri.Scheme = request.Scheme;
                     newUri.Host = application.ShellHost;
                     if (request.Host.Port.HasValue) newUri.Port = request.Host.Port.Value;
-                    
-                    var pathArray = request.Path.ToUriComponent().Split('/', StringSplitOptions.RemoveEmptyEntries);
-                    var pathList = new List<string>() { "api" };
-                    pathList.AddRange(pathArray.Skip(4)); // 4 pour api, core, organisations et organisationId
-                    newUri.Path = String.Join('/', pathList.ToArray()); 
-
                     newUri.Query = request.QueryString.ToUriComponent();
 
-                    var organisationIdParam = request.RouteValues["organisationId"];
-                    var organisationId = Guid.Parse(organisationIdParam.ToString());
-                    requestContext.ProxyRequest.Headers.Add("X-Organisation-Id", organisationId.ToString());
+                    var pathArray = request.Path.ToUriComponent().Split('/', StringSplitOptions.RemoveEmptyEntries);
+                    var pathList = new List<string>() { "api" };
+
+                    if (pathArray[2] == "organisations")
+                    {
+                        pathList.AddRange(pathArray.Skip(4)); // 4 pour api, core, organisations et organisationId
+
+                        var organisationIdParam = pathArray[3];
+                        var organisationId = Guid.Parse(organisationIdParam.ToString());
+                        requestContext.ProxyRequest.Headers.Add("X-Organisation-Id", organisationId.ToString());
+                    }
+                    else
+                    {
+                        pathList.AddRange(pathArray.Skip(2)); // 2 pour api, core
+                    }
+                    newUri.Path = String.Join('/', pathList.ToArray());
 
                     requestContext.ProxyRequest.RequestUri = newUri.Uri;
                 }
