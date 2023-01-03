@@ -20,7 +20,7 @@ interface CollectionUpdate<T> {
     id?: string;
     action: "update";
     type: string;
-    item: T;
+    items: T[];
 }
 
 interface CollectionReset<T> {
