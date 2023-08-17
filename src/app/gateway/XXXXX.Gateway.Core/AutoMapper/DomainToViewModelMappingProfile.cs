@@ -1,6 +1,4 @@
 using AutoMapper;
-using XXXXX.Domain.Models;
-using XXXXX.Gateway.Core.ViewModels;
 
 namespace XXXXX.Gateway.Core.AutoMapper
 {
@@ -8,8 +6,7 @@ namespace XXXXX.Gateway.Core.AutoMapper
     {
         public DomainToViewModelMappingProfile()
         {
-            CreateMap<ApplicationDetails, ApplicationDetailsViewModel>();
-            CreateMap<ApplicationTranslation, ApplicationTranslationViewModel>();
+
         }
     }
 }

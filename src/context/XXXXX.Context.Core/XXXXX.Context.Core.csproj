@@ -1,18 +1,22 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <ItemGroup>
-    <ProjectReference Include="..\..\shared\XXXXX.Domain\XXXXX.Domain.csproj"/>
-    <PackageReference Include="Bones" Version="0.0.9"/>
-    <PackageReference Include="Bones.Flow" Version="0.0.9"/>
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Blurhash.ImageSharp" Version="1.1.1"/>
-    <PackageReference Include="Microsoft.Extensions.Http" Version="5.0.0"/>
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.1"/>
-    <PackageReference Include="SixLabors.ImageSharp" Version="1.0.3"/>
-    <PackageReference Include="Azure.Storage.Blobs" Version="12.10.0"/>
-    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="5.0.0"/>
-  </ItemGroup>
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.10" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\shared\XXXXX.Domain\XXXXX.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Bones" Version="0.0.29" />
+    <PackageReference Include="Bones.Flow" Version="0.0.29" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Foundation.Template.Context" Version="1.0.0" />
+  </ItemGroup>
 </Project>

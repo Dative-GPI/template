@@ -20,6 +20,5 @@ namespace XXXXX.Shell.Core.Models
         public string Name { get; set; }
 
         public bool Exact { get; set; }
-
     }
 }

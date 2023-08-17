@@ -1,24 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Yarp.ReverseProxy" Version="1.1.0"/>
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.10"/>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+    <PackageReference Include="Foundation.Template.Gateway" Version="1.0.0" />
+    <PackageReference Include="Foundation.Template.CrossCutting" Version="1.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\XXXXX.Gateway.Core\XXXXX.Gateway.Core.csproj" />
-    <ProjectReference Include="..\..\..\shared\XXXXX.CrossCutting\XXXXX.CrossCutting.csproj"/>
-    <ProjectReference Include="..\..\..\shared\XXXXX.Domain\XXXXX.Domain.csproj"/>
+    <ProjectReference Include="..\..\..\context\XXXXX.Context.Core\XXXXX.Context.Core.csproj" />
   </ItemGroup>
-  
-  <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="10.1.1"/>
-    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.0"/>
-  </ItemGroup>
-
 </Project>

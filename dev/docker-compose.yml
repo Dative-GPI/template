@@ -1,8 +1,22 @@
 version: "3"
 
 services:
+  traefik:
+    image: traefik:v2.4
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.websecure.address=:443"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    networks:
+      - XXXXX
+    ports:
+      - 443:443
+      - 8080:8080
 
-  db:
+  timescale:
     image: timescale/timescaledb:latest-pg12
     networks:
       - XXXXX
@@ -10,7 +24,22 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: example
     volumes:
-      - data-extension-db:/var/lib/postgresql/data
+      - data-postgres:/var/lib/postgresql/data
+  
+  proxy:
+    image: dative/foundation-template-proxy:latest
+    networks:
+      - XXXXX
+    environment:
+      CUSTOMCONNSTR_FOUNDATION: https://mountain.dative-gpi.com
+      CUSTOMCONNSTR_LOCAL: http://gateway
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.services.proxy-backend.loadbalancer.server.port=80"
+      - "traefik.http.routers.proxy-backend.rule=Host(`foundation-admin.localhost`) || Host(`foundation.localhost`)"
+      - "traefik.http.routers.proxy-backend.entrypoints=websecure"
+      - "traefik.http.routers.proxy-backend.tls=true"
+
       
   shell:
     build: 
@@ -20,16 +49,10 @@ services:
         PROJECT: src/app/shell/XXXXX.Shell.API
     networks:
       - XXXXX
-    extra_hosts:
-      - "foundation-admin.localhost:172.17.0.1"
-      - "foundation.localhost:172.17.0.1"
     environment:
-      MEDIATOR__ENDPOINTURI: amqp://rabbitmq
       DOTNET_ENVIRONMENT: Development
       DOTNET_URLS: http://+:80
       CUSTOMCONNSTR_PGSQL: Host=db;Database=data-extension;Username=postgres;Password=example
-      IMAGE__RAWFOLDER: /images/raw
-      IMAGE__THUMBNAILFOLDER: /images/thumbnails
   
   admin:
     build: 
@@ -39,16 +62,10 @@ services:
         PROJECT: src/app/admin/XXXXX.Admin.API
     networks:
       - XXXXX
-    extra_hosts:
-      - "foundation-admin.localhost:172.17.0.1"
-      - "foundation.localhost:172.17.0.1"
     environment:
-      MEDIATOR__ENDPOINTURI: amqp://rabbitmq
       DOTNET_ENVIRONMENT: Development
       DOTNET_URLS: http://+:80
       CUSTOMCONNSTR_PGSQL: Host=db;Database=data-extension;Username=postgres;Password=example
-      IMAGE__RAWFOLDER: /images/raw
-      IMAGE__THUMBNAILFOLDER: /images/thumbnails
 
   gateway:
     build: 
@@ -138,7 +155,6 @@ services:
 
 networks:
   XXXXX:
-    name: "extension_XXXXX"
 
 volumes:
-  data-extension-db:
+  data-postgres:

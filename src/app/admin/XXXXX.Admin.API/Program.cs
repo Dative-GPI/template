@@ -1,20 +1,32 @@
-using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace XXXXX.Admin.API
-{
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
-            CreateHostBuilder(args).Build().Run();
-        }
+using Foundation.Template.Admin.DI;
+using Foundation.Template.Admin.Extensions;
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
-    }
+using XXXXX.Admin.Core.DI;
+using XXXXX.Context.Core.DI;
+
+var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container.
+
+builder.Services.AddControllers();
+builder.Services.AddCore(builder.Configuration);
+builder.Services.AddAdminTemplate(builder.Configuration);
+builder.Services.AddContext(builder.Configuration);
+
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
 }
+
+app.UseAdminTemplate();
+
+app.MapControllers();
+
+app.Run();

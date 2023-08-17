@@ -1,12 +1,9 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.EntityFrameworkCore;
 
 using Bones.Flow;
 
-using XXXXX.Context.Core.Configurations;
-using XXXXX.Context.Core.Abstractions;
-using XXXXX.Context.Core.Services;
+using Foundation.Template.Context.DI;
 
 namespace XXXXX.Context.Core.DI
 {
@@ -14,20 +11,9 @@ namespace XXXXX.Context.Core.DI
     {
         public static IServiceCollection AddContext(this IServiceCollection services, IConfiguration configuration)
         {
-            services.Configure<ImageConfiguration>(configuration.GetSection("Image"));
+            services.AddContextTemplate<ApplicationContext>(configuration);
 
             services.AddRepositories();
-
-            services.AddDbContext<ApplicationContext>(options =>
-            {
-                options.UseNpgsql(configuration.GetConnectionString("PGSQL"));
-                options.EnableSensitiveDataLogging();
-            });
-
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
-
-            services.AddScoped<IImageHelper, ImageHelper>();
-            services.AddScoped<IBinaryStorage, BinaryStorage>();
 
             return services;
         }

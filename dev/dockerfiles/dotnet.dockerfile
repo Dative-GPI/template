@@ -12,7 +12,7 @@ RUN find . -type d -empty -delete
 
 # ----------------------------------------
 
-FROM mcr.microsoft.com/dotnet/sdk:5.0
+FROM mcr.microsoft.com/dotnet/sdk:7.0
 
 #install debugger for NET Core
 RUN curl -sSL https://aka.ms/getvsdbgsh | /bin/sh /dev/stdin -v latest -l ~/vsdbg
@@ -21,11 +21,18 @@ ARG PROJECT
 ARG POST_RESTORE
 ARG PRE_BUILD
 
-WORKDIR /app/$PROJECT
+# RUN mkdir /libs
+# RUN dotnet nuget add source /libs -n libs
 
-COPY --from=proj-env /app /app
+# WORKDIR /app/$PROJECT
 
-RUN dotnet restore
+# COPY --from=proj-env /app /app
+
+# COPY libs /libs
+# RUN dotnet nuget update source libs
+# RUN for lib in $(find "/libs/temp" -name "*.nupkg"); do nuget add $lib -s /libs; done
+
+RUN dotnet restore 
 RUN $POST_RESTORE
 
 COPY . /app

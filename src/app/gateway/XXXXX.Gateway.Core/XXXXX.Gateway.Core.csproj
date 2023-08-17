@@ -2,21 +2,27 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\shared\XXXXX.Domain\XXXXX.Domain.csproj" />
-    <ProjectReference Include="..\..\..\context\XXXXX.Context.Core\XXXXX.Context.Core.csproj"/>
+    <ProjectReference Include="..\..\..\context\XXXXX.Context.Core\XXXXX.Context.Core.csproj" />
   </ItemGroup>
 
-  
+
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="10.1.1" />
-    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.0" />
-    <PackageReference Include="Bones" Version="0.0.9" />
-    <PackageReference Include="Bones.Flow" Version="0.0.9" />
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
     <PackageReference Include="FluentValidation" Version="10.1.0" />
   </ItemGroup>
 
-  
+  <ItemGroup>
+    <PackageReference Include="Bones" Version="0.0.29" />
+    <PackageReference Include="Bones.Flow" Version="0.0.29" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Foundation.Template.Gateway" Version="1.0.0" />
+  </ItemGroup>
+
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
   </PropertyGroup>
 
 </Project>
