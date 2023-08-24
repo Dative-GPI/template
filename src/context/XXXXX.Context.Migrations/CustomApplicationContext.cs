@@ -4,7 +4,7 @@ using Foundation.Template.Context.DTOs;
 using Foundation.Template.Fixtures.Abstractions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using XXXXX.Context.Core;
+using XXXXX.Context.Kernel;
 
 namespace XXXXX.Context.Migrations
 {

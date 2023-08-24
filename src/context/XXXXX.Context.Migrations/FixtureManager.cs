@@ -27,7 +27,7 @@ namespace XXXXX.Context.Migrations
                 });
 
             Add<PermissionOrganisationDTO, Fixture>(
-                PermissionHelper.GetPermissions(typeof(XXXXX.Shell.Core.Authorizations)),
+                PermissionHelper.GetPermissions(typeof(XXXXX.Shell.Kernel.Authorizations)),
                 fixture => new PermissionOrganisationDTO()
                 {
                     Id = Guid.NewGuid(),
@@ -41,7 +41,7 @@ namespace XXXXX.Context.Migrations
                 });
 
             Add<PermissionOrganisationCategoryDTO, Fixture>(
-                PermissionHelper.GetCategories(typeof(XXXXX.Shell.Core.Authorizations)),
+                PermissionHelper.GetCategories(typeof(XXXXX.Shell.Kernel.Authorizations)),
                 fixture => new PermissionOrganisationCategoryDTO()
                 {
                     Id = Guid.NewGuid(),
@@ -55,7 +55,7 @@ namespace XXXXX.Context.Migrations
                 });
 
             Add<PermissionAdminDTO, Fixture>(
-                PermissionHelper.GetPermissions(typeof(XXXXX.Admin.Core.Authorizations)),
+                PermissionHelper.GetPermissions(typeof(XXXXX.Admin.Kernel.Authorizations)),
                 fixture => new PermissionAdminDTO()
                 {
                     Id = Guid.NewGuid(),
@@ -69,7 +69,7 @@ namespace XXXXX.Context.Migrations
                 });
 
             Add<PermissionAdminCategoryDTO, Fixture>(
-                PermissionHelper.GetCategories(typeof(XXXXX.Admin.Core.Authorizations)),
+                PermissionHelper.GetCategories(typeof(XXXXX.Admin.Kernel.Authorizations)),
                 fixture => new PermissionAdminCategoryDTO()
                 {
                     Id = Guid.NewGuid(),

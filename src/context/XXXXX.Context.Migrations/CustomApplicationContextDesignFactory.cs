@@ -4,7 +4,7 @@
 // using Microsoft.EntityFrameworkCore.Design;
 // using Microsoft.Extensions.Configuration;
 // using Microsoft.Extensions.DependencyInjection;
-// using XXXXX.Context.Core;
+// using XXXXX.Context.Kernel;
 
 // namespace XXXXX.Context.Migrations
 // {

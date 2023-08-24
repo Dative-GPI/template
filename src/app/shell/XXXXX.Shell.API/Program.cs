@@ -7,15 +7,15 @@ using Foundation.Template.CrossCutting.DI;
 
 using Foundation.Template.Shell.Extensions;
 
-using XXXXX.Shell.Core.DI;
-using XXXXX.Context.Core.DI;
+using XXXXX.Shell.Kernel.DI;
+using XXXXX.Context.Kernel.DI;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
-builder.Services.AddCore(builder.Configuration);
+builder.Services.AddKernel(builder.Configuration);
 builder.Services.AddShellTemplate(builder.Configuration);
 builder.Services.AddContext(builder.Configuration);
 builder.Services.AddCrossCutting(builder.Configuration);

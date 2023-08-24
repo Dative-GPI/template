@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\XXXXX.Context.Core\XXXXX.Context.Core.csproj" />
-    <ProjectReference Include="..\..\app\admin\XXXXX.Admin.Core\XXXXX.Admin.Core.csproj" />
-    <ProjectReference Include="..\..\app\shell\XXXXX.Shell.Core\XXXXX.Shell.Core.csproj" />
+    <ProjectReference Include="..\XXXXX.Context.Kernel\XXXXX.Context.Kernel.csproj" />
+    <ProjectReference Include="..\..\app\admin\XXXXX.Admin.Kernel\XXXXX.Admin.Kernel.csproj" />
+    <ProjectReference Include="..\..\app\shell\XXXXX.Shell.Kernel\XXXXX.Shell.Kernel.csproj" />
   </ItemGroup>
 
   <ItemGroup>

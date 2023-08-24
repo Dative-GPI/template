@@ -8,8 +8,8 @@ using Foundation.Template.Gateway.DI;
 using Foundation.Template.CrossCutting.DI;
 using Foundation.Template.Gateway.Extensions;
 
-using XXXXX.Gateway.Core.DI;
-using XXXXX.Context.Core.DI;
+using XXXXX.Gateway.Kernel.DI;
+using XXXXX.Context.Kernel.DI;
 
 using Foundation.Template.Gateway.Middlewares;
 using Microsoft.AspNetCore.Http;
@@ -20,7 +20,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
-builder.Services.AddCore(builder.Configuration);
+builder.Services.AddKernel(builder.Configuration);
 builder.Services.AddGatewayTemplate(builder.Configuration);
 builder.Services.AddContext(builder.Configuration);
 builder.Services.AddCrossCutting(builder.Configuration);
@@ -57,7 +57,7 @@ app.UseEndpoints(endpoints =>
     endpoints.MapForwarder("/api/admin/{**catch-all}", builder.Configuration.GetConnectionString("Admin"))
         .RequireAuthorization();
 
-    endpoints.MapForwarder("/api/core/{**catch-all}", builder.Configuration.GetConnectionString("Core"))
+    endpoints.MapForwarder("/api/core/{**catch-all}", builder.Configuration.GetConnectionString("Kernel"))
         .RequireAuthorization();
 });
 
