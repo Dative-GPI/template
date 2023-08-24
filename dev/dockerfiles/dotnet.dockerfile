@@ -21,16 +21,9 @@ ARG PROJECT
 ARG POST_RESTORE
 ARG PRE_BUILD
 
-# RUN mkdir /libs
-# RUN dotnet nuget add source /libs -n libs
 
-# WORKDIR /app/$PROJECT
-
-# COPY --from=proj-env /app /app
-
-# COPY libs /libs
-# RUN dotnet nuget update source libs
-# RUN for lib in $(find "/libs/temp" -name "*.nupkg"); do nuget add $lib -s /libs; done
+WORKDIR /app/$PROJECT
+COPY --from=proj-env /app /app
 
 RUN dotnet restore 
 RUN $POST_RESTORE

@@ -3,6 +3,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 using Foundation.Template.Shell.DI;
+using Foundation.Template.CrossCutting.DI;
+
 using Foundation.Template.Shell.Extensions;
 
 using XXXXX.Shell.Core.DI;
@@ -16,6 +18,9 @@ builder.Services.AddControllers();
 builder.Services.AddCore(builder.Configuration);
 builder.Services.AddShellTemplate(builder.Configuration);
 builder.Services.AddContext(builder.Configuration);
+builder.Services.AddCrossCutting(builder.Configuration);
+builder.Services.AddHttpClient();
+
 
 var app = builder.Build();
 
@@ -28,5 +33,6 @@ if (app.Environment.IsDevelopment())
 app.UseShellTemplate();
 
 app.MapControllers();
+app.MapShellTemplateControllers(null);
 
 app.Run();

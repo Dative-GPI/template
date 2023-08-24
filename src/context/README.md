@@ -3,9 +3,9 @@
 ## Fixtures
 
 Fixtures for permissions and translations (and those you create) are generated programmatically.  
-To do so, run the command `dotnet run` in the XXXXX.Context.Fixtures folder.  
+To do so, run the command `dotnet run -- fixtures generate` in the XXXXX.Context.Migrations folder.  
 This command will create XML files in the *Fixtures* folder will the data updated.  
-You can also create fixtures in JSON files by hand.
+You can also create fixtures in JSON files by hand. The name should be the DTO in kebab-case
 
 ## Migrations
 

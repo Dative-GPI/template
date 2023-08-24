@@ -1,12 +1,19 @@
 using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 using Foundation.Template.Gateway.DI;
+using Foundation.Template.CrossCutting.DI;
 using Foundation.Template.Gateway.Extensions;
 
 using XXXXX.Gateway.Core.DI;
 using XXXXX.Context.Core.DI;
+
+using Foundation.Template.Gateway.Middlewares;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.HttpOverrides;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,20 +21,44 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddCore(builder.Configuration);
-builder.Services.AddGatewayTemplate();
+builder.Services.AddGatewayTemplate(builder.Configuration);
 builder.Services.AddContext(builder.Configuration);
+builder.Services.AddCrossCutting(builder.Configuration);
+builder.Services.AddHttpClient();
 
+builder.Services.AddAuthentication("Custom"); // to remove
+builder.Services.AddHealthChecks();
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseDeveloperExceptionPage();
+    // app.UseDeveloperExceptionPage();
 }
 
-app.UseGatewayTemplate();
+app.UseForwardedHeaders(new ForwardedHeadersOptions
+{
+    ForwardedHeaders = ForwardedHeaders.XForwardedProto
+});
 
-app.MapControllers();
+app.UseHealthChecks("/health");
+
+app.UseRouting();
+
+app.UseTemplateAuthentication();
+
+app.UseAuthorization();
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapGatewayTemplateEndpoints();
+
+    endpoints.MapForwarder("/api/admin/{**catch-all}", builder.Configuration.GetConnectionString("Admin"))
+        .RequireAuthorization();
+
+    endpoints.MapForwarder("/api/core/{**catch-all}", builder.Configuration.GetConnectionString("Core"))
+        .RequireAuthorization();
+});
 
 app.Run();

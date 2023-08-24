@@ -16,6 +16,7 @@ builder.Services.AddControllers();
 builder.Services.AddCore(builder.Configuration);
 builder.Services.AddAdminTemplate(builder.Configuration);
 builder.Services.AddContext(builder.Configuration);
+builder.Services.AddHttpClient();
 
 var app = builder.Build();
 

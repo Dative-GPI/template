@@ -30,7 +30,7 @@
             },
             "pipeTransport": {
                 "pipeProgram": "docker",
-                "pipeArgs": [ "exec", "-i", "XXXXX-gateway-1" ],
+                "pipeArgs": [ "exec", "-i", "extension_gateway_1" ],
                 "debuggerPath": "/root/vsdbg/vsdbg",
                 "pipeCwd": "${workspaceRoot}",
                 "quoteArgs": false

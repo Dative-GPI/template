@@ -10,7 +10,7 @@ using Foundation.Template.Admin.Abstractions;
 
 using XXXXX.Admin.Core.Models;
 
-namespace XXXXX.Admin.Core.Handlers
+namespace XXXXX.Admin.Core.Services
 {
     public class RoutesProvider : IRoutesProvider
     {

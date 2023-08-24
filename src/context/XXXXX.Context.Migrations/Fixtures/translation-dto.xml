@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfTranslationDTO xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TranslationDTO Id="f4acebff-54cb-4375-88d5-2915f0983b5c" Code="ui.example.open-drawer" ValueDefault="Open drawer" Disabled="false" />
+  <TranslationDTO Id="2a5a7f16-a261-4992-878e-71e8bee6f7ec" Code="ui.example.reset-height" ValueDefault="Reset height" Disabled="false" />
+  <TranslationDTO Id="fe3d540c-1c4a-4161-8fc5-42ae452429e8" Code="ui.example.increase-height" ValueDefault="Increase height" Disabled="false" />
+  <TranslationDTO Id="9ad595ce-e52d-45c0-a81d-4dde37863923" Code="ui.example.title" ValueDefault="Example page" Disabled="false" />
+  <TranslationDTO Id="2d472787-ef3c-43d7-9841-5d65e986314f" Code="ui.common.create" ValueDefault="Create" Disabled="false" />
+  <TranslationDTO Id="4cad44f6-6d40-41bc-97da-4d9d53059924" Code="ui.tables.empty" ValueDefault="No data yet" Disabled="false" />
+  <TranslationDTO Id="74bb2698-bb87-4f21-9213-eb0b8b79aacb" Code="ui.common.code" ValueDefault="Code" Disabled="false" />
+  <TranslationDTO Id="91158317-43ee-4801-9ded-356b69b026bf" Code="ui.admin.translations.languages" ValueDefault="Translations" Disabled="false" />
+  <TranslationDTO Id="2052ae6f-5b80-489f-8dad-bed9912da985" Code="ui.admin.translations.specifics" ValueDefault="Specific translations" Disabled="false" />
+  <TranslationDTO Id="0f786023-647a-4228-bd31-aa459a84eb4d" Code="ui.admin.translations.default" ValueDefault="Default translation" Disabled="false" />
+  <TranslationDTO Id="b3d2de45-4f8f-47c6-b35f-d8f19cec0336" Code="ui.common.actions" ValueDefault="Actions" Disabled="false" />
+  <TranslationDTO Id="0bdec25d-1377-44e6-88a0-054e638c7307" Code="ui.common.more" ValueDefault="more" Disabled="false" />
+  <TranslationDTO Id="16d2a4a1-db09-4bd4-82fc-78661ffb5337" Code="ui.common.close" ValueDefault="Close" Disabled="false" />
+  <TranslationDTO Id="e3d71d24-69c9-4990-b222-4edb7e01320d" Code="ui.admin.translations.import" ValueDefault="Import translations" Disabled="false" />
+  <TranslationDTO Id="f96872e6-df60-4d6f-912b-09c560f85b06" Code="ui.admin.translations.import-details" ValueDefault="Please provide a csv file with the code as the first column" Disabled="false" />
+  <TranslationDTO Id="ba723579-8af7-414a-98ff-621f2ff3cdab" Code="ui.common.separator" ValueDefault="Separator" Disabled="false" />
+  <TranslationDTO Id="6ebf03d6-75e0-4a80-841e-2542ea98220f" Code="ui.common.import-csv" ValueDefault="Import csv file" Disabled="false" />
+  <TranslationDTO Id="6e287b99-ae66-487c-a38f-d987087be641" Code="ui.common.download-csv" ValueDefault="Download csv file" Disabled="false" />
+  <TranslationDTO Id="d1ce9dff-85f2-4575-bfe4-a71fda4a2c42" Code="ui.common.column" ValueDefault="Column" Disabled="false" />
+  <TranslationDTO Id="2e2882b8-5b61-4368-a1c7-c5b5269591f9" Code="ui.common.language" ValueDefault="Language" Disabled="false" />
+  <TranslationDTO Id="b0256d64-0884-4574-bc71-468d95f8dceb" Code="ui.common.specific-translation" ValueDefault="Specific translation" Disabled="false" />
+  <TranslationDTO Id="c1210dc4-d990-41ed-948c-bd4aadfe0bb4" Code="ui.common.organisation-type" ValueDefault="Organisation type" Disabled="false" />
+  <TranslationDTO Id="b34f177f-9e86-4a70-b1c0-11a2c7b0d54b" Code="ui.common.ignored-translations" ValueDefault="translations ignored" Disabled="false" />
+  <TranslationDTO Id="147bff0a-b216-4726-9a9d-dd8bd0380322" Code="ui.common.cancel" ValueDefault="Cancel" Disabled="false" />
+  <TranslationDTO Id="c2a7db7f-39fd-4978-aeaf-ec2f1989bcc4" Code="ui.common.import" ValueDefault="Import" Disabled="false" />
+  <TranslationDTO Id="feffd2d9-d2e3-41f5-aab4-2740f1c43bea" Code="ui.common.default-value" ValueDefault="Default value" Disabled="false" />
+  <TranslationDTO Id="5958738e-cc6d-4976-8554-f7c57e9b5567" Code="ui.common.default" ValueDefault="Default" Disabled="false" />
+  <TranslationDTO Id="802d7554-4ae5-4af3-937d-8704ef0dcba1" Code="ui.admin.translations.drawer.specific-title" ValueDefault="Specific translations" Disabled="false" />
+  <TranslationDTO Id="6d237378-6fe0-4ff6-987b-e07255de6e5a" Code="ui.admin.translations.drawer.specific-description" ValueDefault="Please select the organisation types that will have custom translations" Disabled="false" />
+  <TranslationDTO Id="a7669724-75fd-4ae5-8f9b-916d75c3bbf0" Code="ui.admin.translations.drawer.general-title" ValueDefault="General translations" Disabled="false" />
+  <TranslationDTO Id="f4ac5e0c-084b-4cd3-8624-023cbbe00c3f" Code="ui.admin.translations.update" ValueDefault="Update Translation" Disabled="false" />
+  <TranslationDTO Id="8c265c20-b4ef-4d3f-9d4b-59ddb490cb71" Code="ui.common.save" ValueDefault="Save" Disabled="false" />
+  <TranslationDTO Id="913f2653-3eb1-4764-a09c-c62dd393201e" Code="ui.admin.translation.code" ValueDefault="Code" Disabled="false" />
+  <TranslationDTO Id="2bc2de04-c799-4181-9646-849f44dc3be5" Code="ui.admin.translation.default" ValueDefault="Default value" Disabled="false" />
+  <TranslationDTO Id="cec8e672-ae81-4fc2-bca0-7b917533b470" Code="ui.common.delete" ValueDefault="Delete" Disabled="false" />
+  <TranslationDTO Id="12cb2e24-9127-4056-8926-0def6b917219" Code="ui.common.add-new" ValueDefault="Add new" Disabled="false" />
+  <TranslationDTO Id="2e307769-b5b6-438d-9891-b63cc1dad96e" Code="ui.common.show-all" ValueDefault="Show all" Disabled="false" />
+  <TranslationDTO Id="ac77fe81-7313-4924-ad95-da733ce4cade" Code="ui.common.this-week" ValueDefault="This week" Disabled="false" />
+  <TranslationDTO Id="e3eabda7-05fa-427e-9234-a96b8a77e187" Code="ui.common.this-month" ValueDefault="This month" Disabled="false" />
+  <TranslationDTO Id="d5449f2d-f059-4ff7-ba90-c9cb03dd6ca9" Code="ui.common.this-year" ValueDefault="This year" Disabled="false" />
+  <TranslationDTO Id="15362aa0-9297-4ea8-8439-920d15e9dc49" Code="ui.common.last-7-days" ValueDefault="Last 7 days" Disabled="false" />
+  <TranslationDTO Id="120ae0ae-5dac-4baf-930f-2f447b657027" Code="ui.common.last-30-days" ValueDefault="Last 30 days" Disabled="false" />
+  <TranslationDTO Id="e25cb03d-3759-4908-a820-2da3480ce6c1" Code="ui.common.last-365-days" ValueDefault="Last 365 days" Disabled="false" />
+  <TranslationDTO Id="dd342eaf-2dec-4877-9774-25f4cdc48173" Code="ui.common.select-dates" ValueDefault="Select dates" Disabled="false" />
+</ArrayOfTranslationDTO>

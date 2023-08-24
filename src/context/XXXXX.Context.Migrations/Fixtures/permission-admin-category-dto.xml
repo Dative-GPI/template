@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfPermissionAdminCategoryDTO xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <PermissionAdminCategoryDTO Id="5efdf248-6d63-4b07-aae3-d6da6268d588" Code="admin.XXXXX" LabelDefault="XXXXX" Disabled="false">
+    <Translations />
+  </PermissionAdminCategoryDTO>
+</ArrayOfPermissionAdminCategoryDTO>

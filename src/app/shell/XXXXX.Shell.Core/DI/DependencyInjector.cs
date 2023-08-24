@@ -16,6 +16,7 @@ namespace XXXXX.Shell.Core.DI
             services.AddFlow();
 
             services.AddScoped<IRoutesProvider, RoutesProvider>();
+            services.AddScoped<IActionsProvider, ActionsProvider>();
 
             services.AddAutoMapper(typeof(DependencyInjector).Assembly);
 
