@@ -3,11 +3,11 @@ using Microsoft.Extensions.DependencyInjection;
 
 using Bones.Flow;
 
-using Foundation.Template.Shell.Abstractions;
+using Foundation.Template.Core.Abstractions;
 
-using XXXXX.Shell.Kernel.Services;
+using XXXXX.Core.Kernel.Services;
 
-namespace XXXXX.Shell.Kernel.DI
+namespace XXXXX.Core.Kernel.DI
 {
     public static class DependencyInjector
     {

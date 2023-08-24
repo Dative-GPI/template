@@ -2,12 +2,12 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-using Foundation.Template.Shell.DI;
+using Foundation.Template.Core.DI;
 using Foundation.Template.CrossCutting.DI;
 
-using Foundation.Template.Shell.Extensions;
+using Foundation.Template.Core.Extensions;
 
-using XXXXX.Shell.Kernel.DI;
+using XXXXX.Core.Kernel.DI;
 using XXXXX.Context.Kernel.DI;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,7 +16,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddKernel(builder.Configuration);
-builder.Services.AddShellTemplate(builder.Configuration);
+builder.Services.AddCoreTemplate(builder.Configuration);
 builder.Services.AddContext(builder.Configuration);
 builder.Services.AddCrossCutting(builder.Configuration);
 builder.Services.AddHttpClient();
@@ -30,9 +30,9 @@ if (app.Environment.IsDevelopment())
     app.UseDeveloperExceptionPage();
 }
 
-app.UseShellTemplate();
+app.UseCoreTemplate();
 
 app.MapControllers();
-app.MapShellTemplateControllers(null);
+app.MapCoreTemplateControllers(null);
 
 app.Run();

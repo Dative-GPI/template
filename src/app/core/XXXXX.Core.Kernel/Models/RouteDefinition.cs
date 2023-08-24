@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace XXXXX.Shell.Kernel.Models
+namespace XXXXX.Core.Kernel.Models
 {
     public class RouteDefinition
     {

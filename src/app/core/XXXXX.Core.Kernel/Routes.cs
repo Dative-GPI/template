@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using XXXXX.Shell.Kernel.Models;
+using XXXXX.Core.Kernel.Models;
 
-namespace XXXXX.Shell.Kernel
+namespace XXXXX.Core.Kernel
 {
     public static class Routes
     {

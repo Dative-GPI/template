@@ -1,4 +1,4 @@
-namespace XXXXX.Shell.Kernel
+namespace XXXXX.Core.Kernel
 {
     public static class Authorizations
     {

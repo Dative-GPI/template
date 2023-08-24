@@ -31,9 +31,9 @@ def rename_folders(root_dir, old_text, new_text):
             os.rename(foldername, new_foldername)
 
 def main():
-    root_dir = "src"
-    old_text = "Core"
-    new_text = "Kernel"
+    root_dir = "dev"
+    old_text = "Shell"
+    new_text = "Core"
     
     replace_in_files(root_dir, old_text, new_text)
     rename_files(root_dir, old_text, new_text)

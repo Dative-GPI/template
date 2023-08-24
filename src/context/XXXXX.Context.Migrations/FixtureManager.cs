@@ -27,7 +27,7 @@ namespace XXXXX.Context.Migrations
                 });
 
             Add<PermissionOrganisationDTO, Fixture>(
-                PermissionHelper.GetPermissions(typeof(XXXXX.Shell.Kernel.Authorizations)),
+                PermissionHelper.GetPermissions(typeof(XXXXX.Core.Kernel.Authorizations)),
                 fixture => new PermissionOrganisationDTO()
                 {
                     Id = Guid.NewGuid(),
@@ -41,7 +41,7 @@ namespace XXXXX.Context.Migrations
                 });
 
             Add<PermissionOrganisationCategoryDTO, Fixture>(
-                PermissionHelper.GetCategories(typeof(XXXXX.Shell.Kernel.Authorizations)),
+                PermissionHelper.GetCategories(typeof(XXXXX.Core.Kernel.Authorizations)),
                 fixture => new PermissionOrganisationCategoryDTO()
                 {
                     Id = Guid.NewGuid(),

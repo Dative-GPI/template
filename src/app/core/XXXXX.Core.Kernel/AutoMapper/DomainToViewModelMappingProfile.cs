@@ -1,6 +1,6 @@
 using AutoMapper;
 
-namespace XXXXX.Shell.Kernel.AutoMapper
+namespace XXXXX.Core.Kernel.AutoMapper
 {
     public class DomainToViewModelMappingProfile : Profile
     {

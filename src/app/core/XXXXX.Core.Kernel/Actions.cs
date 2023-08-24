@@ -4,13 +4,13 @@ using System.Collections.Generic;
 
 using Foundation.Shared;
 
-using XXXXX.Shell.Kernel.Models;
+using XXXXX.Core.Kernel.Models;
 
 using Microsoft.Extensions.DependencyInjection;
-using Foundation.Template.Shell.Abstractions;
+using Foundation.Template.Core.Abstractions;
 using Foundation.Template.Domain.Abstractions;
 
-namespace XXXXX.Shell.Kernel
+namespace XXXXX.Core.Kernel
 {
     public static class Actions
     {
@@ -18,7 +18,7 @@ namespace XXXXX.Shell.Kernel
         {
             new ActionDefinition()
             {
-                Authorizations = new [] { Foundation.Clients.ShellAuthorizations.APP_DEVICEORGANISATION_CREATE },
+                Authorizations = new [] { Foundation.Clients.CoreAuthorizations.APP_DEVICEORGANISATION_CREATE },
                 LabelCode = "ui.devices.add-connected",
                 LabelDefault = "Add connected device",
                 Icon = "mdi-wifi",
@@ -37,7 +37,7 @@ namespace XXXXX.Shell.Kernel
                 ComputePath = async (dico, sp) => {
                     var ctx = sp.GetRequiredService<IRequestContextProvider>().Context;
                     var client = await sp.GetRequiredService<IFoundationClientFactory>().CreateAuthenticated(ctx.ApplicationId, ctx.LanguageCode, ctx.Jwt);
-                    var device = await client.Shell.Devices.Get(ctx.OrganisationId.Value, Guid.Parse(dico["deviceId"]));
+                    var device = await client.Core.Devices.Get(ctx.OrganisationId.Value, Guid.Parse(dico["deviceId"]));
                     return $"{device.Code}&{device.ArticleCode}";
                 }
             }

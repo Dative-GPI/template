@@ -6,11 +6,11 @@ using System.Collections.Generic;
 
 using Foundation.Template.Domain.Models;
 using Foundation.Template.Domain.Abstractions;
-using Foundation.Template.Shell.Abstractions;
+using Foundation.Template.Core.Abstractions;
 
-using XXXXX.Shell.Kernel.Models;
+using XXXXX.Core.Kernel.Models;
 
-namespace XXXXX.Shell.Kernel.Services
+namespace XXXXX.Core.Kernel.Services
 {
     public class RoutesProvider : IRoutesProvider
     {

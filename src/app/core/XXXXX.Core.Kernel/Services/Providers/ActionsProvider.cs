@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Foundation.Template.Domain.Models;
-using Foundation.Template.Shell.Abstractions;
+using Foundation.Template.Core.Abstractions;
 
-namespace XXXXX.Shell.Kernel.Services
+namespace XXXXX.Core.Kernel.Services
 {
     public class ActionsProvider : IActionsProvider
     {

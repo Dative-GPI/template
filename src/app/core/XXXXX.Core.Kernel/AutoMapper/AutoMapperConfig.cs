@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 using AutoMapper;
 
-namespace XXXXX.Shell.Kernel.AutoMapper
+namespace XXXXX.Core.Kernel.AutoMapper
 {
     public class AutoMapperConfig
     {

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 using Foundation.Shared;
 
-namespace XXXXX.Shell.Kernel.Models
+namespace XXXXX.Core.Kernel.Models
 {
     public class ActionDefinition
     {

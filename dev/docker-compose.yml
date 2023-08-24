@@ -47,7 +47,7 @@ services:
       context: ..
       dockerfile: dev/dockerfiles/dotnet.dockerfile
       args:
-        PROJECT: src/app/shell/XXXXX.Shell.API
+        PROJECT: src/app/shell/XXXXX.Core.API
     networks:
       - XXXXX
     environment:
@@ -98,17 +98,17 @@ services:
       context: ..
       dockerfile: dev/dockerfiles/vue.dockerfile
       args:
-        PROJECT: "src/app/shell/XXXXX.Shell.UI"
+        PROJECT: "src/app/shell/XXXXX.Core.UI"
     networks:
       - XXXXX
     volumes: # hot reload
-    - ../src/app/shell/XXXXX.Shell.UI/public:/app/src/app/shell/XXXXX.Shell.UI/public:delegated
-    - ../src/app/shell/XXXXX.Shell.UI/src:/app/src/app/shell/XXXXX.Shell.UI/src:delegated
-    - ../src/app/shell/XXXXX.Shell.UI/.env:/app/src/app/shell/XXXXX.Shell.UI/.env:delegated
-    - ../src/app/shell/XXXXX.Shell.UI/.eslintrc.js:/app/src/app/shell/XXXXX.Shell.UI/.eslintrc.js:delegated
-    - ../src/app/shell/XXXXX.Shell.UI/babel.config.js:/app/src/app/shell/XXXXX.Shell.UI/babel.config.js:delegated
-    - ../src/app/shell/XXXXX.Shell.UI/tsconfig.json:/app/src/app/shell/XXXXX.Shell.UI/tsconfig.json:delegated
-    - ../src/app/shell/XXXXX.Shell.UI/vue.config.js:/app/src/app/shell/XXXXX.Shell.UI/vue.config.js:delegated
+    - ../src/app/shell/XXXXX.Core.UI/public:/app/src/app/shell/XXXXX.Core.UI/public:delegated
+    - ../src/app/shell/XXXXX.Core.UI/src:/app/src/app/shell/XXXXX.Core.UI/src:delegated
+    - ../src/app/shell/XXXXX.Core.UI/.env:/app/src/app/shell/XXXXX.Core.UI/.env:delegated
+    - ../src/app/shell/XXXXX.Core.UI/.eslintrc.js:/app/src/app/shell/XXXXX.Core.UI/.eslintrc.js:delegated
+    - ../src/app/shell/XXXXX.Core.UI/babel.config.js:/app/src/app/shell/XXXXX.Core.UI/babel.config.js:delegated
+    - ../src/app/shell/XXXXX.Core.UI/tsconfig.json:/app/src/app/shell/XXXXX.Core.UI/tsconfig.json:delegated
+    - ../src/app/shell/XXXXX.Core.UI/vue.config.js:/app/src/app/shell/XXXXX.Core.UI/vue.config.js:delegated
     labels:
       - "custom.label=extension"
       - "traefik.enable=true"
