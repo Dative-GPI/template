@@ -1,1 +1,0 @@
-export const APPLICATION_TRANSLATIONS_URL = `/api/translations`;

@@ -57,7 +57,7 @@ app.UseEndpoints(endpoints =>
     endpoints.MapForwarder("/api/admin/{**catch-all}", builder.Configuration.GetConnectionString("Admin"))
         .RequireAuthorization();
 
-    endpoints.MapForwarder("/api/core/{**catch-all}", builder.Configuration.GetConnectionString("Kernel"))
+    endpoints.MapForwarder("/api/core/{**catch-all}", builder.Configuration.GetConnectionString("Core"))
         .RequireAuthorization();
 });
 

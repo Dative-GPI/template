@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Foundation.Template.Core" Version="0.0.9" />
-    <PackageReference Include="Foundation.Template.CrossCutting" Version="0.0.9" />
+    <PackageReference Include="Foundation.Template.Core" Version="0.0.11" />
+    <PackageReference Include="Foundation.Template.CrossCutting" Version="0.0.11" />
   </ItemGroup>
 
   <ItemGroup>

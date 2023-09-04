@@ -17,6 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Foundation.Template.Context" Version="0.0.9" />
+    <PackageReference Include="Foundation.Template.Context" Version="0.0.11" />
   </ItemGroup>
 </Project>
