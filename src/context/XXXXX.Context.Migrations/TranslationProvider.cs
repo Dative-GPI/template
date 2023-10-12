@@ -12,7 +12,7 @@ namespace XXXXX.Context.Migrations
         static readonly List<string> PROJECTS = new List<string>()
         {
             "../../../src/app/admin/XXXXX.Admin.UI",
-            "../../../src/app/shell/XXXXX.Core.UI",
+            "../../../src/app/core/XXXXX.Core.UI",
         };
 
         public static async Task<List<Fixture>> GetAllTranslations()
