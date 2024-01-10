@@ -1,8 +1,22 @@
 version: "3"
 
 services:
+  traefik:
+    image: traefik:v2.4
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.websecure.address=:443"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    networks:
+      - XXXXX
+    ports:
+      - 443:443
+      - 8080:8080
 
-  db:
+  timescale:
     image: timescale/timescaledb:latest-pg12
     networks:
       - XXXXX
@@ -10,26 +24,36 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: example
     volumes:
-      - data-extension-db:/var/lib/postgresql/data
-      
-  shell:
+      - data-postgres:/var/lib/postgresql/data
+  
+  proxy:
+    image: dativegpi/foundation-template-proxy:0.0.11
+    networks:
+      - XXXXX
+    environment:
+      CUSTOMCONNSTR_FOUNDATION: https://mountain.dative-gpi.com
+      CUSTOMCONNSTR_LOCAL: https://extension.localhost
+    extra_hosts:
+      - "extension.localhost:172.17.0.1"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.services.proxy-backend.loadbalancer.server.port=80"
+      - "traefik.http.routers.proxy-backend.rule=Host(`foundation-admin.localhost`) || Host(`foundation.localhost`)"
+      - "traefik.http.routers.proxy-backend.entrypoints=websecure"
+      - "traefik.http.routers.proxy-backend.tls=true"
+
+  core:
     build: 
       context: ..
       dockerfile: dev/dockerfiles/dotnet.dockerfile
       args:
-        PROJECT: src/app/shell/XXXXX.Shell.API
+        PROJECT: src/app/core/XXXXX.Core.API
     networks:
       - XXXXX
-    extra_hosts:
-      - "foundation-admin.localhost:172.17.0.1"
-      - "foundation.localhost:172.17.0.1"
     environment:
-      MEDIATOR__ENDPOINTURI: amqp://rabbitmq
       DOTNET_ENVIRONMENT: Development
       DOTNET_URLS: http://+:80
-      CUSTOMCONNSTR_PGSQL: Host=db;Database=data-extension;Username=postgres;Password=example
-      IMAGE__RAWFOLDER: /images/raw
-      IMAGE__THUMBNAILFOLDER: /images/thumbnails
+      CUSTOMCONNSTR_PGSQL: Host=timescale;Database=data-extension;Username=postgres;Password=example
   
   admin:
     build: 
@@ -39,16 +63,10 @@ services:
         PROJECT: src/app/admin/XXXXX.Admin.API
     networks:
       - XXXXX
-    extra_hosts:
-      - "foundation-admin.localhost:172.17.0.1"
-      - "foundation.localhost:172.17.0.1"
     environment:
-      MEDIATOR__ENDPOINTURI: amqp://rabbitmq
       DOTNET_ENVIRONMENT: Development
       DOTNET_URLS: http://+:80
-      CUSTOMCONNSTR_PGSQL: Host=db;Database=data-extension;Username=postgres;Password=example
-      IMAGE__RAWFOLDER: /images/raw
-      IMAGE__THUMBNAILFOLDER: /images/thumbnails
+      CUSTOMCONNSTR_PGSQL: Host=timescale;Database=data-extension;Username=postgres;Password=example
 
   gateway:
     build: 
@@ -58,21 +76,20 @@ services:
         PROJECT: src/app/gateway/XXXXX.Gateway.API
     networks:
       - XXXXX
-    extra_hosts:
-      - "foundation.localhost:172.17.0.1"
-      - "foundation-admin.localhost:172.17.0.1"
+    ports:
+      - 5050:80
     environment:
       MEDIATOR__ENDPOINTURI: amqp://rabbitmq
       DOTNET_ENVIRONMENT: Development
       DOTNET_URLS: http://+:80
-      CUSTOMCONNSTR_PGSQL: Host=db;Database=data-extension;Username=postgres;Password=example
+      CUSTOMCONNSTR_PGSQL: Host=timescale;Database=data-extension;Username=postgres;Password=example
       IMAGE__RAWFOLDER: /images/raw
       IMAGE__THUMBNAILFOLDER: /images/thumbnails
     labels:
       - 'custom.label=extension'
       - "traefik.enable=true"
       - "traefik.http.services.extension-backend.loadbalancer.server.port=80"
-      - "traefik.http.routers.extension-backend.rule=(Host(`extension-admin.localhost`)|| Host(`extension.localhost`)) && (PathPrefix(`/api`) || Path(`/signin-oidc`) || Path(`/signin-google`) || Path(`/signin-facebook`) || Path(`/signout-callback-oidc`) || Path(`/signout-callback-google`) || Path(`/signout-callback-facebook`))"
+      - "traefik.http.routers.extension-backend.rule=(Host(`extension-admin.localhost`)|| Host(`extension.localhost`)) && (PathPrefix(`/api`))"
       - "traefik.http.routers.extension-backend.entrypoints=websecure"
       - "traefik.http.routers.extension-backend.tls=true"
 
@@ -81,17 +98,17 @@ services:
       context: ..
       dockerfile: dev/dockerfiles/vue.dockerfile
       args:
-        PROJECT: "src/app/shell/XXXXX.Shell.UI"
+        PROJECT: "src/app/core/XXXXX.Core.UI"
     networks:
       - XXXXX
-    volumes: # hot reload
-    - ../src/app/shell/XXXXX.Shell.UI/public:/app/src/app/shell/XXXXX.Shell.UI/public:delegated
-    - ../src/app/shell/XXXXX.Shell.UI/src:/app/src/app/shell/XXXXX.Shell.UI/src:delegated
-    - ../src/app/shell/XXXXX.Shell.UI/.env:/app/src/app/shell/XXXXX.Shell.UI/.env:delegated
-    - ../src/app/shell/XXXXX.Shell.UI/.eslintrc.js:/app/src/app/shell/XXXXX.Shell.UI/.eslintrc.js:delegated
-    - ../src/app/shell/XXXXX.Shell.UI/babel.config.js:/app/src/app/shell/XXXXX.Shell.UI/babel.config.js:delegated
-    - ../src/app/shell/XXXXX.Shell.UI/tsconfig.json:/app/src/app/shell/XXXXX.Shell.UI/tsconfig.json:delegated
-    - ../src/app/shell/XXXXX.Shell.UI/vue.config.js:/app/src/app/shell/XXXXX.Shell.UI/vue.config.js:delegated
+    volumes: # hot reload
+    - ../src/app/core/XXXXX.Core.UI/public:/app/src/app/core/XXXXX.Core.UI/public:delegated
+    - ../src/app/core/XXXXX.Core.UI/src:/app/src/app/core/XXXXX.Core.UI/src:delegated
+    - ../src/app/core/XXXXX.Core.UI/.env:/app/src/app/core/XXXXX.Core.UI/.env:delegated
+    - ../src/app/core/XXXXX.Core.UI/.eslintrc.js:/app/src/app/core/XXXXX.Core.UI/.eslintrc.js:delegated
+    - ../src/app/core/XXXXX.Core.UI/babel.config.js:/app/src/app/core/XXXXX.Core.UI/babel.config.js:delegated
+    - ../src/app/core/XXXXX.Core.UI/tsconfig.json:/app/src/app/core/XXXXX.Core.UI/tsconfig.json:delegated
+    - ../src/app/core/XXXXX.Core.UI/vue.config.js:/app/src/app/core/XXXXX.Core.UI/vue.config.js:delegated
     labels:
       - "custom.label=extension"
       - "traefik.enable=true"
@@ -108,7 +125,7 @@ services:
         PROJECT: "src/app/admin/XXXXX.Admin.UI"
     networks:
       - XXXXX
-    volumes: # hot reload
+    volumes: # hot reload
     - ../src/app/admin/XXXXX.Admin.UI/public:/app/src/app/admin/XXXXX.Admin.UI/public:delegated
     - ../src/app/admin/XXXXX.Admin.UI/src:/app/src/app/admin/XXXXX.Admin.UI/src:delegated
     - ../src/app/admin/XXXXX.Admin.UI/.env:/app/src/app/admin/XXXXX.Admin.UI/.env:delegated
@@ -133,12 +150,11 @@ services:
     networks:
       - XXXXX
     environment:
-      CUSTOMCONNSTR_PGSQL: Host=db;Database=data-extension;Username=postgres;Password=example
+      CUSTOMCONNSTR_PGSQL: Host=timescale;Database=data-extension;Username=postgres;Password=example
 
 
 networks:
   XXXXX:
-    name: "extension_XXXXX"
 
 volumes:
-  data-extension-db:
+  data-postgres:

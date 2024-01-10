@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfPermissionAdminDTO xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <PermissionAdminDTO Id="bf477d6b-d6eb-4840-8388-eee2cb73a4a0" Code="admin.XXXXX.create" LabelDefault="ADMIN_XXXXX_CREATE" Disabled="false">
+    <Translations />
+  </PermissionAdminDTO>
+  <PermissionAdminDTO Id="a81c0647-b1ec-4eb8-a836-f8a6321e7d81" Code="admin.XXXXX.update" LabelDefault="ADMIN_XXXXX_UPDATE" Disabled="false">
+    <Translations />
+  </PermissionAdminDTO>
+  <PermissionAdminDTO Id="b9eb2fe8-aaba-4e4b-a6a3-e2623ee67a08" Code="admin.XXXXX.remove" LabelDefault="ADMIN_XXXXX_REMOVE" Disabled="false">
+    <Translations />
+  </PermissionAdminDTO>
+  <PermissionAdminDTO Id="1d54f35c-761c-4300-b43a-b03121e342d6" Code="admin.XXXXX.infos" LabelDefault="ADMIN_XXXXX_INFOS" Disabled="false">
+    <Translations />
+  </PermissionAdminDTO>
+  <PermissionAdminDTO Id="a23c0434-5d1c-4f5d-bcd2-71a48d5378b7" Code="admin.XXXXX.details" LabelDefault="ADMIN_XXXXX_DEAILS" Disabled="false">
+    <Translations />
+  </PermissionAdminDTO>
+</ArrayOfPermissionAdminDTO>

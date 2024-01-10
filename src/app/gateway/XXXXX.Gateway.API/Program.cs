@@ -1,29 +1,64 @@
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace XXXXX.Gateway.API
+using Foundation.Template.Gateway.DI;
+using Foundation.Template.CrossCutting.DI;
+using Foundation.Template.Gateway.Extensions;
+
+using XXXXX.Gateway.Kernel.DI;
+using XXXXX.Context.Kernel.DI;
+
+using Foundation.Template.Gateway.Middlewares;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.HttpOverrides;
+
+var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container.
+
+builder.Services.AddControllers();
+builder.Services.AddKernel(builder.Configuration);
+builder.Services.AddGatewayTemplate(builder.Configuration);
+builder.Services.AddContext(builder.Configuration);
+builder.Services.AddCrossCutting(builder.Configuration);
+builder.Services.AddHttpClient();
+
+builder.Services.AddAuthentication("Custom"); // to remove
+builder.Services.AddHealthChecks();
+
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
 {
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
-            CreateHostBuilder(args).Build().Run();
-        }
-
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureAppConfiguration((hostingContext, config) =>
-                {
-                    config
-                        .SetBasePath(hostingContext.HostingEnvironment.ContentRootPath)
-                        .AddJsonFile("appsettings.json", true, false)
-                        .AddJsonFile($"appsettings.{hostingContext.HostingEnvironment.EnvironmentName}.json", true, false)
-                        .AddEnvironmentVariables();
-                })
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
-    }
+    // app.UseDeveloperExceptionPage();
 }
+
+app.UseForwardedHeaders(new ForwardedHeadersOptions
+{
+    ForwardedHeaders = ForwardedHeaders.XForwardedProto
+});
+
+app.UseHealthChecks("/health");
+
+app.UseRouting();
+
+app.UseTemplateAuthentication();
+
+app.UseAuthorization();
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapGatewayTemplateEndpoints();
+
+    endpoints.MapForwarder("/api/admin/{**catch-all}", builder.Configuration.GetConnectionString("Admin"))
+        .RequireAuthorization();
+
+    endpoints.MapForwarder("/api/core/{**catch-all}", builder.Configuration.GetConnectionString("Core"))
+        .RequireAuthorization();
+});
+
+app.Run();
